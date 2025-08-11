@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ProductCard } from "@/components/shared/ProductCard";
 import { products, categories, brands } from "@/lib/placeholder-data";
 import { ShoppingBag } from "lucide-react";
@@ -14,22 +14,37 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
 
 export default function ShopPage() {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedBrand, setSelectedBrand] = useState<string>("all");
+  
+  const priceRange = useMemo(() => {
+    const prices = products.map(p => p.price);
+    return [Math.min(...prices), Math.max(...prices)];
+  }, []);
+
+  const [priceValue, setPriceValue] = useState<[number]>(() => [priceRange[1]]);
+
 
   const handleFilterChange = () => {
     let tempProducts = products;
+    
     if (selectedCategory !== "all") {
       tempProducts = tempProducts.filter(
         (p) => p.category === selectedCategory
       );
     }
+    
     if (selectedBrand !== "all") {
       tempProducts = tempProducts.filter((p) => p.brand === selectedBrand);
     }
+
+    tempProducts = tempProducts.filter((p) => p.price <= priceValue[0]);
+
     setFilteredProducts(tempProducts);
   };
   
@@ -40,6 +55,7 @@ export default function ShopPage() {
   const handleResetFilters = () => {
     setSelectedCategory("all");
     setSelectedBrand("all");
+    setPriceValue([priceRange[1]]);
     setFilteredProducts(products);
   }
 
@@ -59,7 +75,7 @@ export default function ShopPage() {
 
       <Card className="mb-8 p-6 shadow-lg">
         <CardContent className="p-0">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Chọn danh mục" />
@@ -87,6 +103,19 @@ export default function ShopPage() {
                   ))}
                 </SelectContent>
               </Select>
+
+              <div className="space-y-2">
+                <Label htmlFor="price-range">Giá tối đa: {priceValue[0].toLocaleString('vi-VN')}₫</Label>
+                <Slider
+                  id="price-range"
+                  min={priceRange[0]}
+                  max={priceRange[1]}
+                  step={50000}
+                  value={priceValue}
+                  onValueChange={setPriceValue}
+                />
+              </div>
+              
               <div className="flex gap-2">
                  <Button onClick={handleApplyFilters} className="w-full">Áp dụng bộ lọc</Button>
                  <Button onClick={handleResetFilters} variant="outline" className="w-full">Đặt lại</Button>
