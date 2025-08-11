@@ -15,7 +15,6 @@ const navLinks = [
   { href: "/planner", label: "Workout Planner" },
   { href: "/booking", label: "Book a PT" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
