@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Image from "next/image";
 import { ProductCard } from "@/components/shared/ProductCard";
 import { products, categories, brands } from "@/lib/placeholder-data";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,20 @@ import {
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Search } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
+const bannerImages = [
+  { src: "https://placehold.co/1200x500.png", alt: "Yoga Class", hint: "yoga class" },
+  { src: "https://placehold.co/1200x500.png", alt: "Weightlifting", hint: "weightlifting gym" },
+  { src: "https://placehold.co/1200x500.png", alt: "Cardio Session", hint: "cardio workout" },
+];
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,13 +79,42 @@ export default function Home() {
   
   return (
     <div className="container mx-auto px-4 py-8">
-      <section className="text-center py-12 bg-card rounded-lg shadow-lg mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary">
-          Fuel Your Ambition
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-2xl mx-auto">
-          Discover top-tier supplements to crush your fitness goals. Quality you can trust, results you can see.
-        </p>
+      <section className="mb-12">
+        <Carousel className="w-full" opts={{ loop: true }}>
+          <CarouselContent>
+            {bannerImages.map((image, index) => (
+              <CarouselItem key={index}>
+                <div className="p-1">
+                  <Card>
+                    <CardContent className="relative flex aspect-[16/7] items-center justify-center p-0 overflow-hidden rounded-lg">
+                       <Image 
+                        src={image.src} 
+                        alt={image.alt} 
+                        fill
+                        className="object-cover"
+                        data-ai-hint={image.hint}
+                       />
+                       <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center p-4">
+                          <h2 className="text-3xl md:text-5xl font-bold text-white mb-2 font-headline">
+                            {index === 0 && "Find Your Zen: Join Our Yoga"}
+                            {index === 1 && "Unleash Your Strength"}
+                            {index === 2 && "Boost Your Cardio"}
+                          </h2>
+                          <p className="text-lg md:text-xl text-white/90">
+                            {index === 0 && "Flexible classes for all levels."}
+                            {index === 1 && "State-of-the-art weightlifting facilities."}
+                            {index === 2 && "Get your heart pumping with our cardio machines."}
+                          </p>
+                       </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 hidden sm:flex" />
+          <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 hidden sm:flex" />
+        </Carousel>
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
