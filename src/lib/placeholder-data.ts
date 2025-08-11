@@ -147,3 +147,33 @@ export const faqs: FAQ[] = [
         answer: "We offer a 30-day return policy on all unopened products. If you are not satisfied with your purchase, please contact our support team to initiate a return."
     }
 ];
+
+export interface Exercise {
+  id: string;
+  name: string;
+  sets: string;
+  reps: string;
+  weight: string;
+}
+
+export const weeklyWorkoutPlan: Record<string, Exercise[]> = {
+  monday: [
+    { id: '1', name: 'Bench Press', sets: '4', reps: '8-12', weight: '80' },
+    { id: '2', name: 'Squat', sets: '4', reps: '8-12', weight: '100' },
+    { id: '3', name: 'Deadlift', sets: '3', reps: '5-8', weight: '120' },
+  ],
+  tuesday: [],
+  wednesday: [
+    { id: '4', name: 'Overhead Press', sets: '4', reps: '8-12', weight: '50' },
+    { id: '5', name: 'Barbell Row', sets: '4', reps: '8-12', weight: '70' },
+    { id: '6', name: 'Pull Ups', sets: '3', reps: 'To failure', weight: 'Bodyweight' },
+  ],
+  thursday: [],
+  friday: [
+    { id: '7', name: 'Incline Dumbbell Press', sets: '4', reps: '10-15', weight: '30' },
+    { id: '8', name: 'Leg Press', sets: '4', reps: '10-15', weight: '150' },
+    { id: '9', name: 'Bicep Curls', sets: '3', reps: '10-15', weight: '15' },
+  ],
+  saturday: [],
+  sunday: [],
+};

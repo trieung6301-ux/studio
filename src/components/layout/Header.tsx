@@ -11,6 +11,7 @@ import { Menu, Dumbbell } from "lucide-react";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/advisor", label: "AI Advisor" },
+  { href: "/planner", label: "Workout Planner" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
