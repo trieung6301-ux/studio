@@ -115,38 +115,60 @@ export const products: Product[] = [
 export const categories = [...new Set(products.map(p => p.category))];
 export const brands = [...new Set(products.map(p => p.brand))];
 
-
-export interface FAQ {
-    question: string;
-    answer: string;
+export interface MembershipPlan {
+  id: string;
+  title: string;
+  price: number;
+  period: 'monthly' | 'quarterly' | 'yearly';
+  features: string[];
+  isPopular: boolean;
+  discount?: string;
 }
 
-export const faqs: FAQ[] = [
-    {
-        question: "What is whey protein?",
-        answer: "Whey protein is a mixture of proteins isolated from whey, the liquid part of milk that separates during cheese production. It's a complete, high-quality protein, containing all of the essential amino acids."
-    },
-    {
-        question: "When should I take pre-workout?",
-        answer: "It's best to take pre-workout supplements about 30-60 minutes before you start your workout. This gives the ingredients, like caffeine, enough time to kick in."
-    },
-    {
-        question: "Is creatine safe?",
-        answer: "Creatine is one of the most well-researched supplements available and is considered safe for most people when taken at recommended dosages. It helps muscles produce energy during heavy lifting or high-intensity exercise."
-    },
-    {
-        question: "Do I need a multivitamin if I eat a healthy diet?",
-        answer: "While a balanced diet is key, a multivitamin can help fill in nutritional gaps, especially for active individuals who may have higher nutrient needs. It acts as an insurance policy for your diet."
-    },
-    {
-        question: "How long does shipping take?",
-        answer: "Standard shipping typically takes 3-5 business days. Expedited shipping options are available at checkout for faster delivery."
-    },
-    {
-        question: "What is your return policy?",
-        answer: "We offer a 30-day return policy on all unopened products. If you are not satisfied with your purchase, please contact our support team to initiate a return."
-    }
+export const membershipPlans: MembershipPlan[] = [
+  {
+    id: 'plan-monthly',
+    title: 'Monthly',
+    price: 49,
+    period: 'monthly',
+    features: [
+      'Full gym access',
+      'Access to all group classes',
+      'Locker room access',
+      'No commitment',
+    ],
+    isPopular: false,
+  },
+  {
+    id: 'plan-quarterly',
+    title: 'Quarterly',
+    price: 40,
+    period: 'quarterly',
+    features: [
+      'All monthly benefits',
+      '1 free personal training session',
+      'Free merchandise item',
+      'Guest pass each month',
+    ],
+    isPopular: true,
+    discount: 'Save 18%',
+  },
+  {
+    id: 'plan-yearly',
+    title: 'Yearly',
+    price: 35,
+    period: 'yearly',
+    features: [
+      'All quarterly benefits',
+      'Unlimited guest passes',
+      '20% off all supplements',
+      'Personalized workout plan',
+    ],
+    isPopular: false,
+    discount: 'Save 30%',
+  },
 ];
+
 
 export interface Exercise {
   id: string;

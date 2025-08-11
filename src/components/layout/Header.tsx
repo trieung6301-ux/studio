@@ -14,7 +14,7 @@ const navLinks = [
   { href: "/advisor", label: "AI Advisor" },
   { href: "/planner", label: "Workout Planner" },
   { href: "/booking", label: "Book a PT" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/contact", label: "Contact" },
 ];
 

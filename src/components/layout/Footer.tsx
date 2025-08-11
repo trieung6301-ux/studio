@@ -49,7 +49,7 @@ export function Footer() {
           <div className="col-span-1">
             <h3 className="font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
-              <li><Link href="/faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</Link></li>
+              <li><Link href="/pricing" className="text-muted-foreground hover:text-primary transition-colors">Pricing</Link></li>
               <li><Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact Us</Link></li>
             </ul>
           </div>
