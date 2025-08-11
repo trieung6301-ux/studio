@@ -1,8 +1,8 @@
 export interface Product {
   id: string;
   name: string;
-  category: "Protein" | "Pre-Workout" | "Vitamin" | "Creatine";
-  brand: "Optimum Nutrition" | "MyProtein" | "GymShark" | "Bulk";
+  category: "Protein" | "Pre-Workout" | "Vitamin" | "Creatine" | "Dụng cụ";
+  brand: "Optimum Nutrition" | "MyProtein" | "GymShark" | "Bulk" | "Generic";
   price: number;
   rating: number;
   reviews: number;
@@ -109,6 +109,39 @@ export const products: Product[] = [
     reviews: 880,
     image: "https://placehold.co/600x400.png",
     description: "Whey protein concentrate chất lượng cao từ bò ăn cỏ.",
+  },
+  {
+    id: '10',
+    name: 'Dây kéo tập lưng (Lifting Straps)',
+    category: 'Dụng cụ',
+    brand: 'Generic',
+    price: 14.99,
+    rating: 4,
+    reviews: 350,
+    image: 'https://placehold.co/600x400.png',
+    description: 'Dây kéo chịu lực giúp cải thiện độ bám và hiệu quả nâng tạ.',
+  },
+  {
+    id: '11',
+    name: 'Con lăn xốp (Foam Roller)',
+    category: 'Dụng cụ',
+    brand: 'Generic',
+    price: 25.99,
+    rating: 5,
+    reviews: 550,
+    image: 'https://placehold.co/600x400.png',
+    description: 'Con lăn xốp mật độ cao giúp phục hồi cơ bắp và giảm đau nhức.',
+  },
+  {
+    id: '12',
+    name: 'Bình lắc Protein',
+    category: 'Dụng cụ',
+    brand: 'GymShark',
+    price: 9.99,
+    rating: 4,
+    reviews: 1200,
+    image: 'https://placehold.co/600x400.png',
+    description: 'Bình lắc không chứa BPA, chống rò rỉ để pha trộn protein một cách dễ dàng.',
   },
 ];
 

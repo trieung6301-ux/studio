@@ -42,6 +42,7 @@ export function Footer() {
           <div className="col-span-1">
             <h3 className="font-semibold mb-4">Cửa hàng</h3>
             <ul className="space-y-2">
+              <li><Link href="/shop" className="text-muted-foreground hover:text-primary transition-colors">Sản phẩm</Link></li>
               <li><Link href="/planner" className="text-muted-foreground hover:text-primary transition-colors">Lập kế hoạch tập luyện</Link></li>
               <li><Link href="/booking" className="text-muted-foreground hover:text-primary transition-colors">Đặt lịch PT</Link></li>
             </ul>
