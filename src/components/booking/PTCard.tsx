@@ -55,8 +55,8 @@ export function PTCard({ pt }: PTCardProps) {
                  <div>
                     <h4 className="font-semibold">Các gói</h4>
                     <div className="text-muted-foreground">
-                        <p>Buổi lẻ: ${pt.packages.session.price}</p>
-                        <p>Tháng: ${pt.packages.monthly.price}</p>
+                        <p>Buổi lẻ: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pt.packages.session.price)}</p>
+                        <p>Tháng: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pt.packages.monthly.price)}</p>
                     </div>
                  </div>
             </div>
