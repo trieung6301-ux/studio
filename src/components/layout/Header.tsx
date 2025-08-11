@@ -11,7 +11,6 @@ import { Menu, Dumbbell, User } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Trang chủ" },
-  { href: "/advisor", label: "Tư vấn AI" },
   { href: "/planner", label: "Lập kế hoạch tập luyện" },
   { href: "/booking", label: "Đặt lịch PT" },
   { href: "/pricing", label: "Bảng giá" },
