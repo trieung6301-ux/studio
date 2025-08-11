@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/advisor", label: "AI Advisor" },
   { href: "/planner", label: "Workout Planner" },
+  { href: "/booking", label: "Book a PT" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];

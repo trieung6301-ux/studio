@@ -177,3 +177,59 @@ export const weeklyWorkoutPlan: Record<string, Exercise[]> = {
   saturday: [],
   sunday: [],
 };
+
+export interface PersonalTrainer {
+  id: string;
+  name: string;
+  specialties: string[];
+  description: string;
+  image: string;
+  packages: {
+    session: {
+      price: number;
+    };
+    monthly: {
+      price: number;
+    };
+  };
+  availability: string[];
+}
+
+export const ptData: PersonalTrainer[] = [
+  {
+    id: "pt-1",
+    name: "Alex Carter",
+    specialties: ["Powerlifting", "Strength Training"],
+    description: "Alex is a certified powerlifting coach with over 10 years of experience. He focuses on building raw strength and perfecting form for major lifts.",
+    image: "https://placehold.co/600x400.png",
+    packages: {
+      session: { price: 75 },
+      monthly: { price: 250 },
+    },
+    availability: ["Mon, Wed, Fri: 4pm - 8pm", "Sat: 9am - 1pm"],
+  },
+  {
+    id: "pt-2",
+    name: "Jessica Lee",
+    specialties: ["Yoga", "Flexibility", "Pilates"],
+    description: "Jessica is a renowned yoga instructor who combines traditional practices with modern fitness. Her sessions improve flexibility, balance, and mental clarity.",
+    image: "https://placehold.co/600x400.png",
+    packages: {
+      session: { price: 60 },
+      monthly: { price: 200 },
+    },
+    availability: ["Tue, Thu: 8am - 12pm", "Sun: 10am - 2pm"],
+  },
+  {
+    id: "pt-3",
+    name: "Marcus Cole",
+    specialties: ["Boxing", "HIIT", "Cardio"],
+    description: "A former professional boxer, Marcus brings intensity and discipline to every session. Get ready to sweat with high-energy boxing drills and HIIT circuits.",
+    image: "https://placehold.co/600x400.png",
+    packages: {
+      session: { price: 80 },
+      monthly: { price: 280 },
+    },
+    availability: ["Mon, Wed: 6am - 10am", "Fri: 6pm - 9pm", "Sat: 12pm - 4pm"],
+  },
+];
