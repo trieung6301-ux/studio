@@ -22,7 +22,7 @@ export function PricingTable() {
   };
   
   const getBilledText = () => {
-    return billingCycle === 'monthly' ? 'Billed Monthly' : 'Billed Annually';
+    return billingCycle === 'monthly' ? 'Thanh toán hàng tháng' : 'Thanh toán hàng năm';
   }
 
   const yearlyPlans = membershipPlans.map(plan => ({...plan, period: 'yearly'}));
@@ -32,7 +32,7 @@ export function PricingTable() {
     <div className="max-w-5xl mx-auto">
        <div className="flex justify-center items-center gap-4 mb-10">
         <Label htmlFor="billing-switch" className={cn("font-medium", billingCycle === 'monthly' ? 'text-primary' : 'text-muted-foreground')}>
-          Monthly
+          Hàng tháng
         </Label>
         <Switch
           id="billing-switch"
@@ -40,7 +40,7 @@ export function PricingTable() {
           onCheckedChange={(checked) => setBillingCycle(checked ? 'yearly' : 'monthly')}
         />
         <Label htmlFor="billing-switch" className={cn("font-medium", billingCycle === 'yearly' ? 'text-primary' : 'text-muted-foreground')}>
-          Yearly (Save ~17%)
+          Hàng năm (Tiết kiệm ~17%)
         </Label>
       </div>
 
@@ -55,12 +55,12 @@ export function PricingTable() {
           >
             <CardHeader className="p-6 bg-card">
               {plan.isPopular && (
-                <Badge variant="secondary" className="w-fit self-center mb-2 bg-accent text-accent-foreground">Most Popular</Badge>
+                <Badge variant="secondary" className="w-fit self-center mb-2 bg-accent text-accent-foreground">Phổ biến nhất</Badge>
               )}
               <CardTitle className="text-2xl font-bold font-headline text-center">{plan.title}</CardTitle>
               <div className="text-center">
                  <span className="text-4xl font-extrabold">${getPrice(plan)}</span>
-                 <span className="text-muted-foreground">/mo</span>
+                 <span className="text-muted-foreground">/tháng</span>
               </div>
               <CardDescription className="text-center h-5">{plan.discount && billingCycle === plan.period ? plan.discount : ''}</CardDescription>
             </CardHeader>
@@ -76,14 +76,14 @@ export function PricingTable() {
             </CardContent>
             <CardFooter className="p-6 mt-auto">
               <Button className="w-full" variant={plan.isPopular ? 'default' : 'outline'}>
-                Choose Plan
+                Chọn gói
               </Button>
             </CardFooter>
           </Card>
         ))}
       </div>
        <p className="text-center text-muted-foreground text-sm mt-8">
-        *Yearly plan prices are shown as the effective monthly rate. You will be billed for the entire year at once.
+        *Giá gói hàng năm được hiển thị theo mức giá hiệu quả hàng tháng. Bạn sẽ bị tính phí cho cả năm cùng một lúc.
       </p>
     </div>
   );

@@ -5,8 +5,8 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'MuscleUp Supplements',
-  description: 'Your one-stop shop for premium gym supplements.',
+  title: 'MuscleUp - Thực phẩm bổ sung',
+  description: 'Cửa hàng tổng hợp cho các sản phẩm bổ sung thể hình cao cấp.',
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="vi">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

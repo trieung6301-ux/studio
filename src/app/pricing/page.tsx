@@ -9,10 +9,10 @@ export default function PricingPage() {
           <DollarSign className="w-8 h-8" />
         </div>
         <h1 className="text-4xl font-bold font-headline text-primary">
-          Membership Plans
+          Các gói thành viên
         </h1>
         <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-          Choose the perfect plan to kickstart your fitness journey. All plans include full access to our facilities.
+          Chọn gói hoàn hảo để bắt đầu hành trình thể chất của bạn. Tất cả các gói đều bao gồm quyền truy cập đầy đủ vào các cơ sở của chúng tôi.
         </p>
       </div>
       <PricingTable />

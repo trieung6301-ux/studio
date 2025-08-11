@@ -7,15 +7,15 @@ export default function LoginPage() {
     <div className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[calc(100vh-14rem)]">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold font-headline">Welcome Back!</CardTitle>
-          <CardDescription>Sign in to access your account</CardDescription>
+          <CardTitle className="text-3xl font-bold font-headline">Chào mừng trở lại!</CardTitle>
+          <CardDescription>Đăng nhập để truy cập tài khoản của bạn</CardDescription>
         </CardHeader>
         <CardContent>
           <LoginForm />
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            Don't have an account?{' '}
+            Chưa có tài khoản?{' '}
             <Link href="/signup" className="font-semibold text-primary hover:underline">
-              Sign Up
+              Đăng ký
             </Link>
           </p>
         </CardContent>

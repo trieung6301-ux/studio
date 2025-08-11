@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  category: "Protein" | "Pre-Workout" | "Vitamins" | "Creatine";
+  category: "Protein" | "Pre-Workout" | "Vitamin" | "Creatine";
   brand: "Optimum Nutrition" | "MyProtein" | "GymShark" | "Bulk";
   price: number;
   rating: number;
@@ -20,7 +20,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 1250,
     image: "https://placehold.co/600x400.png",
-    description: "The world's best-selling whey protein powder.",
+    description: "Bột whey protein bán chạy nhất thế giới.",
   },
   {
     id: "2",
@@ -31,18 +31,18 @@ export const products: Product[] = [
     rating: 4,
     reviews: 890,
     image: "https://placehold.co/600x400.png",
-    description: "Explosive energy, heightened focus, and an overwhelming urge to tackle any challenge.",
+    description: "Năng lượng bùng nổ, sự tập trung cao độ và một sự thôi thúc không thể cưỡng lại để vượt qua mọi thử thách.",
   },
   {
     id: "3",
     name: "Opti-Men Multivitamin",
-    category: "Vitamins",
+    category: "Vitamin",
     brand: "Optimum Nutrition",
     price: 24.99,
     rating: 5,
     reviews: 740,
     image: "https://placehold.co/600x400.png",
-    description: "High-potency multivitamin for active men.",
+    description: "Multivitamin hiệu lực cao cho nam giới năng động.",
   },
   {
     id: "4",
@@ -53,7 +53,7 @@ export const products: Product[] = [
     rating: 4,
     reviews: 1500,
     image: "https://placehold.co/600x400.png",
-    description: "Pure creatine monohydrate to increase physical performance.",
+    description: "Creatine monohydrate tinh khiết để tăng hiệu suất thể chất.",
   },
   {
     id: "5",
@@ -64,7 +64,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 980,
     image: "https://placehold.co/600x400.png",
-    description: "Super-pure isolate, with over 90% protein content.",
+    description: "Isolate siêu tinh khiết, với hàm lượng protein trên 90%.",
   },
   {
     id: "6",
@@ -75,7 +75,7 @@ export const products: Product[] = [
     rating: 4,
     reviews: 650,
     image: "https://placehold.co/600x400.png",
-    description: "A powerful blend of ingredients to fuel your workout.",
+    description: "Một sự pha trộn mạnh mẽ của các thành phần để cung cấp năng lượng cho buổi tập của bạn.",
   },
    {
     id: "7",
@@ -86,7 +86,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 1100,
     image: "https://placehold.co/600x400.png",
-    description: "Micronized creatine powder for improved absorption and performance.",
+    description: "Bột creatine micronized để cải thiện sự hấp thụ và hiệu suất.",
   },
   {
     id: "8",
@@ -97,7 +97,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 450,
     image: "https://placehold.co/600x400.png",
-    description: "The ultimate pre-workout for energy, focus, and pump.",
+    description: "Pre-workout tối thượng cho năng lượng, sự tập trung và sự bơm cơ.",
   },
   {
     id: "9",
@@ -108,7 +108,7 @@ export const products: Product[] = [
     rating: 4,
     reviews: 880,
     image: "https://placehold.co/600x400.png",
-    description: "High-quality whey protein concentrate from grass-fed cows.",
+    description: "Whey protein concentrate chất lượng cao từ bò ăn cỏ.",
   },
 ];
 
@@ -128,44 +128,44 @@ export interface MembershipPlan {
 export const membershipPlans: MembershipPlan[] = [
   {
     id: 'plan-monthly',
-    title: 'Monthly',
+    title: 'Hàng tháng',
     price: 49,
     period: 'monthly',
     features: [
-      'Full gym access',
-      'Access to all group classes',
-      'Locker room access',
-      'No commitment',
+      'Toàn quyền truy cập phòng tập',
+      'Truy cập tất cả các lớp học nhóm',
+      'Sử dụng phòng thay đồ',
+      'Không cam kết',
     ],
     isPopular: false,
   },
   {
     id: 'plan-quarterly',
-    title: 'Quarterly',
+    title: 'Hàng quý',
     price: 40,
     period: 'quarterly',
     features: [
-      'All monthly benefits',
-      '1 free personal training session',
-      'Free merchandise item',
-      'Guest pass each month',
+      'Tất cả các lợi ích của gói tháng',
+      '1 buổi tập với huấn luyện viên cá nhân miễn phí',
+      'Miễn phí một món đồ lưu niệm',
+      'Thẻ khách mỗi tháng',
     ],
     isPopular: true,
-    discount: 'Save 18%',
+    discount: 'Tiết kiệm 18%',
   },
   {
     id: 'plan-yearly',
-    title: 'Yearly',
+    title: 'Hàng năm',
     price: 35,
     period: 'yearly',
     features: [
-      'All quarterly benefits',
-      'Unlimited guest passes',
-      '20% off all supplements',
-      'Personalized workout plan',
+      'Tất cả các lợi ích của gói quý',
+      'Thẻ khách không giới hạn',
+      'Giảm 20% tất cả các loại thực phẩm bổ sung',
+      'Kế hoạch tập luyện cá nhân hóa',
     ],
     isPopular: false,
-    discount: 'Save 30%',
+    discount: 'Tiết kiệm 30%',
   },
 ];
 
@@ -180,21 +180,21 @@ export interface Exercise {
 
 export const weeklyWorkoutPlan: Record<string, Exercise[]> = {
   monday: [
-    { id: '1', name: 'Bench Press', sets: '4', reps: '8-12', weight: '80' },
+    { id: '1', name: 'Đẩy ngực', sets: '4', reps: '8-12', weight: '80' },
     { id: '2', name: 'Squat', sets: '4', reps: '8-12', weight: '100' },
     { id: '3', name: 'Deadlift', sets: '3', reps: '5-8', weight: '120' },
   ],
   tuesday: [],
   wednesday: [
-    { id: '4', name: 'Overhead Press', sets: '4', reps: '8-12', weight: '50' },
-    { id: '5', name: 'Barbell Row', sets: '4', reps: '8-12', weight: '70' },
-    { id: '6', name: 'Pull Ups', sets: '3', reps: 'To failure', weight: 'Bodyweight' },
+    { id: '4', name: 'Đẩy vai', sets: '4', reps: '8-12', weight: '50' },
+    { id: '5', name: 'Kéo xà', sets: '4', reps: '8-12', weight: '70' },
+    { id: '6', name: 'Hít xà', sets: '3', reps: 'Đến khi thất bại', weight: 'Trọng lượng cơ thể' },
   ],
   thursday: [],
   friday: [
-    { id: '7', name: 'Incline Dumbbell Press', sets: '4', reps: '10-15', weight: '30' },
-    { id: '8', name: 'Leg Press', sets: '4', reps: '10-15', weight: '150' },
-    { id: '9', name: 'Bicep Curls', sets: '3', reps: '10-15', weight: '15' },
+    { id: '7', name: 'Đẩy ngực dốc lên với tạ đơn', sets: '4', reps: '10-15', weight: '30' },
+    { id: '8', name: 'Đạp chân', sets: '4', reps: '10-15', weight: '150' },
+    { id: '9', name: 'Cuốn tay trước', sets: '3', reps: '10-15', weight: '15' },
   ],
   saturday: [],
   sunday: [],
@@ -221,37 +221,37 @@ export const ptData: PersonalTrainer[] = [
   {
     id: "pt-1",
     name: "Alex Carter",
-    specialties: ["Powerlifting", "Strength Training"],
-    description: "Alex is a certified powerlifting coach with over 10 years of experience. He focuses on building raw strength and perfecting form for major lifts.",
+    specialties: ["Powerlifting", "Tập luyện sức mạnh"],
+    description: "Alex là một huấn luyện viên powerlifting được chứng nhận với hơn 10 năm kinh nghiệm. Anh ấy tập trung vào việc xây dựng sức mạnh thô và hoàn thiện kỹ thuật cho các bài tập chính.",
     image: "https://placehold.co/600x400.png",
     packages: {
       session: { price: 75 },
       monthly: { price: 250 },
     },
-    availability: ["Mon, Wed, Fri: 4pm - 8pm", "Sat: 9am - 1pm"],
+    availability: ["Thứ 2, 4, 6: 4pm - 8pm", "Thứ 7: 9am - 1pm"],
   },
   {
     id: "pt-2",
     name: "Jessica Lee",
-    specialties: ["Yoga", "Flexibility", "Pilates"],
-    description: "Jessica is a renowned yoga instructor who combines traditional practices with modern fitness. Her sessions improve flexibility, balance, and mental clarity.",
+    specialties: ["Yoga", "Linh hoạt", "Pilates"],
+    description: "Jessica là một giảng viên yoga nổi tiếng, kết hợp các phương pháp truyền thống với thể dục hiện đại. Các buổi tập của cô giúp cải thiện sự linh hoạt, cân bằng và tinh thần minh mẫn.",
     image: "https://placehold.co/600x400.png",
     packages: {
       session: { price: 60 },
       monthly: { price: 200 },
     },
-    availability: ["Tue, Thu: 8am - 12pm", "Sun: 10am - 2pm"],
+    availability: ["Thứ 3, 5: 8am - 12pm", "Chủ Nhật: 10am - 2pm"],
   },
   {
     id: "pt-3",
     name: "Marcus Cole",
-    specialties: ["Boxing", "HIIT", "Cardio"],
-    description: "A former professional boxer, Marcus brings intensity and discipline to every session. Get ready to sweat with high-energy boxing drills and HIIT circuits.",
+    specialties: ["Quyền Anh", "HIIT", "Cardio"],
+    description: "Từng là một võ sĩ quyền Anh chuyên nghiệp, Marcus mang đến sự quyết liệt và kỷ luật cho mỗi buổi tập. Hãy sẵn sàng đổ mồ hôi với các bài tập quyền Anh năng lượng cao và các vòng lặp HIIT.",
     image: "https://placehold.co/600x400.png",
     packages: {
       session: { price: 80 },
       monthly: { price: 280 },
     },
-    availability: ["Mon, Wed: 6am - 10am", "Fri: 6pm - 9pm", "Sat: 12pm - 4pm"],
+    availability: ["Thứ 2, 4: 6am - 10am", "Thứ 6: 6pm - 9pm", "Thứ 7: 12pm - 4pm"],
   },
 ];

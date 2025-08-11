@@ -10,11 +10,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, Dumbbell, User } from "lucide-react";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/advisor", label: "AI Advisor" },
-  { href: "/planner", label: "Workout Planner" },
-  { href: "/booking", label: "Book a PT" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/", label: "Trang chủ" },
+  { href: "/advisor", label: "Tư vấn AI" },
+  { href: "/planner", label: "Lập kế hoạch tập luyện" },
+  { href: "/booking", label: "Đặt lịch PT" },
+  { href: "/pricing", label: "Bảng giá" },
 ];
 
 export function Header() {
@@ -52,10 +52,10 @@ export function Header() {
           ) : (
             <>
               <Button asChild variant="ghost">
-                <Link href="/login">Log In</Link>
+                <Link href="/login">Đăng nhập</Link>
               </Button>
               <Button asChild>
-                <Link href="/signup">Sign Up</Link>
+                <Link href="/signup">Đăng ký</Link>
               </Button>
             </>
           )}
@@ -64,7 +64,7 @@ export function Header() {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
-                  <span className="sr-only">Toggle Menu</span>
+                  <span className="sr-only">Chuyển đổi Menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">

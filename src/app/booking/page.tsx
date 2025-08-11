@@ -10,10 +10,10 @@ export default function BookingPage() {
           <CalendarCheck className="w-8 h-8" />
         </div>
         <h1 className="text-4xl font-bold font-headline text-primary">
-          Book a Personal Trainer
+          Đặt lịch với Huấn luyện viên Cá nhân
         </h1>
         <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-          Find the perfect trainer to help you achieve your fitness goals. Browse our elite trainers and book your session or monthly package today.
+          Tìm huấn luyện viên hoàn hảo để giúp bạn đạt được mục tiêu thể chất. Duyệt qua các huấn luyện viên ưu tú của chúng tôi và đặt buổi tập hoặc gói hàng tháng của bạn ngay hôm nay.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

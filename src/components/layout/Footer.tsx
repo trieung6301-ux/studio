@@ -37,23 +37,23 @@ export function Footer() {
               <Icons.logo className="h-8 w-8 text-primary" />
               <span className="text-xl font-bold font-headline">MuscleUp</span>
             </Link>
-            <p className="text-muted-foreground text-sm">Premium supplements for peak performance.</p>
+            <p className="text-muted-foreground text-sm">Thực phẩm bổ sung cao cấp cho hiệu suất đỉnh cao.</p>
           </div>
           <div className="col-span-1">
-            <h3 className="font-semibold mb-4">Shop</h3>
+            <h3 className="font-semibold mb-4">Cửa hàng</h3>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-muted-foreground hover:text-primary transition-colors">All Products</Link></li>
-              <li><Link href="/advisor" className="text-muted-foreground hover:text-primary transition-colors">AI Advisor</Link></li>
+              <li><Link href="/" className="text-muted-foreground hover:text-primary transition-colors">Tất cả sản phẩm</Link></li>
+              <li><Link href="/advisor" className="text-muted-foreground hover:text-primary transition-colors">Tư vấn AI</Link></li>
             </ul>
           </div>
           <div className="col-span-1">
-            <h3 className="font-semibold mb-4">Support</h3>
+            <h3 className="font-semibold mb-4">Hỗ trợ</h3>
             <ul className="space-y-2">
-              <li><Link href="/pricing" className="text-muted-foreground hover:text-primary transition-colors">Pricing</Link></li>
+              <li><Link href="/pricing" className="text-muted-foreground hover:text-primary transition-colors">Bảng giá</Link></li>
             </ul>
           </div>
           <div className="col-span-1">
-             <h3 className="font-semibold mb-4">Follow Us</h3>
+             <h3 className="font-semibold mb-4">Theo dõi chúng tôi</h3>
             <div className="flex space-x-4">
               <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><FacebookIcon /></Link>
               <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><TwitterIcon /></Link>
@@ -62,7 +62,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t mt-8 pt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} MuscleUp Supplements. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} MuscleUp Supplements. Đã đăng ký Bản quyền.</p>
         </div>
       </div>
     </footer>

@@ -11,13 +11,23 @@ import { WorkoutTable, type Exercise } from "./WorkoutTable";
 import { weeklyWorkoutPlan } from "@/lib/placeholder-data";
 
 const daysOfWeek = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
+  "Thứ Hai",
+  "Thứ Ba",
+  "Thứ Tư",
+  "Thứ Năm",
+  "Thứ Sáu",
+  "Thứ Bảy",
+  "Chủ Nhật",
+];
+
+const dayKeys = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
 ];
 
 export function WorkoutPlanner() {
@@ -31,7 +41,7 @@ export function WorkoutPlanner() {
   };
 
   return (
-    <Tabs defaultValue="Monday" className="w-full">
+    <Tabs defaultValue="Thứ Hai" className="w-full">
       <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 md:grid-cols-7 mb-4">
         {daysOfWeek.map((day) => (
           <TabsTrigger key={day} value={day}>
@@ -39,13 +49,13 @@ export function WorkoutPlanner() {
           </TabsTrigger>
         ))}
       </TabsList>
-      {daysOfWeek.map((day) => (
+      {daysOfWeek.map((day, index) => (
         <TabsContent key={day} value={day}>
           <WorkoutTable
             day={day}
-            initialExercises={workouts[day.toLowerCase() as keyof typeof workouts] || []}
+            initialExercises={workouts[dayKeys[index] as keyof typeof workouts] || []}
             onExercisesChange={(exercises) =>
-              handleExercisesChange(day.toLowerCase(), exercises)
+              handleExercisesChange(dayKeys[index], exercises)
             }
           />
         </TabsContent>

@@ -19,12 +19,12 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  name: z.string().min(2, { message: "Tên phải có ít nhất 2 ký tự." }),
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: "Vui lòng nhập một địa chỉ email hợp lệ.",
   }),
   password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
+    message: "Mật khẩu phải có ít nhất 6 ký tự.",
   }),
 });
 
@@ -50,8 +50,8 @@ export function SignupForm() {
     console.log(values);
 
     toast({
-      title: "Account Created!",
-      description: "Welcome to MuscleUp! You can now log in.",
+      title: "Tạo tài khoản thành công!",
+      description: "Chào mừng bạn đến với MuscleUp! Bây giờ bạn có thể đăng nhập.",
     });
     router.push('/login');
     setIsSubmitting(false);
@@ -65,9 +65,9 @@ export function SignupForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Tên</FormLabel>
               <FormControl>
-                <Input placeholder="Your Name" {...field} />
+                <Input placeholder="Tên của bạn" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -91,7 +91,7 @@ export function SignupForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="********" {...field} />
               </FormControl>
@@ -103,9 +103,9 @@ export function SignupForm() {
           {isSubmitting ? (
              <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creating Account...
+              Đang tạo tài khoản...
             </>
-          ) : "Sign Up"}
+          ) : "Đăng ký"}
         </Button>
       </form>
     </Form>

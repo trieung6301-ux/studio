@@ -39,12 +39,12 @@ export function ProductCard({ product }: ProductCardProps) {
         <CardDescription className="text-sm text-muted-foreground">{product.brand}</CardDescription>
         <div className="flex items-center mt-2">
           <StarRating rating={product.rating} />
-          <span className="text-xs text-muted-foreground ml-2">({product.reviews} reviews)</span>
+          <span className="text-xs text-muted-foreground ml-2">({product.reviews} đánh giá)</span>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
         <p className="text-2xl font-bold text-primary">${product.price.toFixed(2)}</p>
-        <Button>Add to Cart</Button>
+        <Button>Thêm vào giỏ hàng</Button>
       </CardFooter>
     </Card>
   );

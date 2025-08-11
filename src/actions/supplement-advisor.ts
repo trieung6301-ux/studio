@@ -4,9 +4,9 @@ import { supplementAdvisor as supplementAdvisorFlow, type SupplementAdvisorInput
 import { z } from 'zod';
 
 const formSchema = z.object({
-  fitnessGoals: z.string().min(10, "Please describe your fitness goals in more detail."),
-  dietaryRestrictions: z.string().min(3, "Please specify your dietary restrictions, or enter 'none'."),
-  workoutRoutine: z.string().min(10, "Please describe your workout routine in more detail."),
+  fitnessGoals: z.string().min(10, "Vui lòng mô tả chi tiết hơn về mục tiêu thể chất của bạn."),
+  dietaryRestrictions: z.string().min(3, "Vui lòng ghi rõ các hạn chế về chế độ ăn uống của bạn, hoặc nhập 'không có'."),
+  workoutRoutine: z.string().min(10, "Vui lòng mô tả chi tiết hơn về thói quen tập luyện của bạn."),
 });
 
 export type AdvisorState = {
@@ -33,7 +33,7 @@ export async function getSupplementAdvice(
   if (!validatedFields.success) {
     return {
       success: false,
-      message: 'Invalid form data. Please check your entries.',
+      message: 'Dữ liệu biểu mẫu không hợp lệ. Vui lòng kiểm tra lại thông tin đã nhập.',
       errors: validatedFields.error.flatten().fieldErrors,
       data: null,
     };
@@ -43,7 +43,7 @@ export async function getSupplementAdvice(
     const result = await supplementAdvisorFlow(validatedFields.data as SupplementAdvisorInput);
     return {
       success: true,
-      message: 'Here is your personalized supplement advice!',
+      message: 'Đây là lời khuyên về thực phẩm bổ sung dành riêng cho bạn!',
       data: result,
       errors: null,
     };
@@ -51,7 +51,7 @@ export async function getSupplementAdvice(
     console.error(error);
     return {
       success: false,
-      message: 'An AI error occurred. Please try again later.',
+      message: 'Đã xảy ra lỗi AI. Vui lòng thử lại sau.',
       data: null,
       errors: null,
     };

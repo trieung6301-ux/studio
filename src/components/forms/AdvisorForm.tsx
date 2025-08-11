@@ -17,10 +17,10 @@ function SubmitButton() {
       {pending ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Getting Advice...
+          Đang nhận lời khuyên...
         </>
       ) : (
-        "Get My Advice"
+        "Nhận lời khuyên của tôi"
       )}
     </Button>
   );
@@ -40,14 +40,14 @@ export function AdvisorForm() {
   useEffect(() => {
     if (state.success) {
       toast({
-        title: "Success!",
+        title: "Thành công!",
         description: state.message,
       });
       formRef.current?.reset();
     } else if (state.message && !state.success && state.errors === null) {
       toast({
         variant: "destructive",
-        title: "Error",
+        title: "Lỗi",
         description: state.message,
       });
     }
@@ -58,11 +58,11 @@ export function AdvisorForm() {
       <CardContent className="p-6">
         <form ref={formRef} action={formAction} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="fitnessGoals" className="text-lg font-semibold">Fitness Goals</Label>
+            <Label htmlFor="fitnessGoals" className="text-lg font-semibold">Mục tiêu thể chất</Label>
             <Textarea
               id="fitnessGoals"
               name="fitnessGoals"
-              placeholder="e.g., Build lean muscle, lose 10 pounds, improve marathon time"
+              placeholder="VD: Xây dựng cơ bắp săn chắc, giảm 5kg, cải thiện thời gian chạy marathon"
               rows={3}
             />
             {state.errors?.fitnessGoals && (
@@ -70,11 +70,11 @@ export function AdvisorForm() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="dietaryRestrictions" className="text-lg font-semibold">Dietary Restrictions</Label>
+            <Label htmlFor="dietaryRestrictions" className="text-lg font-semibold">Chế độ ăn kiêng</Label>
             <Textarea
               id="dietaryRestrictions"
               name="dietaryRestrictions"
-              placeholder="e.g., Vegan, gluten-free, lactose intolerant, none"
+              placeholder="VD: Thuần chay, không gluten, không dung nạp lactose, không có"
               rows={3}
             />
              {state.errors?.dietaryRestrictions && (
@@ -82,11 +82,11 @@ export function AdvisorForm() {
             )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="workoutRoutine" className="text-lg font-semibold">Workout Routine</Label>
+            <Label htmlFor="workoutRoutine" className="text-lg font-semibold">Thói quen tập luyện</Label>
             <Textarea
               id="workoutRoutine"
               name="workoutRoutine"
-              placeholder="e.g., Weightlifting 4 times a week, running 3 times a week, yoga"
+              placeholder="VD: Nâng tạ 4 lần một tuần, chạy bộ 3 lần một tuần, yoga"
               rows={4}
             />
             {state.errors?.workoutRoutine && (
@@ -101,16 +101,16 @@ export function AdvisorForm() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-accent">
                 <Sparkles className="w-6 h-6" />
-                Your Personalized Recommendations
+                Đề xuất được cá nhân hóa của bạn
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h3 className="font-bold text-lg">Suggested Supplements:</h3>
+                <h3 className="font-bold text-lg">Thực phẩm bổ sung được đề xuất:</h3>
                 <p className="text-muted-foreground whitespace-pre-wrap">{state.data.suggestedSupplements}</p>
               </div>
               <div>
-                <h3 className="font-bold text-lg">Reasoning:</h3>
+                <h3 className="font-bold text-lg">Lý do:</h3>
                 <p className="text-muted-foreground whitespace-pre-wrap">{state.data.reasoning}</p>
               </div>
             </CardContent>

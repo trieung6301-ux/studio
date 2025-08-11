@@ -7,15 +7,15 @@ export default function SignupPage() {
     <div className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[calc(100vh-14rem)]">
        <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold font-headline">Create an Account</CardTitle>
-          <CardDescription>Join MuscleUp to track your progress and get personalized advice.</CardDescription>
+          <CardTitle className="text-3xl font-bold font-headline">Tạo một tài khoản</CardTitle>
+          <CardDescription>Tham gia MuscleUp để theo dõi tiến trình của bạn và nhận lời khuyên được cá nhân hóa.</CardDescription>
         </CardHeader>
         <CardContent>
           <SignupForm />
            <p className="mt-6 text-center text-sm text-muted-foreground">
-            Already have an account?{' '}
+            Bạn đã có tài khoản?{' '}
             <Link href="/login" className="font-semibold text-primary hover:underline">
-              Log In
+              Đăng nhập
             </Link>
           </p>
         </CardContent>

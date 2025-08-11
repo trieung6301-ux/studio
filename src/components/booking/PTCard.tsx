@@ -44,7 +44,7 @@ export function PTCard({ pt }: PTCardProps) {
             <div className="flex items-center gap-3">
                 <CalendarDays className="w-5 h-5 text-primary" />
                 <div>
-                    <h4 className="font-semibold">Availability</h4>
+                    <h4 className="font-semibold">Lịch làm việc</h4>
                     <ul className="list-none text-muted-foreground">
                         {pt.availability.map((slot) => <li key={slot}>{slot}</li>)}
                     </ul>
@@ -53,17 +53,17 @@ export function PTCard({ pt }: PTCardProps) {
              <div className="flex items-center gap-3">
                 <Sparkles className="w-5 h-5 text-primary" />
                  <div>
-                    <h4 className="font-semibold">Packages</h4>
+                    <h4 className="font-semibold">Các gói</h4>
                     <div className="text-muted-foreground">
-                        <p>Single Session: ${pt.packages.session.price}</p>
-                        <p>Monthly: ${pt.packages.monthly.price}</p>
+                        <p>Buổi lẻ: ${pt.packages.session.price}</p>
+                        <p>Tháng: ${pt.packages.monthly.price}</p>
                     </div>
                  </div>
             </div>
         </div>
       </CardContent>
       <CardFooter className="p-6 pt-0">
-        <Button className="w-full">Book Now</Button>
+        <Button className="w-full">Đặt ngay</Button>
       </CardFooter>
     </Card>
   );

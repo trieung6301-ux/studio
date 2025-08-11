@@ -20,10 +20,10 @@ import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: "Vui lòng nhập một địa chỉ email hợp lệ.",
   }),
   password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
+    message: "Mật khẩu phải có ít nhất 6 ký tự.",
   }),
 });
 
@@ -48,8 +48,8 @@ export function LoginForm() {
     console.log(values);
 
     toast({
-      title: "Login Successful!",
-      description: "Welcome back!",
+      title: "Đăng nhập thành công!",
+      description: "Chào mừng trở lại!",
     });
     router.push('/');
     setIsSubmitting(false);
@@ -76,7 +76,7 @@ export function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="********" {...field} />
               </FormControl>
@@ -88,9 +88,9 @@ export function LoginForm() {
           {isSubmitting ? (
              <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Logging in...
+              Đang đăng nhập...
             </>
-          ) : "Log In"}
+          ) : "Đăng nhập"}
         </Button>
       </form>
     </Form>

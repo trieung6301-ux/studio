@@ -25,9 +25,9 @@ import {
 } from "@/components/ui/carousel";
 
 const bannerImages = [
-  { src: "https://placehold.co/1200x500.png", alt: "Yoga Class", hint: "yoga class" },
-  { src: "https://placehold.co/1200x500.png", alt: "Weightlifting", hint: "weightlifting gym" },
-  { src: "https://placehold.co/1200x500.png", alt: "Cardio Session", hint: "cardio workout" },
+  { src: "https://placehold.co/1200x500.png", alt: "Lớp học Yoga", hint: "yoga class" },
+  { src: "https://placehold.co/1200x500.png", alt: "Nâng tạ", hint: "weightlifting gym" },
+  { src: "https://placehold.co/1200x500.png", alt: "Buổi tập Cardio", hint: "cardio workout" },
 ];
 
 export default function Home() {
@@ -96,14 +96,14 @@ export default function Home() {
                        />
                        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center p-4">
                           <h2 className="text-3xl md:text-5xl font-bold text-white mb-2 font-headline">
-                            {index === 0 && "Find Your Zen: Join Our Yoga"}
-                            {index === 1 && "Unleash Your Strength"}
-                            {index === 2 && "Boost Your Cardio"}
+                            {index === 0 && "Tìm lại sự cân bằng: Tham gia lớp Yoga của chúng tôi"}
+                            {index === 1 && "Giải phóng sức mạnh của bạn"}
+                            {index === 2 && "Tăng cường Cardio của bạn"}
                           </h2>
                           <p className="text-lg md:text-xl text-white/90">
-                            {index === 0 && "Flexible classes for all levels."}
-                            {index === 1 && "State-of-the-art weightlifting facilities."}
-                            {index === 2 && "Get your heart pumping with our cardio machines."}
+                            {index === 0 && "Các lớp học linh hoạt cho mọi cấp độ."}
+                            {index === 1 && "Cơ sở vật chất cử tạ hiện đại."}
+                            {index === 2 && "Hãy để trái tim bạn đập rộn ràng với các máy tập cardio của chúng tôi."}
                           </p>
                        </div>
                     </CardContent>
@@ -119,15 +119,15 @@ export default function Home() {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <aside className="lg:col-span-1 bg-card p-6 rounded-lg shadow-md h-fit">
-          <h2 className="text-2xl font-bold mb-6 font-headline">Filters</h2>
+          <h2 className="text-2xl font-bold mb-6 font-headline">Bộ lọc</h2>
           <div className="space-y-6">
             <div>
-              <Label htmlFor="search" className="text-lg font-semibold">Search</Label>
+              <Label htmlFor="search" className="text-lg font-semibold">Tìm kiếm</Label>
               <div className="relative mt-2">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
                   id="search"
-                  placeholder="Search supplements..."
+                  placeholder="Tìm kiếm thực phẩm bổ sung..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
@@ -136,13 +136,13 @@ export default function Home() {
             </div>
 
             <div>
-              <Label htmlFor="category" className="text-lg font-semibold">Category</Label>
+              <Label htmlFor="category" className="text-lg font-semibold">Danh mục</Label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger id="category" className="mt-2">
-                  <SelectValue placeholder="All Categories" />
+                  <SelectValue placeholder="Tất cả danh mục" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="all">Tất cả danh mục</SelectItem>
                   {categories.map((cat) => (
                     <SelectItem key={cat} value={cat}>
                       {cat}
@@ -153,13 +153,13 @@ export default function Home() {
             </div>
 
             <div>
-              <Label htmlFor="brand" className="text-lg font-semibold">Brand</Label>
+              <Label htmlFor="brand" className="text-lg font-semibold">Thương hiệu</Label>
               <Select value={brand} onValueChange={setBrand}>
                 <SelectTrigger id="brand" className="mt-2">
-                  <SelectValue placeholder="All Brands" />
+                  <SelectValue placeholder="Tất cả thương hiệu" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Brands</SelectItem>
+                  <SelectItem value="all">Tất cả thương hiệu</SelectItem>
                   {brands.map((b) => (
                     <SelectItem key={b} value={b}>
                       {b}
@@ -170,7 +170,7 @@ export default function Home() {
             </div>
 
             <div>
-              <Label htmlFor="price" className="text-lg font-semibold">Max Price: ${priceRange[0]}</Label>
+              <Label htmlFor="price" className="text-lg font-semibold">Giá tối đa: ${priceRange[0]}</Label>
               <Slider
                 id="price"
                 min={0}
@@ -183,15 +183,15 @@ export default function Home() {
             </div>
 
             <div>
-              <Label htmlFor="sort" className="text-lg font-semibold">Sort By</Label>
+              <Label htmlFor="sort" className="text-lg font-semibold">Sắp xếp theo</Label>
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger id="sort" className="mt-2">
-                  <SelectValue placeholder="Sort by" />
+                  <SelectValue placeholder="Sắp xếp theo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="rating">Best Rating</SelectItem>
-                  <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                  <SelectItem value="price-desc">Price: High to Low</SelectItem>
+                  <SelectItem value="rating">Đánh giá tốt nhất</SelectItem>
+                  <SelectItem value="price-asc">Giá: Thấp đến cao</SelectItem>
+                  <SelectItem value="price-desc">Giá: Cao đến thấp</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -206,7 +206,7 @@ export default function Home() {
               ))
             ) : (
               <div className="sm:col-span-2 xl:col-span-3 text-center py-12">
-                <p className="text-muted-foreground text-lg">No products match your criteria.</p>
+                <p className="text-muted-foreground text-lg">Không có sản phẩm nào phù hợp với tiêu chí của bạn.</p>
               </div>
             )}
           </div>

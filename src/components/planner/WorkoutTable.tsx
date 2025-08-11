@@ -83,18 +83,18 @@ export function WorkoutTable({
   return (
     <Card className="shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl font-headline">{day}'s Workout</CardTitle>
+        <CardTitle className="text-2xl font-headline">Bài tập của {day}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Exercise</TableHead>
-                <TableHead>Sets</TableHead>
-                <TableHead>Reps</TableHead>
-                <TableHead>Weight (kg)</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead>Bài tập</TableHead>
+                <TableHead>Số set</TableHead>
+                <TableHead>Số rep</TableHead>
+                <TableHead>Tạ (kg)</TableHead>
+                <TableHead className="text-right">Hành động</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -126,13 +126,13 @@ export function WorkoutTable({
                 </TableRow>
               ))}
                <TableRow>
-                <TableCell><Input placeholder="New Exercise" value={newExercise.name} onChange={(e) => handleNewExerciseChange(e, 'name')} /></TableCell>
-                <TableCell><Input placeholder="e.g., 3" value={newExercise.sets} onChange={(e) => handleNewExerciseChange(e, 'sets')} /></TableCell>
-                <TableCell><Input placeholder="e.g., 10" value={newExercise.reps} onChange={(e) => handleNewExerciseChange(e, 'reps')} /></TableCell>
-                <TableCell><Input placeholder="e.g., 50" value={newExercise.weight} onChange={(e) => handleNewExerciseChange(e, 'weight')} /></TableCell>
+                <TableCell><Input placeholder="Bài tập mới" value={newExercise.name} onChange={(e) => handleNewExerciseChange(e, 'name')} /></TableCell>
+                <TableCell><Input placeholder="VD: 3" value={newExercise.sets} onChange={(e) => handleNewExerciseChange(e, 'sets')} /></TableCell>
+                <TableCell><Input placeholder="VD: 10" value={newExercise.reps} onChange={(e) => handleNewExerciseChange(e, 'reps')} /></TableCell>
+                <TableCell><Input placeholder="VD: 50" value={newExercise.weight} onChange={(e) => handleNewExerciseChange(e, 'weight')} /></TableCell>
                 <TableCell className="text-right">
                   <Button onClick={handleAddExercise} size="sm">
-                    <PlusCircle className="mr-2 h-4 w-4" /> Add
+                    <PlusCircle className="mr-2 h-4 w-4" /> Thêm
                   </Button>
                 </TableCell>
               </TableRow>
