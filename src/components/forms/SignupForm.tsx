@@ -26,6 +26,7 @@ const formSchema = z.object({
   password: z.string().min(6, {
     message: "Mật khẩu phải có ít nhất 6 ký tự.",
   }),
+  phone: z.string().min(10, { message: "Số điện thoại phải có ít nhất 10 ký tự." }),
 });
 
 export function SignupForm() {
@@ -39,6 +40,7 @@ export function SignupForm() {
       name: "",
       email: "",
       password: "",
+      phone: "",
     },
   });
 
@@ -81,6 +83,19 @@ export function SignupForm() {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="your.email@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Số điện thoại</FormLabel>
+              <FormControl>
+                <Input placeholder="Số điện thoại của bạn" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
