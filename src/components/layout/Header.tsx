@@ -7,7 +7,9 @@ import { Icons } from "../shared/Icons";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, Dumbbell, User } from "lucide-react";
+import { Menu, Dumbbell, User, ShoppingCart } from "lucide-react";
+import { useCart } from "@/hooks/use-cart";
+import { Badge } from "../ui/badge";
 
 const navLinks = [
   { href: "/", label: "Trang chủ" },
@@ -20,6 +22,8 @@ const navLinks = [
 export function Header() {
   const pathname = usePathname();
   const [user, setUser] = React.useState(null); // Replace with actual user state
+  const { items } = useCart();
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -45,6 +49,16 @@ export function Header() {
           ))}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
+           <Button asChild variant="ghost" size="icon" className="relative">
+            <Link href="/cart">
+              <ShoppingCart className="h-5 w-5" />
+              {totalItems > 0 && (
+                <Badge variant="destructive" className="absolute -top-2 -right-2 h-5 w-5 justify-center p-0">{totalItems}</Badge>
+              )}
+              <span className="sr-only">Giỏ hàng</span>
+            </Link>
+          </Button>
+
            {user ? (
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />

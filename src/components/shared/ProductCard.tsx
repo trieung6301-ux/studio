@@ -11,12 +11,26 @@ import {
 import { StarRating } from "./StarRating";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "../ui/button";
+import { useCart } from "@/hooks/use-cart";
+import { useToast } from "@/hooks/use-toast";
+import { ShoppingCart } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addItem } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = () => {
+    addItem(product);
+    toast({
+      title: "Đã thêm vào giỏ hàng",
+      description: `${product.name} đã được thêm vào giỏ hàng của bạn.`,
+    });
+  };
+
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
       <CardHeader className="p-0">
@@ -44,7 +58,10 @@ export function ProductCard({ product }: ProductCardProps) {
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
         <p className="text-2xl font-bold text-primary">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}</p>
-        <Button>Thêm vào giỏ hàng</Button>
+        <Button onClick={handleAddToCart}>
+          <ShoppingCart className="mr-2 h-4 w-4" />
+          Thêm vào giỏ
+        </Button>
       </CardFooter>
     </Card>
   );
