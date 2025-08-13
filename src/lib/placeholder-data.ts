@@ -151,8 +151,9 @@ export const brands = [...new Set(products.map(p => p.brand))];
 export interface MembershipPlan {
   id: string;
   title: string;
+  description?: string;
   price: number;
-  period: 'monthly' | 'quarterly' | 'yearly';
+  period: 'monthly' | 'yearly';
   features: string[];
   isPopular: boolean;
   discount?: string;
@@ -160,45 +161,85 @@ export interface MembershipPlan {
 
 export const membershipPlans: MembershipPlan[] = [
   {
-    id: 'plan-monthly',
-    title: 'Hàng tháng',
-    price: 1225000,
+    id: 'plan-basic-monthly',
+    title: 'Cơ bản',
+    description: 'Lựa chọn tuyệt vời để bắt đầu.',
+    price: 800000,
     period: 'monthly',
     features: [
       'Toàn quyền truy cập phòng tập',
       'Truy cập tất cả các lớp học nhóm',
       'Sử dụng phòng thay đồ',
-      'Không cam kết',
+      'Không cam kết, hủy bất kỳ lúc nào',
     ],
     isPopular: false,
   },
   {
-    id: 'plan-quarterly',
-    title: 'Hàng quý',
-    price: 1000000,
-    period: 'quarterly',
+    id: 'plan-pro-monthly',
+    title: 'Chuyên nghiệp',
+    description: 'Dành cho những người tập luyện nghiêm túc.',
+    price: 1200000,
+    period: 'monthly',
     features: [
-      'Tất cả các lợi ích của gói tháng',
-      '1 buổi tập với huấn luyện viên cá nhân miễn phí',
+      'Tất cả các lợi ích của gói Cơ bản',
+      '2 buổi tập với HLV cá nhân miễn phí',
       'Miễn phí một món đồ lưu niệm',
-      'Thẻ khách mỗi tháng',
+      '2 thẻ khách mỗi tháng',
     ],
     isPopular: true,
-    discount: 'Tiết kiệm 18%',
   },
   {
-    id: 'plan-yearly',
-    title: 'Hàng năm',
-    price: 875000,
-    period: 'yearly',
+    id: 'plan-vip-monthly',
+    title: 'VIP',
+    description: 'Trải nghiệm đỉnh cao.',
+    price: 2000000,
+    period: 'monthly',
     features: [
-      'Tất cả các lợi ích của gói quý',
+      'Tất cả các lợi ích của gói Chuyên nghiệp',
       'Thẻ khách không giới hạn',
       'Giảm 20% tất cả các loại thực phẩm bổ sung',
-      'Kế hoạch tập luyện cá nhân hóa',
+      'Kế hoạch tập luyện được cá nhân hóa',
     ],
     isPopular: false,
-    discount: 'Tiết kiệm 30%',
+  },
+    {
+    id: 'plan-basic-yearly',
+    title: 'Cơ bản',
+    price: 7680000, // 800k * 12 * 0.8
+    period: 'yearly',
+    features: [
+      'Toàn quyền truy cập phòng tập',
+      'Truy cập tất cả các lớp học nhóm',
+      'Sử dụng phòng thay đồ',
+      'Không cam kết, hủy bất kỳ lúc nào',
+    ],
+    isPopular: false,
+  },
+  {
+    id: 'plan-pro-yearly',
+    title: 'Chuyên nghiệp',
+    price: 11520000, // 1.2M * 12 * 0.8
+    period: 'yearly',
+    features: [
+      'Tất cả các lợi ích của gói Cơ bản',
+      '2 buổi tập với HLV cá nhân miễn phí',
+      'Miễn phí một món đồ lưu niệm',
+      '2 thẻ khách mỗi tháng',
+    ],
+    isPopular: true,
+  },
+  {
+    id: 'plan-vip-yearly',
+    title: 'VIP',
+    price: 19200000, // 2M * 12 * 0.8
+    period: 'yearly',
+    features: [
+      'Tất cả các lợi ích của gói Chuyên nghiệp',
+      'Thẻ khách không giới hạn',
+      'Giảm 20% tất cả các loại thực phẩm bổ sung',
+      'Kế hoạch tập luyện được cá nhân hóa',
+    ],
+    isPopular: false,
   },
 ];
 

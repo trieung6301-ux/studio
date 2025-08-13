@@ -18,15 +18,15 @@ interface PTCardProps {
 
 export function PTCard({ pt }: PTCardProps) {
   return (
-    <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+    <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group border-2 border-transparent hover:border-primary">
       <CardHeader className="p-0">
-        <div className="relative w-full h-64">
+        <div className="relative w-full h-64 overflow-hidden">
           <Image
             src={pt.image}
             alt={pt.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
             data-ai-hint="personal trainer fitness"
           />
         </div>
