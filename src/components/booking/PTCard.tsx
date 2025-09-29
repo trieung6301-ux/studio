@@ -1,5 +1,5 @@
-import Image from "next/image";
-import type { PersonalTrainer } from "@/lib/placeholder-data";
+import Image from 'next/image'
+import type { PersonalTrainer } from '@/lib/placeholder-data'
 import {
   Card,
   CardContent,
@@ -7,13 +7,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "../ui/button";
-import { Clock, Tag, DollarSign, CalendarDays, Sparkles } from "lucide-react";
+} from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '../ui/button'
+import { Clock, Tag, DollarSign, CalendarDays, Sparkles } from 'lucide-react'
 
 interface PTCardProps {
-  pt: PersonalTrainer;
+  pt: PersonalTrainer
 }
 
 export function PTCard({ pt }: PTCardProps) {
@@ -32,39 +32,59 @@ export function PTCard({ pt }: PTCardProps) {
         </div>
       </CardHeader>
       <CardContent className="p-6 flex-grow">
-        <CardTitle className="text-2xl font-bold font-headline mb-2">{pt.name}</CardTitle>
+        <CardTitle className="text-2xl font-bold font-headline mb-2">
+          {pt.name}
+        </CardTitle>
         <div className="flex flex-wrap gap-2 mb-4">
-            {pt.specialties.map((spec) => (
-                <Badge key={spec} variant="secondary" className="text-sm">{spec}</Badge>
-            ))}
+          {pt.specialties.map((spec) => (
+            <Badge key={spec} variant="secondary" className="text-sm">
+              {spec}
+            </Badge>
+          ))}
         </div>
-        <CardDescription className="text-base text-muted-foreground mb-4">{pt.description}</CardDescription>
-        
+        <CardDescription className="text-base text-muted-foreground mb-4">
+          {pt.description}
+        </CardDescription>
+
         <div className="space-y-3 text-sm">
-            <div className="flex items-center gap-3">
-                <CalendarDays className="w-5 h-5 text-primary" />
-                <div>
-                    <h4 className="font-semibold">Lịch làm việc</h4>
-                    <ul className="list-none text-muted-foreground">
-                        {pt.availability.map((slot) => <li key={slot}>{slot}</li>)}
-                    </ul>
-                </div>
+          <div className="flex items-center gap-3">
+            <CalendarDays className="w-5 h-5 text-primary" />
+            <div>
+              <h4 className="font-semibold">Lịch làm việc</h4>
+              <ul className="list-none text-muted-foreground">
+                {pt.availability.map((slot) => (
+                  <li key={slot}>{slot}</li>
+                ))}
+              </ul>
             </div>
-             <div className="flex items-center gap-3">
-                <Sparkles className="w-5 h-5 text-primary" />
-                 <div>
-                    <h4 className="font-semibold">Các gói</h4>
-                    <div className="text-muted-foreground">
-                        <p>Buổi lẻ: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pt.packages.session.price)}</p>
-                        <p>Tháng: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pt.packages.monthly.price)}</p>
-                    </div>
-                 </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <div>
+              <h4 className="font-semibold">Các gói</h4>
+              <div className="text-muted-foreground">
+                <p>
+                  Buổi lẻ:{' '}
+                  {new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                  }).format(pt.packages.session.price)}
+                </p>
+                <p>
+                  Tháng:{' '}
+                  {new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                  }).format(pt.packages.monthly.price)}
+                </p>
+              </div>
             </div>
+          </div>
         </div>
       </CardContent>
       <CardFooter className="p-6 pt-0">
         <Button className="w-full">Đặt ngay</Button>
       </CardFooter>
     </Card>
-  );
+  )
 }

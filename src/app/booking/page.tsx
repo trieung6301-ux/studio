@@ -1,6 +1,6 @@
-import { ptData } from "@/lib/placeholder-data";
-import { PTCard } from "@/components/booking/PTCard";
-import { CalendarCheck } from "lucide-react";
+import { ptData } from '@/lib/placeholder-data'
+import { PTCard } from '@/components/booking/PTCard'
+import { CalendarCheck } from 'lucide-react'
 
 export default function BookingPage() {
   return (
@@ -13,7 +13,9 @@ export default function BookingPage() {
           Đặt lịch với Huấn luyện viên Cá nhân
         </h1>
         <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-          Tìm huấn luyện viên hoàn hảo để giúp bạn đạt được mục tiêu thể chất. Duyệt qua các huấn luyện viên ưu tú của chúng tôi và đặt buổi tập hoặc gói hàng tháng của bạn ngay hôm nay.
+          Tìm huấn luyện viên hoàn hảo để giúp bạn đạt được mục tiêu thể chất.
+          Duyệt qua các huấn luyện viên ưu tú của chúng tôi và đặt buổi tập hoặc
+          gói hàng tháng của bạn ngay hôm nay.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -22,5 +24,5 @@ export default function BookingPage() {
         ))}
       </div>
     </div>
-  );
+  )
 }

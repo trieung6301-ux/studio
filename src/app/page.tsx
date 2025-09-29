@@ -1,20 +1,32 @@
-import { AdvisorForm } from "@/components/forms/AdvisorForm";
-import { Bot } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { AdvisorForm } from '@/components/forms/AdvisorForm'
+import { Bot } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import Image from "next/image";
+} from '@/components/ui/carousel'
+import Image from 'next/image'
 
 const bannerImages = [
-  { src: "https://placehold.co/1200x500.png", alt: "Người đang tập tạ", hint: "gym workout" },
-  { src: "https://placehold.co/1200x500.png", alt: "Lớp học yoga", hint: "yoga class" },
-  { src: "https://placehold.co/1200x500.png", alt: "Người đang chạy trên máy chạy bộ", hint: "cardio workout" },
-];
+  {
+    src: 'https://placehold.co/1200x500.png',
+    alt: 'Người đang tập tạ',
+    hint: 'gym workout',
+  },
+  {
+    src: 'https://placehold.co/1200x500.png',
+    alt: 'Lớp học yoga',
+    hint: 'yoga class',
+  },
+  {
+    src: 'https://placehold.co/1200x500.png',
+    alt: 'Người đang chạy trên máy chạy bộ',
+    hint: 'cardio workout',
+  },
+]
 
 export default function HomePage() {
   return (
@@ -34,8 +46,13 @@ export default function HomePage() {
                 />
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                   <div className="text-center text-white p-4">
-                    <h2 className="text-4xl md:text-6xl font-bold font-headline">Chương trình tập luyện của chúng tôi</h2>
-                    <p className="mt-4 text-lg md:text-xl">Khám phá các lựa chọn đa dạng để đạt được mục tiêu thể chất của bạn.</p>
+                    <h2 className="text-4xl md:text-6xl font-bold font-headline">
+                      Chương trình tập luyện của chúng tôi
+                    </h2>
+                    <p className="mt-4 text-lg md:text-xl">
+                      Khám phá các lựa chọn đa dạng để đạt được mục tiêu thể
+                      chất của bạn.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -52,14 +69,17 @@ export default function HomePage() {
             <div className="inline-flex items-center justify-center bg-primary text-primary-foreground rounded-full w-16 h-16 mb-4">
               <Bot className="w-8 h-8" />
             </div>
-            <h1 className="text-4xl font-bold font-headline text-primary">Tư vấn viên AI</h1>
+            <h1 className="text-4xl font-bold font-headline text-primary">
+              Tư vấn viên AI
+            </h1>
             <p className="text-lg text-muted-foreground mt-2">
-              Nhận đề xuất thực phẩm bổ sung được cá nhân hóa dựa trên mục tiêu và lối sống riêng của bạn.
+              Nhận đề xuất thực phẩm bổ sung được cá nhân hóa dựa trên mục tiêu
+              và lối sống riêng của bạn.
             </p>
           </div>
           <AdvisorForm />
         </div>
       </div>
     </div>
-  );
+  )
 }

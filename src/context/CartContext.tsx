@@ -1,74 +1,74 @@
-"use client";
+'use client'
 
-import { createContext, useState, useEffect, ReactNode } from 'react';
-import type { Product } from '@/lib/placeholder-data';
+import { createContext, useState, useEffect, ReactNode } from 'react'
+import type { Product } from '@/lib/placeholder-data'
 
 export interface CartItem extends Product {
-  quantity: number;
+  quantity: number
 }
 
 interface CartContextType {
-  items: CartItem[];
-  addItem: (product: Product, quantity?: number) => void;
-  removeItem: (productId: string) => void;
-  updateItemQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
-  cartTotal: number;
+  items: CartItem[]
+  addItem: (product: Product, quantity?: number) => void
+  removeItem: (productId: string) => void
+  updateItemQuantity: (productId: string, quantity: number) => void
+  clearCart: () => void
+  cartTotal: number
 }
 
-export const CartContext = createContext<CartContextType | undefined>(undefined);
+export const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => {
     if (typeof window !== 'undefined') {
-      const savedCart = localStorage.getItem('cart');
-      return savedCart ? JSON.parse(savedCart) : [];
+      const savedCart = localStorage.getItem('cart')
+      return savedCart ? JSON.parse(savedCart) : []
     }
-    return [];
-  });
+    return []
+  })
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(items));
-  }, [items]);
+    localStorage.setItem('cart', JSON.stringify(items))
+  }, [items])
 
   const addItem = (product: Product, quantity = 1) => {
     setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+      const existingItem = prevItems.find((item) => item.id === product.id)
       if (existingItem) {
         return prevItems.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
+            : item,
+        )
       }
-      return [...prevItems, { ...product, quantity }];
-    });
-  };
+      return [...prevItems, { ...product, quantity }]
+    })
+  }
 
   const removeItem = (productId: string) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== productId));
-  };
+    setItems((prevItems) => prevItems.filter((item) => item.id !== productId))
+  }
 
   const updateItemQuantity = (productId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeItem(productId);
-      return;
+      removeItem(productId)
+      return
     }
     setItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
-      )
-    );
-  };
+        item.id === productId ? { ...item, quantity } : item,
+      ),
+    )
+  }
 
   const clearCart = () => {
-    setItems([]);
-  };
+    setItems([])
+  }
 
   const cartTotal = items.reduce(
     (total, item) => total + item.price * item.quantity,
-    0
-  );
+    0,
+  )
 
   return (
     <CartContext.Provider
@@ -83,5 +83,5 @@ export function CartProvider({ children }: { children: ReactNode }) {
     >
       {children}
     </CartContext.Provider>
-  );
+  )
 }

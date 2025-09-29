@@ -1,44 +1,39 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { WorkoutTable, type Exercise } from "./WorkoutTable";
-import { weeklyWorkoutPlan } from "@/lib/placeholder-data";
+import { useState } from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { WorkoutTable, type Exercise } from './WorkoutTable'
+import { weeklyWorkoutPlan } from '@/lib/placeholder-data'
 
 const daysOfWeek = [
-  "Thứ Hai",
-  "Thứ Ba",
-  "Thứ Tư",
-  "Thứ Năm",
-  "Thứ Sáu",
-  "Thứ Bảy",
-  "Chủ Nhật",
-];
+  'Thứ Hai',
+  'Thứ Ba',
+  'Thứ Tư',
+  'Thứ Năm',
+  'Thứ Sáu',
+  'Thứ Bảy',
+  'Chủ Nhật',
+]
 
 const dayKeys = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-];
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+]
 
 export function WorkoutPlanner() {
-  const [workouts, setWorkouts] = useState(weeklyWorkoutPlan);
+  const [workouts, setWorkouts] = useState(weeklyWorkoutPlan)
 
   const handleExercisesChange = (day: string, exercises: Exercise[]) => {
     setWorkouts((prevWorkouts) => ({
       ...prevWorkouts,
       [day]: exercises,
-    }));
-  };
+    }))
+  }
 
   return (
     <Tabs defaultValue="Thứ Hai" className="w-full">
@@ -53,7 +48,9 @@ export function WorkoutPlanner() {
         <TabsContent key={day} value={day}>
           <WorkoutTable
             day={day}
-            initialExercises={workouts[dayKeys[index] as keyof typeof workouts] || []}
+            initialExercises={
+              workouts[dayKeys[index] as keyof typeof workouts] || []
+            }
             onExercisesChange={(exercises) =>
               handleExercisesChange(dayKeys[index], exercises)
             }
@@ -61,5 +58,5 @@ export function WorkoutPlanner() {
         </TabsContent>
       ))}
     </Tabs>
-  );
+  )
 }

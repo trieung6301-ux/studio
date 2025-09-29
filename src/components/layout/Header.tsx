@@ -1,29 +1,29 @@
-"use client";
+'use client'
 
-import * as React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Icons } from "../shared/Icons";
-import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Menu, Dumbbell, User, ShoppingCart } from "lucide-react";
-import { useCart } from "@/hooks/use-cart";
-import { Badge } from "../ui/badge";
+import * as React from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Icons } from '../shared/Icons'
+import { cn } from '@/lib/utils'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Button } from '@/components/ui/button'
+import { Menu, Dumbbell, User, ShoppingCart } from 'lucide-react'
+import { useCart } from '@/hooks/use-cart'
+import { Badge } from '../ui/badge'
 
 const navLinks = [
-  { href: "/", label: "Trang chủ" },
-  { href: "/shop", label: "Cửa hàng" },
-  { href: "/planner", label: "Lập kế hoạch tập luyện" },
-  { href: "/booking", label: "Đặt lịch PT" },
-  { href: "/pricing", label: "Bảng giá" },
-];
+  { href: '/', label: 'Trang chủ' },
+  { href: '/shop', label: 'Cửa hàng' },
+  { href: '/planner', label: 'Lập kế hoạch tập luyện' },
+  { href: '/booking', label: 'Đặt lịch PT' },
+  { href: '/pricing', label: 'Bảng giá' },
+]
 
 export function Header() {
-  const pathname = usePathname();
-  const [user, setUser] = React.useState(null); // Replace with actual user state
-  const { items } = useCart();
-  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
+  const pathname = usePathname()
+  const [user, setUser] = React.useState(null) // Replace with actual user state
+  const { items } = useCart()
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0)
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -40,8 +40,10 @@ export function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                "transition-colors hover:text-primary relative",
-                pathname === link.href ? "text-primary" : "text-muted-foreground"
+                'transition-colors hover:text-primary relative',
+                pathname === link.href
+                  ? 'text-primary'
+                  : 'text-muted-foreground',
               )}
             >
               {link.label}
@@ -52,17 +54,22 @@ export function Header() {
           ))}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
-           <Button asChild variant="ghost" size="icon" className="relative">
+          <Button asChild variant="ghost" size="icon" className="relative">
             <Link href="/cart">
               <ShoppingCart className="h-6 w-6" />
               {totalItems > 0 && (
-                <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 justify-center p-0">{totalItems}</Badge>
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-1 -right-1 h-5 w-5 justify-center p-0"
+                >
+                  {totalItems}
+                </Badge>
               )}
               <span className="sr-only">Giỏ hàng</span>
             </Link>
           </Button>
 
-           {user ? (
+          {user ? (
             <Button variant="ghost" size="icon">
               <User className="h-6 w-6" />
             </Button>
@@ -88,7 +95,9 @@ export function Header() {
                 <div className="p-4">
                   <Link href="/" className="mb-6 flex items-center space-x-2">
                     <Icons.logo className="h-8 w-8 text-primary" />
-                    <span className="font-bold font-headline text-xl">MuscleUp</span>
+                    <span className="font-bold font-headline text-xl">
+                      MuscleUp
+                    </span>
                   </Link>
                   <nav className="flex flex-col space-y-4">
                     {navLinks.map((link) => (
@@ -96,8 +105,10 @@ export function Header() {
                         key={link.href}
                         href={link.href}
                         className={cn(
-                          "text-lg transition-colors hover:text-primary",
-                           pathname === link.href ? "text-primary font-semibold" : "text-muted-foreground"
+                          'text-lg transition-colors hover:text-primary',
+                          pathname === link.href
+                            ? 'text-primary font-semibold'
+                            : 'text-muted-foreground',
                         )}
                       >
                         {link.label}
@@ -105,12 +116,12 @@ export function Header() {
                     ))}
                   </nav>
                   <div className="mt-8 border-t pt-6 flex flex-col space-y-3">
-                     <Button asChild variant="default" className="w-full">
-                        <Link href="/signup">Đăng ký</Link>
-                     </Button>
-                     <Button asChild variant="outline" className="w-full">
-                       <Link href="/login">Đăng nhập</Link>
-                     </Button>
+                    <Button asChild variant="default" className="w-full">
+                      <Link href="/signup">Đăng ký</Link>
+                    </Button>
+                    <Button asChild variant="outline" className="w-full">
+                      <Link href="/login">Đăng nhập</Link>
+                    </Button>
                   </div>
                 </div>
               </SheetContent>
@@ -119,5 +130,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }

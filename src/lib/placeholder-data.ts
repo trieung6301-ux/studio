@@ -1,114 +1,118 @@
 export interface Product {
-  id: string;
-  name: string;
-  category: "Protein" | "Pre-Workout" | "Vitamin" | "Creatine" | "Dụng cụ";
-  brand: "Optimum Nutrition" | "MyProtein" | "GymShark" | "Bulk" | "Generic";
-  price: number;
-  rating: number;
-  reviews: number;
-  image: string;
-  description: string;
+  id: string
+  name: string
+  category: 'Protein' | 'Pre-Workout' | 'Vitamin' | 'Creatine' | 'Dụng cụ'
+  brand: 'Optimum Nutrition' | 'MyProtein' | 'GymShark' | 'Bulk' | 'Generic'
+  price: number
+  rating: number
+  reviews: number
+  image: string
+  description: string
 }
 
 export const products: Product[] = [
   {
-    id: "1",
-    name: "Gold Standard Whey",
-    category: "Protein",
-    brand: "Optimum Nutrition",
+    id: '1',
+    name: 'Gold Standard Whey',
+    category: 'Protein',
+    brand: 'Optimum Nutrition',
     price: 1500000,
     rating: 5,
     reviews: 1250,
-    image: "https://placehold.co/600x400.png",
-    description: "Bột whey protein bán chạy nhất thế giới.",
+    image: 'https://placehold.co/600x400.png',
+    description: 'Bột whey protein bán chạy nhất thế giới.',
   },
   {
-    id: "2",
-    name: "C4 Original Pre-Workout",
-    category: "Pre-Workout",
-    brand: "GymShark",
+    id: '2',
+    name: 'C4 Original Pre-Workout',
+    category: 'Pre-Workout',
+    brand: 'GymShark',
     price: 750000,
     rating: 4,
     reviews: 890,
-    image: "https://placehold.co/600x400.png",
-    description: "Năng lượng bùng nổ, sự tập trung cao độ và một sự thôi thúc không thể cưỡng lại để vượt qua mọi thử thách.",
+    image: 'https://placehold.co/600x400.png',
+    description:
+      'Năng lượng bùng nổ, sự tập trung cao độ và một sự thôi thúc không thể cưỡng lại để vượt qua mọi thử thách.',
   },
   {
-    id: "3",
-    name: "Opti-Men Multivitamin",
-    category: "Vitamin",
-    brand: "Optimum Nutrition",
+    id: '3',
+    name: 'Opti-Men Multivitamin',
+    category: 'Vitamin',
+    brand: 'Optimum Nutrition',
     price: 625000,
     rating: 5,
     reviews: 740,
-    image: "https://placehold.co/600x400.png",
-    description: "Multivitamin hiệu lực cao cho nam giới năng động.",
+    image: 'https://placehold.co/600x400.png',
+    description: 'Multivitamin hiệu lực cao cho nam giới năng động.',
   },
   {
-    id: "4",
-    name: "Creatine Monohydrate",
-    category: "Creatine",
-    brand: "MyProtein",
+    id: '4',
+    name: 'Creatine Monohydrate',
+    category: 'Creatine',
+    brand: 'MyProtein',
     price: 500000,
     rating: 4,
     reviews: 1500,
-    image: "https://placehold.co/600x400.png",
-    description: "Creatine monohydrate tinh khiết để tăng hiệu suất thể chất.",
+    image: 'https://placehold.co/600x400.png',
+    description: 'Creatine monohydrate tinh khiết để tăng hiệu suất thể chất.',
   },
   {
-    id: "5",
-    name: "Impact Whey Isolate",
-    category: "Protein",
-    brand: "MyProtein",
+    id: '5',
+    name: 'Impact Whey Isolate',
+    category: 'Protein',
+    brand: 'MyProtein',
     price: 1250000,
     rating: 5,
     reviews: 980,
-    image: "https://placehold.co/600x400.png",
-    description: "Isolate siêu tinh khiết, với hàm lượng protein trên 90%.",
+    image: 'https://placehold.co/600x400.png',
+    description: 'Isolate siêu tinh khiết, với hàm lượng protein trên 90%.',
   },
   {
-    id: "6",
-    name: "The Pre-Workout",
-    category: "Pre-Workout",
-    brand: "MyProtein",
+    id: '6',
+    name: 'The Pre-Workout',
+    category: 'Pre-Workout',
+    brand: 'MyProtein',
     price: 875000,
     rating: 4,
     reviews: 650,
-    image: "https://placehold.co/600x400.png",
-    description: "Một sự pha trộn mạnh mẽ của các thành phần để cung cấp năng lượng cho buổi tập của bạn.",
+    image: 'https://placehold.co/600x400.png',
+    description:
+      'Một sự pha trộn mạnh mẽ của các thành phần để cung cấp năng lượng cho buổi tập của bạn.',
   },
-   {
-    id: "7",
-    name: "Creatine Monohydrate Powder",
-    category: "Creatine",
-    brand: "Bulk",
+  {
+    id: '7',
+    name: 'Creatine Monohydrate Powder',
+    category: 'Creatine',
+    brand: 'Bulk',
     price: 575000,
     rating: 5,
     reviews: 1100,
-    image: "https://placehold.co/600x400.png",
-    description: "Bột creatine micronized để cải thiện sự hấp thụ và hiệu suất.",
+    image: 'https://placehold.co/600x400.png',
+    description:
+      'Bột creatine micronized để cải thiện sự hấp thụ và hiệu suất.',
   },
   {
-    id: "8",
-    name: "Legacy Pre-Workout",
-    category: "Pre-Workout",
-    brand: "GymShark",
+    id: '8',
+    name: 'Legacy Pre-Workout',
+    category: 'Pre-Workout',
+    brand: 'GymShark',
     price: 1000000,
     rating: 5,
     reviews: 450,
-    image: "https://placehold.co/600x400.png",
-    description: "Pre-workout tối thượng cho năng lượng, sự tập trung và sự bơm cơ.",
+    image: 'https://placehold.co/600x400.png',
+    description:
+      'Pre-workout tối thượng cho năng lượng, sự tập trung và sự bơm cơ.',
   },
   {
-    id: "9",
-    name: "Pure Whey Protein",
-    category: "Protein",
-    brand: "Bulk",
+    id: '9',
+    name: 'Pure Whey Protein',
+    category: 'Protein',
+    brand: 'Bulk',
     price: 1150000,
     rating: 4,
     reviews: 880,
-    image: "https://placehold.co/600x400.png",
-    description: "Whey protein concentrate chất lượng cao từ bò ăn cỏ.",
+    image: 'https://placehold.co/600x400.png',
+    description: 'Whey protein concentrate chất lượng cao từ bò ăn cỏ.',
   },
   {
     id: '10',
@@ -130,7 +134,8 @@ export const products: Product[] = [
     rating: 5,
     reviews: 550,
     image: 'https://placehold.co/600x400.png',
-    description: 'Con lăn xốp mật độ cao giúp phục hồi cơ bắp và giảm đau nhức.',
+    description:
+      'Con lăn xốp mật độ cao giúp phục hồi cơ bắp và giảm đau nhức.',
   },
   {
     id: '12',
@@ -141,22 +146,23 @@ export const products: Product[] = [
     rating: 4,
     reviews: 1200,
     image: 'https://placehold.co/600x400.png',
-    description: 'Bình lắc không chứa BPA, chống rò rỉ để pha trộn protein một cách dễ dàng.',
+    description:
+      'Bình lắc không chứa BPA, chống rò rỉ để pha trộn protein một cách dễ dàng.',
   },
-];
+]
 
-export const categories = [...new Set(products.map(p => p.category))];
-export const brands = [...new Set(products.map(p => p.brand))];
+export const categories = [...new Set(products.map((p) => p.category))]
+export const brands = [...new Set(products.map((p) => p.brand))]
 
 export interface MembershipPlan {
-  id: string;
-  title: string;
-  description?: string;
-  price: number;
-  period: 'monthly' | 'yearly';
-  features: string[];
-  isPopular: boolean;
-  discount?: string;
+  id: string
+  title: string
+  description?: string
+  price: number
+  period: 'monthly' | 'yearly'
+  features: string[]
+  isPopular: boolean
+  discount?: string
 }
 
 export const membershipPlans: MembershipPlan[] = [
@@ -202,7 +208,7 @@ export const membershipPlans: MembershipPlan[] = [
     ],
     isPopular: false,
   },
-    {
+  {
     id: 'plan-basic-yearly',
     title: 'Cơ bản',
     price: 7680000, // 800k * 12 * 0.8
@@ -241,15 +247,14 @@ export const membershipPlans: MembershipPlan[] = [
     ],
     isPopular: false,
   },
-];
-
+]
 
 export interface Exercise {
-  id: string;
-  name: string;
-  sets: string;
-  reps: string;
-  weight: string;
+  id: string
+  name: string
+  sets: string
+  reps: string
+  weight: string
 }
 
 export const weeklyWorkoutPlan: Record<string, Exercise[]> = {
@@ -262,70 +267,89 @@ export const weeklyWorkoutPlan: Record<string, Exercise[]> = {
   wednesday: [
     { id: '4', name: 'Đẩy vai', sets: '4', reps: '8-12', weight: '50' },
     { id: '5', name: 'Kéo xà', sets: '4', reps: '8-12', weight: '70' },
-    { id: '6', name: 'Hít xà', sets: '3', reps: 'Đến khi thất bại', weight: 'Trọng lượng cơ thể' },
+    {
+      id: '6',
+      name: 'Hít xà',
+      sets: '3',
+      reps: 'Đến khi thất bại',
+      weight: 'Trọng lượng cơ thể',
+    },
   ],
   thursday: [],
   friday: [
-    { id: '7', name: 'Đẩy ngực dốc lên với tạ đơn', sets: '4', reps: '10-15', weight: '30' },
+    {
+      id: '7',
+      name: 'Đẩy ngực dốc lên với tạ đơn',
+      sets: '4',
+      reps: '10-15',
+      weight: '30',
+    },
     { id: '8', name: 'Đạp chân', sets: '4', reps: '10-15', weight: '150' },
     { id: '9', name: 'Cuốn tay trước', sets: '3', reps: '10-15', weight: '15' },
   ],
   saturday: [],
   sunday: [],
-};
+}
 
 export interface PersonalTrainer {
-  id: string;
-  name: string;
-  specialties: string[];
-  description: string;
-  image: string;
+  id: string
+  name: string
+  specialties: string[]
+  description: string
+  image: string
   packages: {
     session: {
-      price: number;
-    };
+      price: number
+    }
     monthly: {
-      price: number;
-    };
-  };
-  availability: string[];
+      price: number
+    }
+  }
+  availability: string[]
 }
 
 export const ptData: PersonalTrainer[] = [
   {
-    id: "pt-1",
-    name: "Alex Carter",
-    specialties: ["Powerlifting", "Tập luyện sức mạnh"],
-    description: "Alex là một huấn luyện viên powerlifting được chứng nhận với hơn 10 năm kinh nghiệm. Anh ấy tập trung vào việc xây dựng sức mạnh thô và hoàn thiện kỹ thuật cho các bài tập chính.",
-    image: "https://placehold.co/600x400.png",
+    id: 'pt-1',
+    name: 'Alex Carter',
+    specialties: ['Powerlifting', 'Tập luyện sức mạnh'],
+    description:
+      'Alex là một huấn luyện viên powerlifting được chứng nhận với hơn 10 năm kinh nghiệm. Anh ấy tập trung vào việc xây dựng sức mạnh thô và hoàn thiện kỹ thuật cho các bài tập chính.',
+    image: 'https://placehold.co/600x400.png',
     packages: {
       session: { price: 1875000 },
       monthly: { price: 6250000 },
     },
-    availability: ["Thứ 2, 4, 6: 4pm - 8pm", "Thứ 7: 9am - 1pm"],
+    availability: ['Thứ 2, 4, 6: 4pm - 8pm', 'Thứ 7: 9am - 1pm'],
   },
   {
-    id: "pt-2",
-    name: "Jessica Lee",
-    specialties: ["Yoga", "Linh hoạt", "Pilates"],
-    description: "Jessica là một giảng viên yoga nổi tiếng, kết hợp các phương pháp truyền thống với thể dục hiện đại. Các buổi tập của cô giúp cải thiện sự linh hoạt, cân bằng và tinh thần minh mẫn.",
-    image: "https://placehold.co/600x400.png",
+    id: 'pt-2',
+    name: 'Jessica Lee',
+    specialties: ['Yoga', 'Linh hoạt', 'Pilates'],
+    description:
+      'Jessica là một giảng viên yoga nổi tiếng, kết hợp các phương pháp truyền thống với thể dục hiện đại. Các buổi tập của cô giúp cải thiện sự linh hoạt, cân bằng và tinh thần minh mẫn.',
+    image: 'https://placehold.co/600x400.png',
     packages: {
       session: { price: 1500000 },
       monthly: { price: 5000000 },
     },
-    availability: ["Thứ 3, 5: 8am - 12pm", "Chủ Nhật: 10am - 2pm"],
+    availability: ['Thứ 3, 5: 8am - 12pm', 'Chủ Nhật: 10am - 2pm'],
   },
   {
-    id: "pt-3",
-    name: "Marcus Cole",
-    specialties: ["Quyền Anh", "HIIT", "Cardio"],
-    description: "Từng là một võ sĩ quyền Anh chuyên nghiệp, Marcus mang đến sự quyết liệt và kỷ luật cho mỗi buổi tập. Hãy sẵn sàng đổ mồ hôi với các bài tập quyền Anh năng lượng cao và các vòng lặp HIIT.",
-    image: "https://placehold.co/600x400.png",
+    id: 'pt-3',
+    name: 'Marcus Cole',
+    specialties: ['Quyền Anh', 'HIIT', 'Cardio'],
+    description:
+      'Từng là một võ sĩ quyền Anh chuyên nghiệp, Marcus mang đến sự quyết liệt và kỷ luật cho mỗi buổi tập. Hãy sẵn sàng đổ mồ hôi với các bài tập quyền Anh năng lượng cao và các vòng lặp HIIT.',
+    image: 'https://placehold.co/600x400.png',
     packages: {
       session: { price: 2000000 },
       monthly: { price: 7000000 },
     },
-    availability: ["Thứ 2, 4: 6am - 10am", "Thứ 6: 6pm - 9pm", "Thứ 7: 12pm - 4pm"],
+    availability: [
+      'Thứ 2, 4: 6am - 10am',
+      'Thứ 6: 6pm - 9pm',
+      'Thứ 7: 12pm - 4pm',
+    ],
   },
-];
+]

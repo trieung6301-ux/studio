@@ -1,16 +1,29 @@
-"use client";
+'use client'
 
-import { useCart } from "@/hooks/use-cart";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import Image from "next/image";
-import { Trash2, ShoppingBag } from "lucide-react";
-import Link from "next/link";
+import { useCart } from '@/hooks/use-cart'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from '@/components/ui/card'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import Image from 'next/image'
+import { Trash2, ShoppingBag } from 'lucide-react'
+import Link from 'next/link'
 
 export default function CartPage() {
-  const { items, removeItem, updateItemQuantity, cartTotal } = useCart();
+  const { items, removeItem, updateItemQuantity, cartTotal } = useCart()
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -26,7 +39,9 @@ export default function CartPage() {
       {items.length === 0 ? (
         <Card className="text-center py-12">
           <CardContent>
-            <p className="text-xl text-muted-foreground mb-4">Giỏ hàng của bạn đang trống.</p>
+            <p className="text-xl text-muted-foreground mb-4">
+              Giỏ hàng của bạn đang trống.
+            </p>
             <Button asChild>
               <Link href="/shop">Bắt đầu mua sắm</Link>
             </Button>
@@ -51,20 +66,23 @@ export default function CartPage() {
                     {items.map((item) => (
                       <TableRow key={item.id}>
                         <TableCell>
-                           <div className="relative h-20 w-20">
-                             <Image
-                               src={item.image}
-                               alt={item.name}
-                               fill
-                               className="object-cover rounded-md"
-                               data-ai-hint={`${item.category} supplement`}
-                             />
-                           </div>
+                          <div className="relative h-20 w-20">
+                            <Image
+                              src={item.image}
+                              alt={item.name}
+                              fill
+                              className="object-cover rounded-md"
+                              data-ai-hint={`${item.category} supplement`}
+                            />
+                          </div>
                         </TableCell>
                         <TableCell>
                           <p className="font-bold">{item.name}</p>
                           <p className="text-sm text-muted-foreground">
-                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price)}
+                            {new Intl.NumberFormat('vi-VN', {
+                              style: 'currency',
+                              currency: 'VND',
+                            }).format(item.price)}
                           </p>
                         </TableCell>
                         <TableCell>
@@ -73,16 +91,28 @@ export default function CartPage() {
                               type="number"
                               min="1"
                               value={item.quantity}
-                              onChange={(e) => updateItemQuantity(item.id, parseInt(e.target.value, 10))}
+                              onChange={(e) =>
+                                updateItemQuantity(
+                                  item.id,
+                                  parseInt(e.target.value, 10),
+                                )
+                              }
                               className="w-20 text-center"
                             />
                           </div>
                         </TableCell>
                         <TableCell className="text-right font-semibold">
-                          {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price * item.quantity)}
+                          {new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }).format(item.price * item.quantity)}
                         </TableCell>
                         <TableCell>
-                          <Button variant="ghost" size="icon" onClick={() => removeItem(item.id)}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeItem(item.id)}
+                          >
                             <Trash2 className="h-5 w-5 text-destructive" />
                           </Button>
                         </TableCell>
@@ -101,7 +131,12 @@ export default function CartPage() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
                   <span>Tạm tính</span>
-                  <span>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(cartTotal)}</span>
+                  <span>
+                    {new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                    }).format(cartTotal)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Vận chuyển</span>
@@ -109,7 +144,12 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between font-bold text-lg border-t pt-4">
                   <span>Tổng cộng</span>
-                  <span>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(cartTotal)}</span>
+                  <span>
+                    {new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                    }).format(cartTotal)}
+                  </span>
                 </div>
               </CardContent>
               <CardFooter>
@@ -120,5 +160,5 @@ export default function CartPage() {
         </div>
       )}
     </div>
-  );
+  )
 }
