@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,48 +11,44 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-
-const formSchema = z.object({
-  email: z.string().email({
-    message: "Vui lòng nhập một địa chỉ email hợp lệ.",
-  }),
-  password: z.string().min(6, {
-    message: "Mật khẩu phải có ít nhất 6 ký tự.",
-  }),
-});
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useAuth } from '@/hooks/use-auth'
+import { useToast } from '@/hooks/use-toast'
+import { type LoginFormValues, loginFormSchema } from '@/lib/schemas/authSchema'
 
 export function LoginForm() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
+  const { toast } = useToast()
+  const { login, isLoading } = useAuth()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
-  });
+  })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    console.log(values);
-
-    toast({
-      title: "Đăng nhập thành công!",
-      description: "Chào mừng trở lại!",
-    });
-    router.push('/');
-    setIsSubmitting(false);
+  const onSubmit = async (values: LoginFormValues) => {
+    try {
+      setIsSubmitting(true)
+      await login(values.email, values.password)
+      toast({
+        title: 'Đăng Nhập thành công',
+        description: 'Bạn sẽ được chuyển hướng đến trang chủ',
+      })
+    } catch (error: any) {
+      toast({
+        title: 'Lỗi khi đăng nhập',
+        description:
+          error.response?.data?.message ||
+          'Vui lòng kiểm tra lại thông tin đăng nhập và thử lại',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -65,7 +61,7 @@ export function LoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="your.email@example.com" {...field} />
+                <Input placeholder="seu@email.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,23 +72,22 @@ export function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mật khẩu</FormLabel>
+              <FormLabel>Senha</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input type="password" placeholder="******" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? (
-             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Đang đăng nhập...
-            </>
-          ) : "Đăng nhập"}
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isSubmitting || isLoading}
+        >
+          {isSubmitting ? 'Entrando...' : 'Entrar'}
         </Button>
       </form>
     </Form>
-  );
+  )
 }

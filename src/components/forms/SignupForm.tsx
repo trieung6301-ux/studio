@@ -1,9 +1,10 @@
-"use client";
+'use client'
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,52 +12,55 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-
-const formSchema = z.object({
-  name: z.string().min(2, { message: "Tên phải có ít nhất 2 ký tự." }),
-  email: z.string().email({
-    message: "Vui lòng nhập một địa chỉ email hợp lệ.",
-  }),
-  password: z.string().min(6, {
-    message: "Mật khẩu phải có ít nhất 6 ký tự.",
-  }),
-  phone: z.string().min(10, { message: "Số điện thoại phải có ít nhất 10 ký tự." }),
-});
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useAuth } from '@/hooks/use-auth'
+import { useToast } from '@/hooks/use-toast'
+import {
+  type RegisterFormValues,
+  registerFormSchema,
+} from '@/lib/schemas/authSchema'
 
 export function SignupForm() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
+  const { toast } = useToast()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { signup } = useAuth()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      phone: "",
+      name: '',
+      email: '',
+      password: '',
+      phone: '',
     },
-  });
+  })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    console.log(values);
+  async function onSubmit(values: RegisterFormValues) {
+    try {
+      setIsSubmitting(true)
 
-    toast({
-      title: "Tạo tài khoản thành công!",
-      description: "Chào mừng bạn đến với MuscleUp! Bây giờ bạn có thể đăng nhập.",
-    });
-    router.push('/login');
-    setIsSubmitting(false);
+      // Sử dụng hàm signup từ hook useAuth
+      await signup(values.email, values.password, values.name)
+
+      toast({
+        title: 'Tạo tài khoản thành công!',
+        description:
+          'Chào mừng bạn đến với MuscleUp! Bạn đã được đăng nhập tự động.',
+      })
+
+      // Không cần router.push vì hàm signup đã tự động chuyển hướng
+    } catch (error: any) {
+      toast({
+        title: 'Đăng ký thất bại',
+        description:
+          error.response?.data?.message ||
+          'Có lỗi xảy ra khi đăng ký. Vui lòng thử lại.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -82,7 +86,11 @@ export function SignupForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="your.email@example.com" {...field} />
+                <Input
+                  type="email"
+                  placeholder="your.email@example.com"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,7 +116,7 @@ export function SignupForm() {
             <FormItem>
               <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input type="password" placeholder="******" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -116,13 +124,15 @@ export function SignupForm() {
         />
         <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? (
-             <>
+            <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Đang tạo tài khoản...
+              Đang đăng ký...
             </>
-          ) : "Đăng ký"}
+          ) : (
+            'Đăng ký'
+          )}
         </Button>
       </form>
     </Form>
-  );
+  )
 }
