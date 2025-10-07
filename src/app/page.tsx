@@ -12,7 +12,7 @@ import Image from 'next/image'
 
 const bannerImages = [
   {
-    src: 'https://placehold.co/1200x500.png',
+    src: 'https://res.cloudinary.com/dsy1matb3/image/upload/v1759848717/unnamed_ccphwt.jpg',
     alt: 'Người đang tập tạ',
     hint: 'gym workout',
   },
