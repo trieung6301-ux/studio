@@ -72,7 +72,7 @@ export function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Senha</FormLabel>
+              <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="******" {...field} />
               </FormControl>
@@ -85,7 +85,7 @@ export function LoginForm() {
           className="w-full"
           disabled={isSubmitting || isLoading}
         >
-          {isSubmitting ? 'Entrando...' : 'Entrar'}
+          {isSubmitting ? 'Đang đăng nhập' : 'Đăng nhập'}
         </Button>
       </form>
     </Form>

@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { CartProvider } from '@/context/CartContext'
+import { Roboto } from 'next/font/google'
 
 export const metadata: Metadata = {
   title: 'MuscleUp - Thực phẩm bổ sung',
@@ -11,13 +12,18 @@ export const metadata: Metadata = {
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 }
 
+const robotoFont = Roboto({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi">
+    <html lang="vi" className={robotoFont.className}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
