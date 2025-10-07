@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import type { Product } from '@/lib/placeholder-data'
+import Link from 'next/link'
+import type { Product } from '@/lib/api/products.api'
 import {
   Card,
   CardContent,
@@ -8,9 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { StarRating } from './StarRating'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import { useCart } from '@/hooks/use-cart'
 import { useToast } from '@/hooks/use-toast'
 import { ShoppingCart } from 'lucide-react'
@@ -32,44 +32,43 @@ export function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group border-2 border-transparent hover:border-primary">
-      <CardHeader className="p-0">
-        <div className="relative w-full h-56 overflow-hidden">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            data-ai-hint={`${product.category} supplement`}
-          />
-        </div>
-      </CardHeader>
-      <CardContent className="p-4 flex-grow">
-        <div className="flex justify-between items-start">
-          <CardTitle className="text-xl font-bold font-headline mb-2">
-            {product.name}
-          </CardTitle>
-          <Badge variant="secondary">{product.category}</Badge>
-        </div>
-        <CardDescription className="text-sm text-muted-foreground">
-          {product.brand}
-        </CardDescription>
-        <div className="flex items-center mt-2">
-          <StarRating rating={product.rating} />
-          <span className="text-xs text-muted-foreground ml-2">
-            ({product.reviews} đánh giá)
-          </span>
-        </div>
-      </CardContent>
-      <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <p className="text-2xl font-bold text-primary font-headline">
-          {new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND',
-          }).format(product.price)}
-        </p>
-        <Button onClick={handleAddToCart}>
+    <Card className="group overflow-hidden rounded-xl">
+      <Link
+        href={`/products/${product.id}`}
+        className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      >
+        <CardHeader className="p-0">
+          <div className="relative w-full h-56 overflow-hidden">
+            {product.imageUrl ? (
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-muted">
+                <span className="text-muted-foreground">Không có hình ảnh</span>
+              </div>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <Badge variant="outline" className="px-2 py-1 font-normal">
+              {product.type}
+            </Badge>
+          </div>
+          <CardTitle className="text-base font-medium">{product.name}</CardTitle>
+          <CardDescription className="line-clamp-2 text-xs mt-1">
+            {product.description}
+          </CardDescription>
+        </CardContent>
+      </Link>
+      <CardFooter className="p-4 pt-0 flex items-center justify-between">
+        <div className="font-semibold">{product.price.toLocaleString('vi-VN')}₫</div>
+        <Button size="sm" className="h-8 rounded-lg" onClick={handleAddToCart}>
           <ShoppingCart className="mr-2 h-4 w-4" />
           Thêm vào giỏ
         </Button>
