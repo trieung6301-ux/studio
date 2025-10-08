@@ -29,7 +29,9 @@ export function SignupForm() {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      name: '',
+      username: '',
+      first_name: '',
+      last_name: '',
       email: '',
       password: '',
       phone: '',
@@ -41,7 +43,7 @@ export function SignupForm() {
       setIsSubmitting(true)
 
       // Sử dụng hàm signup từ hook useAuth
-      await signup(values.email, values.password, values.name)
+      await signup(values.email, values.password, values.username, values.first_name, values.last_name)
 
       toast({
         title: 'Tạo tài khoản thành công!',
@@ -66,14 +68,43 @@ export function SignupForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+       <div className='grid grid-cols-2 gap-2'>
+      
         <FormField
           control={form.control}
-          name="name"
+          name="last_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Họ</FormLabel>
+              <FormControl>
+                <Input placeholder="Họ của bạn" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+          <FormField
+          control={form.control}
+          name="first_name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tên</FormLabel>
               <FormControl>
                 <Input placeholder="Tên của bạn" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        </div>
+         <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tên đăng nhập</FormLabel>
+              <FormControl>
+                <Input placeholder="Tên đăng nhập của bạn" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -25,7 +25,7 @@ export function LoginForm() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   })
@@ -33,7 +33,7 @@ export function LoginForm() {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       setIsSubmitting(true)
-      await login(values.email, values.password)
+      await login(values.username, values.password)
       toast({
         title: 'Đăng Nhập thành công',
         description: 'Bạn sẽ được chuyển hướng đến trang chủ',
@@ -56,12 +56,12 @@ export function LoginForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="email"
+          name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Tên đăng nhập</FormLabel>
               <FormControl>
-                <Input placeholder="seu@email.com" {...field} />
+                <Input placeholder="Tên đăng nhập của bạn" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

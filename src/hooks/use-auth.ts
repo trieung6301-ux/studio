@@ -5,7 +5,9 @@ import api from '@/lib/axios'
 interface User {
   id: string
   email: string
-  name?: string
+  username?: string
+  first_name?: string
+  last_name?: string
 }
 
 interface AuthResponse {
@@ -52,7 +54,7 @@ export function useAuth() {
   const login = async (email: string, password: string): Promise<void> => {
     try {
       setIsLoading(true)
-      const response = await api.post<AuthResponse>('/auth/login', {
+      const response = await api.post<AuthResponse>('/login', {
         email,
         password,
       })
@@ -74,14 +76,18 @@ export function useAuth() {
   const signup = async (
     email: string,
     password: string,
-    name: string,
+    username: string,
+    first_name: string,
+    last_name: string,
   ): Promise<void> => {
     try {
       setIsLoading(true)
-      const response = await api.post<AuthResponse>('/auth/signup', {
+      const response = await api.post<AuthResponse>('/register', {
         email,
         password,
-        name,
+        username,
+        first_name,
+        last_name,
       })
       const { token, user } = response.data
 
