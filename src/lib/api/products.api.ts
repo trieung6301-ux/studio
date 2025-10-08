@@ -81,8 +81,8 @@ export async function getProducts(params?: {
     console.log(response);
     
     // Chuyển đổi dữ liệu sản phẩm
-    const transformedProducts = Array.isArray(productsData.products) 
-      ? productsData.products.map(transformProduct)
+    const transformedProducts = Array.isArray(productsData) 
+      ? productsData.map(transformProduct)
       : [];
     
     return {

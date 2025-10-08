@@ -1,8 +1,8 @@
 'use client'
 
 import { Loader2, Sparkles } from 'lucide-react'
-import { useEffect, useRef } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useActionState, useEffect, useRef } from 'react'
+import { useFormStatus } from 'react-dom'
 import {
   type AdvisorState,
   getSupplementAdvice,
@@ -36,7 +36,7 @@ export function AdvisorForm() {
     data: null,
     errors: null,
   }
-  const [state, formAction] = useFormState(getSupplementAdvice, initialState)
+  const [state, formAction] = useActionState(getSupplementAdvice, initialState)
   const formRef = useRef<HTMLFormElement>(null)
   const { toast } = useToast()
 

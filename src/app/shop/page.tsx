@@ -1,8 +1,11 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
-import { ProductCard } from '@/components/shared/ProductCard'
 import { ShoppingBag } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { ProductCard } from '@/components/shared/ProductCard'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -10,10 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
-import { Label } from '@/components/ui/label'
 import { getProducts, type Product } from '@/lib/api/products.api'
 
 export default function ShopPage() {
@@ -23,20 +23,20 @@ export default function ShopPage() {
   const [error, setError] = useState<string | null>(null)
   const [selectedType, setSelectedType] = useState<string>('all')
   const [priceValue, setPriceValue] = useState<[number]>([0])
-  
+
   // Lấy danh sách các loại sản phẩm duy nhất
   const productTypes = useMemo(() => {
     if (!products.length) return []
-    return [...new Set(products.map(p => p.type))]
+    return [...new Set(products.map((p) => p.type))]
   }, [products])
-  
+
   // Tính toán khoảng giá
   const priceRange = useMemo(() => {
     if (!products.length) return [0, 1000000]
-    const prices = products.map(p => p.price)
+    const prices = products.map((p) => p.price)
     return [Math.min(...prices), Math.max(...prices)]
   }, [products])
-  
+
   // Lấy dữ liệu sản phẩm từ API khi component được tải
   useEffect(() => {
     async function fetchProducts() {
@@ -45,10 +45,10 @@ export default function ShopPage() {
         const result = await getProducts()
         setProducts(result.products)
         setFilteredProducts(result.products)
-        
+
         // Cập nhật giá trị mặc định cho bộ lọc giá
         if (result.products.length > 0) {
-          const prices = result.products.map(p => p.price)
+          const prices = result.products.map((p) => p.price)
           const maxPrice = Math.max(...prices)
           setPriceValue([maxPrice])
         }
@@ -59,7 +59,7 @@ export default function ShopPage() {
         setIsLoading(false)
       }
     }
-    
+
     fetchProducts()
   }, [])
 
@@ -67,10 +67,10 @@ export default function ShopPage() {
     let tempProducts = [...products]
 
     if (selectedType !== 'all') {
-      tempProducts = tempProducts.filter(p => p.type === selectedType)
+      tempProducts = tempProducts.filter((p) => p.type === selectedType)
     }
 
-    tempProducts = tempProducts.filter(p => p.price <= priceValue[0])
+    tempProducts = tempProducts.filter((p) => p.price <= priceValue[0])
 
     setFilteredProducts(tempProducts)
   }
@@ -106,16 +106,13 @@ export default function ShopPage() {
           <Card>
             <CardContent className="p-6">
               <h2 className="text-xl font-bold mb-4">Bộ lọc</h2>
-              
+
               <div className="space-y-4">
                 <div>
                   <Label htmlFor="type" className="block mb-2">
                     Loại sản phẩm
                   </Label>
-                  <Select
-                    value={selectedType}
-                    onValueChange={setSelectedType}
-                  >
+                  <Select value={selectedType} onValueChange={setSelectedType}>
                     <SelectTrigger id="type">
                       <SelectValue placeholder="Chọn loại" />
                     </SelectTrigger>
@@ -129,7 +126,7 @@ export default function ShopPage() {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div>
                   <Label htmlFor="price" className="block mb-2">
                     Giá tối đa: {priceValue[0].toLocaleString('vi-VN')}₫
@@ -144,13 +141,10 @@ export default function ShopPage() {
                     className="mt-2"
                   />
                 </div>
-                
+
                 <div className="flex flex-col space-y-2 pt-2">
                   <Button onClick={handleApplyFilters}>Áp dụng bộ lọc</Button>
-                  <Button
-                    onClick={handleResetFilters}
-                    variant="outline"
-                  >
+                  <Button onClick={handleResetFilters} variant="outline">
                     Đặt lại
                   </Button>
                 </div>
@@ -158,7 +152,7 @@ export default function ShopPage() {
             </CardContent>
           </Card>
         </div>
-        
+
         {/* Main content */}
         <div className="w-full md:w-3/4">
           <div className="flex justify-between items-center mb-6">
@@ -167,7 +161,7 @@ export default function ShopPage() {
               {filteredProducts.length} sản phẩm
             </div>
           </div>
-          
+
           {isLoading ? (
             <div className="flex flex-col items-center justify-center h-64 text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>

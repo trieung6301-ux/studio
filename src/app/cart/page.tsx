@@ -68,11 +68,11 @@ export default function CartPage() {
                         <TableCell>
                           <div className="relative h-20 w-20">
                             <Image
-                              src={item.image}
+                              src={item.imageUrl}
                               alt={item.name}
                               fill
                               className="object-cover rounded-md"
-                              data-ai-hint={`${item.category} supplement`}
+                              data-ai-hint={`${item.type} supplement`}
                             />
                           </div>
                         </TableCell>
@@ -93,7 +93,7 @@ export default function CartPage() {
                               value={item.quantity}
                               onChange={(e) =>
                                 updateItemQuantity(
-                                  item.id,
+                                  item.id.toString(),
                                   parseInt(e.target.value, 10),
                                 )
                               }
@@ -111,7 +111,7 @@ export default function CartPage() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeItem(item.id.toString())}
                           >
                             <Trash2 className="h-5 w-5 text-destructive" />
                           </Button>

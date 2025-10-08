@@ -1,6 +1,6 @@
-import { AdvisorForm } from '@/components/forms/AdvisorForm'
 import { Bot } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import Image from 'next/image'
+import { AdvisorForm } from '@/components/forms/AdvisorForm'
 import {
   Carousel,
   CarouselContent,
@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import Image from 'next/image'
 
 const bannerImages = [
   {

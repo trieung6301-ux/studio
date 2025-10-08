@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Toaster } from '@/components/ui/toaster'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { CartProvider } from '@/context/CartContext'
 import { Roboto } from 'next/font/google'
+import { Footer } from '@/components/layout/Footer'
+import { Header } from '@/components/layout/Header'
+import { Toaster } from '@/components/ui/toaster'
+import { CartProvider } from '@/context/CartContext'
 
 export const metadata: Metadata = {
-  title: 'MuscleUp - Thực phẩm bổ sung',
+  title: 'MuscleUp',
   description: 'Cửa hàng tổng hợp cho các sản phẩm bổ sung thể hình cao cấp.',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 }

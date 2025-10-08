@@ -1,7 +1,7 @@
 'use client'
 
-import { Product } from '@/lib/api/products.api'
-import { createContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, type ReactNode, useEffect, useState } from 'react'
+import type { Product } from '@/lib/api/products.api'
 
 export interface CartItem extends Product {
   quantity: number
@@ -46,7 +46,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   const removeItem = (productId: string) => {
-    setItems((prevItems) => prevItems.filter((item) => String(item.id) !== productId))
+    setItems((prevItems) =>
+      prevItems.filter((item) => String(item.id) !== productId),
+    )
   }
 
   const updateItemQuantity = (productId: string, quantity: number) => {
