@@ -1,7 +1,7 @@
 import z from 'zod'
 
 export const loginFormSchema = z.object({
-  username: z.string().email({ message: 'Tên đăng nhập không hợp lệ' }),
+  username: z.string().min(3, { message: 'Tên đăng nhập phải có ít nhất 3 ký tự' }),
   password: z
     .string()
     .min(6, { message: 'Mật khẩu phải có ít nhất 6 ký tự.' }),

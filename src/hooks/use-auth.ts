@@ -51,11 +51,11 @@ export function useAuth() {
     }
   }
 
-  const login = async (email: string, password: string): Promise<void> => {
+  const login = async (username: string, password: string): Promise<void> => {
     try {
       setIsLoading(true)
       const response = await api.post<AuthResponse>('/login', {
-        email,
+        username,
         password,
       })
       const { token, user } = response.data
