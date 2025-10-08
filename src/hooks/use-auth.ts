@@ -11,7 +11,7 @@ interface User {
 }
 
 interface AuthResponse {
-  token: string
+  access_token: string
   user: User
 }
 
@@ -58,9 +58,10 @@ export function useAuth() {
         username,
         password,
       })
-      const { token, user } = response.data
+      const { access_token, user } = response.data
 
-      localStorage.setItem('token', token)
+      
+      localStorage.setItem('token', access_token)
       localStorage.setItem('user', JSON.stringify(user))
 
       setUser(user)
@@ -89,9 +90,9 @@ export function useAuth() {
         first_name,
         last_name,
       })
-      const { token, user } = response.data
+      const { access_token, user } = response.data
 
-      localStorage.setItem('token', token)
+      localStorage.setItem('token', access_token)
       localStorage.setItem('user', JSON.stringify(user))
 
       setUser(user)

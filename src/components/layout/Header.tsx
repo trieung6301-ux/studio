@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Menu, Dumbbell, User, ShoppingCart } from 'lucide-react'
 import { useCart } from '@/hooks/use-cart'
 import { Badge } from '../ui/badge'
+import { useAuth } from '@/hooks/use-auth'
 
 const navLinks = [
   { href: '/', label: 'Trang chủ' },
@@ -21,7 +22,7 @@ const navLinks = [
 
 export function Header() {
   const pathname = usePathname()
-  const [user, setUser] = React.useState(null) // Replace with actual user state
+  const { isAuthenticated } = useAuth()
   const { items } = useCart()
   const totalItems = items.reduce((total, item) => total + item.quantity, 0)
 
@@ -69,7 +70,7 @@ export function Header() {
             </Link>
           </Button>
 
-          {user ? (
+          {isAuthenticated ? (
             <Button variant="ghost" size="icon">
               <User className="h-6 w-6" />
             </Button>
@@ -83,6 +84,7 @@ export function Header() {
               </Button>
             </div>
           )}
+          
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
