@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import CalendarDemo from '@/components/calendar-demo'
 
 const bannerImages = [
   {
@@ -49,8 +50,7 @@ export default function HomePage() {
                       Chương trình tập luyện của chúng tôi
                     </h2>
                     <p className="mt-4 text-lg md:text-xl">
-                      Khám phá các lựa chọn đa dạng để đạt được mục tiêu thể
-                      chất của bạn.
+                      Khám phá các lựa chọn đa dạng để đạt được mục tiêu thể chất của bạn.
                     </p>
                   </div>
                 </div>
@@ -68,12 +68,10 @@ export default function HomePage() {
             <div className="inline-flex items-center justify-center bg-primary text-primary-foreground rounded-full w-16 h-16 mb-4">
               <Bot className="w-8 h-8" />
             </div>
-            <h1 className="text-4xl font-bold font-headline text-primary">
-              Tư vấn viên AI
-            </h1>
+            <h1 className="text-4xl font-bold font-headline text-primary">Tư vấn viên AI</h1>
             <p className="text-lg text-muted-foreground mt-2">
-              Nhận đề xuất thực phẩm bổ sung được cá nhân hóa dựa trên mục tiêu
-              và lối sống riêng của bạn.
+              Nhận đề xuất thực phẩm bổ sung được cá nhân hóa dựa trên mục tiêu và lối sống riêng
+              của bạn.
             </p>
           </div>
           <AdvisorForm />
