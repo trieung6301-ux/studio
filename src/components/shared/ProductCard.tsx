@@ -34,7 +34,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Card className="group overflow-hidden rounded-xl">
       <Link
-        href={`/products/${product.id}`}
+        href={`/shop/${product.id}`}
         className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         <CardHeader className="p-0">
