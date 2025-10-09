@@ -7,7 +7,7 @@ import { Icons } from '../shared/Icons'
 import { cn } from '@/lib/utils'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
-import { Menu, Dumbbell, User, ShoppingCart } from 'lucide-react'
+import { Menu, User, ShoppingCart } from 'lucide-react'
 import { useCart } from '@/hooks/use-cart'
 import { Badge } from '../ui/badge'
 import { useAuth } from '@/hooks/use-auth'
@@ -42,9 +42,7 @@ export function Header() {
               href={link.href}
               className={cn(
                 'transition-colors hover:text-primary relative',
-                pathname === link.href
-                  ? 'text-primary'
-                  : 'text-muted-foreground',
+                pathname === link.href ? 'text-primary' : 'text-muted-foreground',
               )}
             >
               {link.label}
@@ -72,7 +70,9 @@ export function Header() {
 
           {isAuthenticated ? (
             <Button variant="ghost" size="icon">
-              <User className="h-6 w-6" />
+              <Link href="/calendar">
+                <User className="h-6 w-6" />
+              </Link>
             </Button>
           ) : (
             <div className="hidden md:flex items-center space-x-2">
@@ -84,7 +84,7 @@ export function Header() {
               </Button>
             </div>
           )}
-          
+
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -97,9 +97,7 @@ export function Header() {
                 <div className="p-4">
                   <Link href="/" className="mb-6 flex items-center space-x-2">
                     <Icons.logo className="h-8 w-8 text-primary" />
-                    <span className="font-bold font-headline text-xl">
-                      MuscleUp
-                    </span>
+                    <span className="font-bold font-headline text-xl">MuscleUp</span>
                   </Link>
                   <nav className="flex flex-col space-y-4">
                     {navLinks.map((link) => (

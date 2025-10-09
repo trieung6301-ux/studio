@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { setCookie, getCookie, deleteCookie } from 'cookies-next'
 import api from '@/lib/axios'
+import { deleteCookie, getCookie, setCookie } from 'cookies-next/client'
 
 interface User {
   id: string
@@ -23,7 +23,11 @@ export function useAuth() {
   const router = useRouter()
 
   useEffect(() => {
-    checkAuth()
+    const token = getCookie('token')
+    if (token) {
+      setIsLoading(false)
+      setIsAuthenticated(true)
+    }
   }, [])
 
   const checkAuth = async () => {
@@ -61,19 +65,18 @@ export function useAuth() {
       })
       const { access_token, user } = response.data
 
-      
       setCookie('token', access_token, {
         maxAge: 60 * 60 * 24 * 7, // 7 days
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+        sameSite: 'strict',
       })
-      
+
       setCookie('user', JSON.stringify(user), {
         maxAge: 60 * 60 * 24 * 7, // 7 days
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+        sameSite: 'strict',
       })
 
       setUser(user)
@@ -108,14 +111,14 @@ export function useAuth() {
         maxAge: 60 * 60 * 24 * 7, // 7 days
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+        sameSite: 'strict',
       })
-      
+
       setCookie('user', JSON.stringify(user), {
         maxAge: 60 * 60 * 24 * 7, // 7 days
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+        sameSite: 'strict',
       })
 
       setUser(user)

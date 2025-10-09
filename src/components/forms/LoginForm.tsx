@@ -19,7 +19,7 @@ import { type LoginFormValues, loginFormSchema } from '@/lib/schemas/authSchema'
 
 export function LoginForm() {
   const { toast } = useToast()
-  const { login, isLoading } = useAuth()
+  const { login } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<LoginFormValues>({
@@ -42,8 +42,7 @@ export function LoginForm() {
       toast({
         title: 'Lỗi khi đăng nhập',
         description:
-          error.response?.data?.message ||
-          'Vui lòng kiểm tra lại thông tin đăng nhập và thử lại',
+          error.response?.data?.message || 'Vui lòng kiểm tra lại thông tin đăng nhập và thử lại',
         variant: 'destructive',
       })
     } finally {
@@ -80,11 +79,7 @@ export function LoginForm() {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting || isLoading}
-        >
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? 'Đang đăng nhập' : 'Đăng nhập'}
         </Button>
       </form>
