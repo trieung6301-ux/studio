@@ -81,7 +81,7 @@ export function useAuth() {
 
       setUser(user)
       setIsAuthenticated(true)
-      router.push('/')
+      window.location.href = '/'
     } catch (error) {
       throw error
     } finally {
@@ -123,7 +123,7 @@ export function useAuth() {
 
       setUser(user)
       setIsAuthenticated(true)
-      router.push('/')
+      router.push('/login')
     } catch (error) {
       throw error
     } finally {
