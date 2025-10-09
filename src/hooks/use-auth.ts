@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { setCookie, getCookie, deleteCookie } from 'cookies-next'
 import api from '@/lib/axios'
 
 interface User {
@@ -26,7 +27,7 @@ export function useAuth() {
   }, [])
 
   const checkAuth = async () => {
-    const token = localStorage.getItem('token')
+    const token = getCookie('token')
 
     if (!token) {
       setIsLoading(false)
@@ -43,8 +44,8 @@ export function useAuth() {
       setIsAuthenticated(true)
     } catch (error) {
       // Token không hợp lệ hoặc hết hạn
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      deleteCookie('token')
+      deleteCookie('user')
       setIsAuthenticated(false)
     } finally {
       setIsLoading(false)
@@ -61,8 +62,19 @@ export function useAuth() {
       const { access_token, user } = response.data
 
       
-      localStorage.setItem('token', access_token)
-      localStorage.setItem('user', JSON.stringify(user))
+      setCookie('token', access_token, {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      })
+      
+      setCookie('user', JSON.stringify(user), {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      })
 
       setUser(user)
       setIsAuthenticated(true)
@@ -92,8 +104,19 @@ export function useAuth() {
       })
       const { access_token, user } = response.data
 
-      localStorage.setItem('token', access_token)
-      localStorage.setItem('user', JSON.stringify(user))
+      setCookie('token', access_token, {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      })
+      
+      setCookie('user', JSON.stringify(user), {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      })
 
       setUser(user)
       setIsAuthenticated(true)
@@ -106,8 +129,8 @@ export function useAuth() {
   }
 
   const logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
+    deleteCookie('token')
+    deleteCookie('user')
     setUser(null)
     setIsAuthenticated(false)
     router.push('/login')
