@@ -69,7 +69,7 @@ export function Header() {
           </Button>
 
           {isAuthenticated ? (
-            <div className="max-w-[200px]">
+            <div className="max-w-[200px] ml-4">
               <Button asChild variant="default" className="w-full">
                 <Link href="/planner">Lập kế hoạch tập luyện</Link>
               </Button>
