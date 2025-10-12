@@ -13,27 +13,15 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { PlusCircle, Trash2, Edit, Save, X } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
-import { createSchedule } from '@/lib/api/schedules.api'
-
-export interface Exercise {
-  id: string
-  name: string
-  sets: string
-  reps: string
-  weight: string
-}
+import { createSchedule, deleteSchedule, Exercise, updateSchedule } from '@/lib/api/schedules.api'
 
 interface WorkoutTableProps {
   day: string
   initialExercises: Exercise[]
-  onExercisesChange: (exercises: Exercise[]) => void
+  onExercisesChange: () => void
 }
 
-export function WorkoutTable({
-  day,
-  initialExercises,
-  onExercisesChange,
-}: WorkoutTableProps) {
+export function WorkoutTable({ day, initialExercises, onExercisesChange }: WorkoutTableProps) {
   const [exercises, setExercises] = useState<Exercise[]>(initialExercises)
   const [editingRowId, setEditingRowId] = useState<string | null>(null)
   const [newExercise, setNewExercise] = useState<Omit<Exercise, 'id'>>({
@@ -65,26 +53,43 @@ export function WorkoutTable({
 
       const updatedExercises = [...exercises, newExerciseWithId]
       setExercises(updatedExercises)
-      onExercisesChange(updatedExercises)
+      onExercisesChange()
       setNewExercise({ name: '', sets: '', reps: '', weight: '' })
     } catch (error) {
       console.error('Error adding exercise:', error)
     }
   }
 
-  const handleDeleteExercise = (id: string) => {
-    const updatedExercises = exercises.filter((ex) => ex.id !== id)
-    setExercises(updatedExercises)
-    onExercisesChange(updatedExercises)
+  const handleDeleteExercise = async (id: string) => {
+    try {
+      await deleteSchedule(id)
+    } catch (error) {
+      console.error('Error deleting exercise:', error)
+    }
+    onExercisesChange()
   }
 
   const handleEdit = (exercise: Exercise) => {
     setEditingRowId(exercise.id)
   }
 
-  const handleSave = (id: string) => {
+  const handleSave = async (id: string) => {
     setEditingRowId(null)
-    onExercisesChange(exercises)
+    const exerciseToUpdate = exercises.find((ex) => ex.id === id)
+    if (!exerciseToUpdate) return
+
+    try {
+      await updateSchedule(id, {
+        day_of_week: day,
+        exercise_name: exerciseToUpdate.name,
+        sets: Number(exerciseToUpdate.sets),
+        reps: Number(exerciseToUpdate.reps),
+        weight: Number(exerciseToUpdate.weight),
+      })
+    } catch (error) {
+      console.error('Error updating exercise:', error)
+    }
+    onExercisesChange()
   }
 
   const handleCancelEdit = () => {
@@ -98,9 +103,7 @@ export function WorkoutTable({
     field: keyof Exercise,
   ) => {
     const { value } = e.target
-    setExercises(
-      exercises.map((ex) => (ex.id === id ? { ...ex, [field]: value } : ex)),
-    )
+    setExercises(exercises.map((ex) => (ex.id === id ? { ...ex, [field]: value } : ex)))
   }
 
   const handleNewExerciseChange = (
@@ -113,9 +116,7 @@ export function WorkoutTable({
   return (
     <Card className="shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl font-headline">
-          Bài tập của {day}
-        </CardTitle>
+        <CardTitle className="text-2xl font-headline">Bài tập của {day}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
@@ -137,48 +138,32 @@ export function WorkoutTable({
                       <TableCell>
                         <Input
                           value={exercise.name}
-                          onChange={(e) =>
-                            handleInputChange(e, exercise.id, 'name')
-                          }
+                          onChange={(e) => handleInputChange(e, exercise.id, 'name')}
                         />
                       </TableCell>
                       <TableCell>
                         <Input
                           value={exercise.sets}
-                          onChange={(e) =>
-                            handleInputChange(e, exercise.id, 'sets')
-                          }
+                          onChange={(e) => handleInputChange(e, exercise.id, 'sets')}
                         />
                       </TableCell>
                       <TableCell>
                         <Input
                           value={exercise.reps}
-                          onChange={(e) =>
-                            handleInputChange(e, exercise.id, 'reps')
-                          }
+                          onChange={(e) => handleInputChange(e, exercise.id, 'reps')}
                         />
                       </TableCell>
                       <TableCell>
                         <Input
                           value={exercise.weight}
-                          onChange={(e) =>
-                            handleInputChange(e, exercise.id, 'weight')
-                          }
+                          onChange={(e) => handleInputChange(e, exercise.id, 'weight')}
                         />
                       </TableCell>
                       <TableCell className="text-right">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleSave(exercise.id)}
-                        >
+                        <Button variant="ghost" size="icon" onClick={() => handleSave(exercise.id)}>
                           <Save className="h-4 w-4 text-green-500" />
                         </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleCancelEdit()}
-                        >
+                        <Button variant="ghost" size="icon" onClick={() => handleCancelEdit()}>
                           <X className="h-4 w-4" />
                         </Button>
                       </TableCell>
@@ -190,11 +175,7 @@ export function WorkoutTable({
                       <TableCell>{exercise.reps}</TableCell>
                       <TableCell>{exercise.weight}</TableCell>
                       <TableCell className="text-right">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleEdit(exercise)}
-                        >
+                        <Button variant="ghost" size="icon" onClick={() => handleEdit(exercise)}>
                           <Edit className="h-4 w-4" />
                         </Button>
                         <Button

@@ -16,15 +16,14 @@ import {
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/hooks/use-auth'
 import { useToast } from '@/hooks/use-toast'
-import {
-  type RegisterFormValues,
-  registerFormSchema,
-} from '@/lib/schemas/authSchema'
+import { type RegisterFormValues, registerFormSchema } from '@/lib/schemas/authSchema'
+import { useRouter } from 'next/navigation'
 
 export function SignupForm() {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { signup } = useAuth()
+  const { signup, isAuthenticated } = useAuth()
+  const router = useRouter()
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
@@ -43,12 +42,17 @@ export function SignupForm() {
       setIsSubmitting(true)
 
       // Sử dụng hàm signup từ hook useAuth
-      await signup(values.email, values.password, values.username, values.first_name, values.last_name)
+      await signup(
+        values.email,
+        values.password,
+        values.username,
+        values.first_name,
+        values.last_name,
+      )
 
       toast({
         title: 'Tạo tài khoản thành công!',
-        description:
-          'Chào mừng bạn đến với MuscleUp! Bạn đã được đăng nhập tự động.',
+        description: 'Chào mừng bạn đến với MuscleUp! Bạn đã được đăng nhập tự động.',
       })
 
       // Không cần router.push vì hàm signup đã tự động chuyển hướng
@@ -56,8 +60,7 @@ export function SignupForm() {
       toast({
         title: 'Đăng ký thất bại',
         description:
-          error.response?.data?.message ||
-          'Có lỗi xảy ra khi đăng ký. Vui lòng thử lại.',
+          error.response?.data?.message || 'Có lỗi xảy ra khi đăng ký. Vui lòng thử lại.',
         variant: 'destructive',
       })
     } finally {
@@ -65,39 +68,42 @@ export function SignupForm() {
     }
   }
 
+  if (isAuthenticated) {
+    router.push('/')
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-       <div className='grid grid-cols-2 gap-2'>
-      
-        <FormField
-          control={form.control}
-          name="last_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Họ</FormLabel>
-              <FormControl>
-                <Input placeholder="Họ của bạn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 gap-2">
           <FormField
-          control={form.control}
-          name="first_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tên</FormLabel>
-              <FormControl>
-                <Input placeholder="Tên của bạn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            control={form.control}
+            name="last_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Họ</FormLabel>
+                <FormControl>
+                  <Input placeholder="Họ của bạn" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="first_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tên</FormLabel>
+                <FormControl>
+                  <Input placeholder="Tên của bạn" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-         <FormField
+        <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
@@ -117,11 +123,7 @@ export function SignupForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  type="email"
-                  placeholder="your.email@example.com"
-                  {...field}
-                />
+                <Input type="email" placeholder="your.email@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

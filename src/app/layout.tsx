@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { Toaster } from '@/components/ui/toaster'
 import { CartProvider } from '@/context/CartContext'
+import TanstackProvider from '@/components/provider/tanstack-provider'
 
 export const metadata: Metadata = {
   title: 'MuscleUp',
@@ -26,11 +27,7 @@ export default function RootLayout({
     <html lang="vi" className={robotoFont.className} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Archivo+Black&display=swap"
           rel="stylesheet"
@@ -38,11 +35,13 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased">
         <CartProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </div>
+          <TanstackProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
+          </TanstackProvider>
           <Toaster />
         </CartProvider>
       </body>

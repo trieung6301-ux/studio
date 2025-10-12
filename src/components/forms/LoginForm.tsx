@@ -16,12 +16,13 @@ import { Input } from '@/components/ui/input'
 import { useAuth } from '@/hooks/use-auth'
 import { useToast } from '@/hooks/use-toast'
 import { type LoginFormValues, loginFormSchema } from '@/lib/schemas/authSchema'
+import { useRouter } from 'next/navigation'
 
 export function LoginForm() {
   const { toast } = useToast()
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
-
+  const router = useRouter()
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -48,6 +49,10 @@ export function LoginForm() {
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  if (isAuthenticated) {
+    router.push('/')
   }
 
   return (
