@@ -119,32 +119,20 @@ export function Footer() {
           <div className="col-span-1">
             <h3 className="font-semibold mb-4">Theo dõi chúng tôi</h3>
             <div className="flex space-x-4">
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
+              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
                 <FacebookIcon />
               </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
+              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
                 <TwitterIcon />
               </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
+              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
                 <InstagramIcon />
               </Link>
             </div>
           </div>
         </div>
         <div className="border-t mt-8 pt-6 text-center text-sm text-muted-foreground">
-          <p>
-            &copy; {new Date().getFullYear()} MuscleUp Supplements. Đã đăng ký
-            Bản quyền.
-          </p>
+          <p>&copy; {new Date().getFullYear()} MuscleUp Supplements. Đã đăng ký Bản quyền.</p>
         </div>
       </div>
     </footer>
