@@ -25,10 +25,20 @@ export function useAuth() {
 
   useEffect(() => {
     const token = getCookie('token')
+
     if (token) {
-      setIsLoading(false)
-      setIsAuthenticated(true)
+      try {
+        setIsAuthenticated(true)
+      } catch (error) {
+        // Invalid user data in cookie, clear it
+        deleteCookie('token')
+        deleteCookie('user')
+        setIsAuthenticated(false)
+      }
+    } else {
+      setIsAuthenticated(false)
     }
+    setIsLoading(false)
   }, [])
 
   const checkAuth = async () => {
@@ -37,21 +47,31 @@ export function useAuth() {
     if (!token) {
       setIsLoading(false)
       setIsAuthenticated(false)
+      setUser(null)
       return
     }
 
     try {
       // Kiểm tra token có hợp lệ không bằng cách gọi API
-      const response = await api.get('/auth/me')
+      const response = await api.get('/user_info')
       const userData = response.data
 
       setUser(userData)
       setIsAuthenticated(true)
+
+      // Update user data in cookie
+      setCookie('user', JSON.stringify(userData), {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+      })
     } catch (error) {
       // Token không hợp lệ hoặc hết hạn
       deleteCookie('token')
       deleteCookie('user')
       setIsAuthenticated(false)
+      setUser(null)
     } finally {
       setIsLoading(false)
     }

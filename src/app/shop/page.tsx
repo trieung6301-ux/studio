@@ -14,75 +14,42 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
-import { getProducts, type Product } from '@/lib/api/products.api'
+import { getProducts } from '@/lib/api/products.api'
+import { useQuery } from '@tanstack/react-query'
 
 export default function ShopPage() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [selectedType, setSelectedType] = useState<string>('all')
+  const [selectedType, setSelectedType] = useState<string | undefined>()
   const [priceValue, setPriceValue] = useState<[number]>([0])
 
-  // Lấy danh sách các loại sản phẩm duy nhất
-  const productTypes = useMemo(() => {
-    if (!products.length) return []
-    return [...new Set(products.map((p) => p.type))]
-  }, [products])
+  const {
+    data: products,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ['products'],
+    queryFn: () => getProducts({ type: selectedType }),
+  })
 
-  // Tính toán khoảng giá
   const priceRange = useMemo(() => {
-    if (!products.length) return [0, 1000000]
-    const prices = products.map((p) => p.price)
+    if (!products?.products.length) return [0, 1000000]
+    const prices = products.products.map((p) => p.price)
     return [Math.min(...prices), Math.max(...prices)]
   }, [products])
 
-  // Lấy dữ liệu sản phẩm từ API khi component được tải
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        setIsLoading(true)
-        const result = await getProducts()
-        setProducts(result.products)
-        setFilteredProducts(result.products)
-
-        // Cập nhật giá trị mặc định cho bộ lọc giá
-        if (result.products.length > 0) {
-          const prices = result.products.map((p) => p.price)
-          const maxPrice = Math.max(...prices)
-          setPriceValue([maxPrice])
-        }
-      } catch (err) {
-        console.error('Lỗi khi lấy dữ liệu sản phẩm:', err)
-        setError('Không thể tải dữ liệu sản phẩm. Vui lòng thử lại sau.')
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchProducts()
-  }, [])
-
-  const handleFilterChange = () => {
-    let tempProducts = [...products]
-
-    if (selectedType !== 'all') {
-      tempProducts = tempProducts.filter((p) => p.type === selectedType)
-    }
-
-    tempProducts = tempProducts.filter((p) => p.price <= priceValue[0])
-
-    setFilteredProducts(tempProducts)
-  }
+  // Lấy danh sách các loại sản phẩm duy nhất
+  const productTypes = useMemo(() => {
+    if (!products?.products.length) return []
+    return [...new Set(products.products.map((p) => p.type))]
+  }, [products])
 
   const handleApplyFilters = () => {
-    handleFilterChange()
+    refetch()
   }
 
   const handleResetFilters = () => {
-    setSelectedType('all')
-    setPriceValue([priceRange[1]])
-    setFilteredProducts(products)
+    setSelectedType(undefined)
+    setPriceValue([0])
   }
 
   return (
@@ -91,12 +58,10 @@ export default function ShopPage() {
         <div className="inline-flex items-center justify-center bg-primary text-primary-foreground rounded-full w-16 h-16 mb-4">
           <ShoppingBag className="w-8 h-8" />
         </div>
-        <h1 className="text-4xl font-bold font-headline text-primary">
-          Cửa hàng
-        </h1>
+        <h1 className="text-4xl font-bold font-headline text-primary">Cửa hàng</h1>
         <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
-          Duyệt qua lựa chọn cao cấp của chúng tôi về các loại thực phẩm chức
-          năng và dụng cụ tập gym.
+          Duyệt qua lựa chọn cao cấp của chúng tôi về các loại thực phẩm chức năng và dụng cụ tập
+          gym.
         </p>
       </div>
 
@@ -118,7 +83,7 @@ export default function ShopPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">Tất cả loại</SelectItem>
-                      {productTypes.map((type) => (
+                      {productTypes?.map((type) => (
                         <SelectItem key={type} value={type}>
                           {type}
                         </SelectItem>
@@ -157,9 +122,7 @@ export default function ShopPage() {
         <div className="w-full md:w-3/4">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Cửa hàng</h1>
-            <div className="text-sm text-muted-foreground">
-              {filteredProducts.length} sản phẩm
-            </div>
+            <div className="text-sm text-muted-foreground">{products?.total} sản phẩm</div>
           </div>
 
           {isLoading ? (
@@ -171,9 +134,9 @@ export default function ShopPage() {
             <div className="flex flex-col items-center justify-center h-64 text-center">
               <ShoppingBag className="h-12 w-12 mb-4 text-destructive" />
               <h3 className="text-lg font-medium">Lỗi</h3>
-              <p className="text-muted-foreground">{error}</p>
+              <p className="text-muted-foreground">{error.message}</p>
             </div>
-          ) : filteredProducts.length === 0 ? (
+          ) : products?.total === 0 ? (
             <div className="flex flex-col items-center justify-center h-64 text-center">
               <ShoppingBag className="h-12 w-12 mb-4 text-muted-foreground" />
               <h3 className="text-lg font-medium">Không tìm thấy sản phẩm</h3>
@@ -183,7 +146,7 @@ export default function ShopPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
+              {products?.products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>

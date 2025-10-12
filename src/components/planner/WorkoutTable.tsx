@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import {
   Table,
   TableBody,
@@ -16,13 +16,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { createSchedule, deleteSchedule, Exercise, updateSchedule } from '@/lib/api/schedules.api'
 
 interface WorkoutTableProps {
+  dayName: string
   day: string
   initialExercises: Exercise[]
   onExercisesChange: () => void
 }
 
-export function WorkoutTable({ day, initialExercises, onExercisesChange }: WorkoutTableProps) {
-  const [exercises, setExercises] = useState<Exercise[]>(initialExercises)
+export function WorkoutTable({
+  dayName,
+  day,
+  initialExercises,
+  onExercisesChange,
+}: WorkoutTableProps) {
   const [editingRowId, setEditingRowId] = useState<string | null>(null)
   const [newExercise, setNewExercise] = useState<Omit<Exercise, 'id'>>({
     name: '',
@@ -31,11 +36,13 @@ export function WorkoutTable({ day, initialExercises, onExercisesChange }: Worko
     weight: '',
   })
 
-  const handleAddExercise = async () => {
+  const exercises = useMemo(() => initialExercises, [initialExercises])
+
+  const handleAddExercise = useCallback(async () => {
     if (newExercise.name.trim() === '') return
 
     try {
-      const created = await createSchedule({
+      await createSchedule({
         day_of_week: day, // ngày hiện tại
         exercise_name: newExercise.name,
         sets: Number(newExercise.sets),
@@ -43,80 +50,75 @@ export function WorkoutTable({ day, initialExercises, onExercisesChange }: Worko
         weight: Number(newExercise.weight),
       })
 
-      const newExerciseWithId: Exercise = {
-        id: created.id.toString(),
-        name: created.exercise_name,
-        sets: created.sets.toString(),
-        reps: created.reps.toString(),
-        weight: created.weight.toString(),
-      }
-
-      const updatedExercises = [...exercises, newExerciseWithId]
-      setExercises(updatedExercises)
       onExercisesChange()
       setNewExercise({ name: '', sets: '', reps: '', weight: '' })
     } catch (error) {
       console.error('Error adding exercise:', error)
     }
-  }
+  }, [newExercise, day, exercises, onExercisesChange])
 
-  const handleDeleteExercise = async (id: string) => {
-    try {
-      await deleteSchedule(id)
-    } catch (error) {
-      console.error('Error deleting exercise:', error)
-    }
-    onExercisesChange()
-  }
+  const handleDeleteExercise = useCallback(
+    async (id: string) => {
+      try {
+        await deleteSchedule(id)
+        // Update local state immediately
+        onExercisesChange()
+      } catch (error) {
+        console.error('Error deleting exercise:', error)
+      }
+    },
+    [exercises, onExercisesChange],
+  )
 
-  const handleEdit = (exercise: Exercise) => {
+  const handleEdit = useCallback((exercise: Exercise) => {
     setEditingRowId(exercise.id)
-  }
+  }, [])
 
-  const handleSave = async (id: string) => {
+  const handleSave = useCallback(
+    async (id: string) => {
+      setEditingRowId(null)
+      const exerciseToUpdate = exercises.find((ex) => ex.id === id)
+      if (!exerciseToUpdate) return
+
+      try {
+        await updateSchedule(id, {
+          day_of_week: day,
+          exercise_name: exerciseToUpdate.name,
+          sets: Number(exerciseToUpdate.sets),
+          reps: Number(exerciseToUpdate.reps),
+          weight: Number(exerciseToUpdate.weight),
+        })
+      } catch (error) {
+        console.error('Error updating exercise:', error)
+      }
+      onExercisesChange()
+    },
+    [exercises, day, onExercisesChange],
+  )
+
+  const handleCancelEdit = useCallback(() => {
     setEditingRowId(null)
-    const exerciseToUpdate = exercises.find((ex) => ex.id === id)
-    if (!exerciseToUpdate) return
+  }, [exercises])
 
-    try {
-      await updateSchedule(id, {
-        day_of_week: day,
-        exercise_name: exerciseToUpdate.name,
-        sets: Number(exerciseToUpdate.sets),
-        reps: Number(exerciseToUpdate.reps),
-        weight: Number(exerciseToUpdate.weight),
-      })
-    } catch (error) {
-      console.error('Error updating exercise:', error)
-    }
-    onExercisesChange()
-  }
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, id: string, field: keyof Exercise) => {
+      const { value } = e.target
+      setNewExercise({ ...newExercise, [field]: value })
+    },
+    [newExercise],
+  )
 
-  const handleCancelEdit = () => {
-    setEditingRowId(null)
-    setExercises(initialExercises)
-  }
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    id: string,
-    field: keyof Exercise,
-  ) => {
-    const { value } = e.target
-    setExercises(exercises.map((ex) => (ex.id === id ? { ...ex, [field]: value } : ex)))
-  }
-
-  const handleNewExerciseChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: keyof Omit<Exercise, 'id'>,
-  ) => {
-    setNewExercise({ ...newExercise, [field]: e.target.value })
-  }
+  const handleNewExerciseChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, field: keyof Omit<Exercise, 'id'>) => {
+      setNewExercise({ ...newExercise, [field]: e.target.value })
+    },
+    [newExercise],
+  )
 
   return (
     <Card className="shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl font-headline">Bài tập của {day}</CardTitle>
+        <CardTitle className="text-2xl font-headline">Bài tập của {dayName}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
