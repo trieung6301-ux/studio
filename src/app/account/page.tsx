@@ -1,4 +1,3 @@
-import { ProtectedRoute } from '@/components/auth/AuthGuard'
 import { UserProfile } from '@/components/auth/UserProfile'
 
 export default function AccountPage() {

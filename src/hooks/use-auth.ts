@@ -34,10 +34,7 @@ export function useAuth() {
           setUser(parsedUser)
           setIsAuthenticated(true)
         } catch (error) {
-          // Invalid user data in cookie, clear it
-          deleteCookie('token')
-          deleteCookie('user')
-          setIsAuthenticated(false)
+          console.log(error)
         }
       }
       // Luôn gọi checkAuth để verify token và update user data
@@ -164,7 +161,7 @@ export function useAuth() {
     deleteCookie('user')
     setUser(null)
     setIsAuthenticated(false)
-    router.push('/login')
+    window.location.href = '/login'
   }
 
   return {
