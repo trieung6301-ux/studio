@@ -29,6 +29,7 @@ export function WorkoutTable({
   onExercisesChange,
 }: WorkoutTableProps) {
   const [editingRowId, setEditingRowId] = useState<string | null>(null)
+  const [editingExercise, setEditingExercise] = useState<Exercise | null>(null)
   const [newExercise, setNewExercise] = useState<Omit<Exercise, 'id'>>({
     name: '',
     sets: '',
@@ -72,40 +73,45 @@ export function WorkoutTable({
 
   const handleEdit = useCallback((exercise: Exercise) => {
     setEditingRowId(exercise.id)
+    setEditingExercise({ ...exercise })
   }, [])
 
   const handleSave = useCallback(
     async (id: string) => {
+      if (!editingExercise) return
+
       setEditingRowId(null)
-      const exerciseToUpdate = exercises.find((ex) => ex.id === id)
-      if (!exerciseToUpdate) return
+      setEditingExercise(null)
 
       try {
         await updateSchedule(id, {
           day_of_week: day,
-          exercise_name: exerciseToUpdate.name,
-          sets: Number(exerciseToUpdate.sets),
-          reps: Number(exerciseToUpdate.reps),
-          weight: Number(exerciseToUpdate.weight),
+          exercise_name: editingExercise.name,
+          sets: Number(editingExercise.sets),
+          reps: Number(editingExercise.reps),
+          weight: Number(editingExercise.weight),
         })
       } catch (error) {
         console.error('Error updating exercise:', error)
       }
       onExercisesChange()
     },
-    [exercises, day, onExercisesChange],
+    [editingExercise, day, onExercisesChange],
   )
 
   const handleCancelEdit = useCallback(() => {
     setEditingRowId(null)
-  }, [exercises])
+    setEditingExercise(null)
+  }, [])
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, id: string, field: keyof Exercise) => {
       const { value } = e.target
-      setNewExercise({ ...newExercise, [field]: value })
+      if (editingExercise) {
+        setEditingExercise({ ...editingExercise, [field]: value })
+      }
     },
-    [newExercise],
+    [editingExercise],
   )
 
   const handleNewExerciseChange = useCallback(
@@ -139,25 +145,25 @@ export function WorkoutTable({
                     <>
                       <TableCell>
                         <Input
-                          value={exercise.name}
+                          value={editingExercise?.name || ''}
                           onChange={(e) => handleInputChange(e, exercise.id, 'name')}
                         />
                       </TableCell>
                       <TableCell>
                         <Input
-                          value={exercise.sets}
+                          value={editingExercise?.sets || ''}
                           onChange={(e) => handleInputChange(e, exercise.id, 'sets')}
                         />
                       </TableCell>
                       <TableCell>
                         <Input
-                          value={exercise.reps}
+                          value={editingExercise?.reps || ''}
                           onChange={(e) => handleInputChange(e, exercise.id, 'reps')}
                         />
                       </TableCell>
                       <TableCell>
                         <Input
-                          value={exercise.weight}
+                          value={editingExercise?.weight || ''}
                           onChange={(e) => handleInputChange(e, exercise.id, 'weight')}
                         />
                       </TableCell>
