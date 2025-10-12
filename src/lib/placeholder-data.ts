@@ -259,7 +259,7 @@ export interface Exercise {
 
 export const weeklyWorkoutPlan: Record<string, Exercise[]> = {
   monday: [
-    { id: '1', name: 'Đẩy ngực', sets: '4', reps: '8-12', weight: '80' },
+    { id: '1', name: 'Đẩy ngực', sets: '4', reps: '8-12', weight: '80'},
     { id: '2', name: 'Squat', sets: '4', reps: '8-12', weight: '100' },
     { id: '3', name: 'Deadlift', sets: '3', reps: '5-8', weight: '120' },
   ],

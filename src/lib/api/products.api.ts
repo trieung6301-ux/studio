@@ -77,9 +77,7 @@ export async function getProducts(params?: {
   try {
     const response = await api.get('/products', { params });
     const productsData = response.data;
-    
-    console.log(response);
-    
+        
     // Chuyển đổi dữ liệu sản phẩm
     const transformedProducts = Array.isArray(productsData) 
       ? productsData.map(transformProduct)

@@ -27,8 +27,8 @@ const dayKeys = [
   'sunday',
 ]
 
-export function WorkoutPlanner() {
-  const [workouts, setWorkouts] = useState(weeklyWorkoutPlan)
+export function WorkoutPlanner( { workouts }: { workouts?: Record<string, Exercise[]> }) {
+  const [workoutsState, setWorkoutsState] = useState(workouts || weeklyWorkoutPlan)   
 
   const { isAuthenticated, isLoading } = useAuth()
   const router = useRouter()
@@ -41,8 +41,9 @@ export function WorkoutPlanner() {
     router.push('/login')
   }
 
+
   const handleExercisesChange = (day: string, exercises: Exercise[]) => {
-    setWorkouts((prevWorkouts) => ({
+    setWorkoutsState((prevWorkouts) => ({
       ...prevWorkouts,
       [day]: exercises,
     }))
@@ -62,7 +63,7 @@ export function WorkoutPlanner() {
           <WorkoutTable
             day={day}
             initialExercises={
-              workouts[dayKeys[index] as keyof typeof workouts] || []
+              workoutsState[dayKeys[index] as keyof typeof workoutsState] || []
             }
             onExercisesChange={(exercises) =>
               handleExercisesChange(dayKeys[index], exercises)

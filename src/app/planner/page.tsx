@@ -1,7 +1,9 @@
 import { Dumbbell } from 'lucide-react'
 import { WorkoutPlanner } from '@/components/planner/WorkoutPlanner'
+import { getSchedulesGrouped } from '@/lib/api/schedules.api'
 
-export default function PlannerPage() {
+export default async function PlannerPage() {
+  const [ workouts ] = await Promise.all([getSchedulesGrouped()])
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="text-center mb-12">
@@ -16,7 +18,7 @@ export default function PlannerPage() {
           lập kế hoạch có thể tùy chỉnh của chúng tôi.
         </p>
       </div>
-      <WorkoutPlanner />
+      <WorkoutPlanner workouts={workouts} />
     </div>
   )
 }

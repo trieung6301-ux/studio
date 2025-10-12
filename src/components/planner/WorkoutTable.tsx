@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { PlusCircle, Trash2, Edit, Save, X } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { createSchedule } from '@/lib/api/schedules.api'
 
 export interface Exercise {
   id: string
@@ -42,13 +43,33 @@ export function WorkoutTable({
     weight: '',
   })
 
-  const handleAddExercise = () => {
+  const handleAddExercise = async () => {
     if (newExercise.name.trim() === '') return
-    const newExerciseWithId = { ...newExercise, id: Date.now().toString() }
-    const updatedExercises = [...exercises, newExerciseWithId]
-    setExercises(updatedExercises)
-    onExercisesChange(updatedExercises)
-    setNewExercise({ name: '', sets: '', reps: '', weight: '' })
+
+    try {
+      const created = await createSchedule({
+        day_of_week: day, // ngày hiện tại
+        exercise_name: newExercise.name,
+        sets: Number(newExercise.sets),
+        reps: Number(newExercise.reps),
+        weight: Number(newExercise.weight),
+      })
+
+      const newExerciseWithId: Exercise = {
+        id: created.id.toString(),
+        name: created.exercise_name,
+        sets: created.sets.toString(),
+        reps: created.reps.toString(),
+        weight: created.weight.toString(),
+      }
+
+      const updatedExercises = [...exercises, newExerciseWithId]
+      setExercises(updatedExercises)
+      onExercisesChange(updatedExercises)
+      setNewExercise({ name: '', sets: '', reps: '', weight: '' })
+    } catch (error) {
+      console.error('Error adding exercise:', error)
+    }
   }
 
   const handleDeleteExercise = (id: string) => {
