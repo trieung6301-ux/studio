@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import CalendarDemo from '@/components/calendar-demo'
 
 const bannerImages = [
   {
@@ -17,13 +16,13 @@ const bannerImages = [
     hint: 'gym workout',
   },
   {
-    src: 'https://placehold.co/1200x500.png',
-    alt: 'Lớp học yoga',
+    src: 'https://res.cloudinary.com/dsy1matb3/image/upload/v1760270664/554495211_1139788997608328_8485153753941523005_n_ymiwvn.png',
+    alt: 'Người đang tập tạ',
     hint: 'yoga class',
   },
   {
-    src: 'https://placehold.co/1200x500.png',
-    alt: 'Người đang chạy trên máy chạy bộ',
+    src: 'https://res.cloudinary.com/dsy1matb3/image/upload/v1760270678/553796072_1393952202314576_1740880908129591934_n_duermu.png',
+    alt: 'Người đang tập tạ',
     hint: 'cardio workout',
   },
 ]
