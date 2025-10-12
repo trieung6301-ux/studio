@@ -10,18 +10,14 @@ interface AuthGuardProps {
   requireAuth?: boolean
 }
 
-export function AuthGuard({ 
-  children, 
-  redirectTo = '/login', 
-  requireAuth = true 
-}: AuthGuardProps) {
+export function AuthGuard({ children, redirectTo = '/login', requireAuth = true }: AuthGuardProps) {
   const { isAuthenticated, isLoading, checkAuth } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     // Gọi checkAuth để đảm bảo trạng thái auth được cập nhật
     checkAuth()
-  }, [checkAuth])
+  }, [])
 
   useEffect(() => {
     if (!isLoading) {
@@ -57,7 +53,13 @@ export function AuthGuard({
 }
 
 // Component để bảo vệ route cần đăng nhập
-export function ProtectedRoute({ children, redirectTo }: { children: React.ReactNode; redirectTo?: string }) {
+export function ProtectedRoute({
+  children,
+  redirectTo,
+}: {
+  children: React.ReactNode
+  redirectTo?: string
+}) {
   return (
     <AuthGuard requireAuth={true} redirectTo={redirectTo}>
       {children}
@@ -67,9 +69,5 @@ export function ProtectedRoute({ children, redirectTo }: { children: React.React
 
 // Component để bảo vệ route chỉ dành cho guest (chưa đăng nhập)
 export function GuestRoute({ children }: { children: React.ReactNode }) {
-  return (
-    <AuthGuard requireAuth={false}>
-      {children}
-    </AuthGuard>
-  )
+  return <AuthGuard requireAuth={false}>{children}</AuthGuard>
 }

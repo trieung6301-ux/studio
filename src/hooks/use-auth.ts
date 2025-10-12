@@ -25,20 +25,27 @@ export function useAuth() {
 
   useEffect(() => {
     const token = getCookie('token')
+    const userData = getCookie('user')
 
     if (token) {
-      try {
-        setIsAuthenticated(true)
-      } catch (error) {
-        // Invalid user data in cookie, clear it
-        deleteCookie('token')
-        deleteCookie('user')
-        setIsAuthenticated(false)
+      if (userData) {
+        try {
+          const parsedUser = JSON.parse(userData)
+          setUser(parsedUser)
+          setIsAuthenticated(true)
+        } catch (error) {
+          // Invalid user data in cookie, clear it
+          deleteCookie('token')
+          deleteCookie('user')
+          setIsAuthenticated(false)
+        }
       }
+      // Luôn gọi checkAuth để verify token và update user data
+      checkAuth()
     } else {
       setIsAuthenticated(false)
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }, [])
 
   const checkAuth = async () => {

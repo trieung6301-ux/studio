@@ -56,32 +56,29 @@ export function UserProfile() {
           </Avatar>
           <div className="flex-1">
             <h3 className="font-semibold">
-              {user.first_name && user.last_name 
-                ? `${user.first_name} ${user.last_name}` 
-                : user.username || user.email
-              }
+              {user.first_name && user.last_name
+                ? `${user.first_name} ${user.last_name}`
+                : user.username || user.email}
             </h3>
             <p className="text-sm text-muted-foreground">{user.email}</p>
-            {user.role && (
-              <p className="text-xs text-muted-foreground">Vai trò: {user.role}</p>
-            )}
+            {user.role && <p className="text-xs text-muted-foreground">Vai trò: {user.role}</p>}
           </div>
         </div>
-        
+
         <div className="flex space-x-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             onClick={handleRefreshAuth}
             className="flex items-center space-x-2"
           >
             <RefreshCw className="h-4 w-4" />
             <span>Làm mới</span>
           </Button>
-          
-          <Button 
-            variant="destructive" 
-            size="sm" 
+
+          <Button
+            variant="destructive"
+            size="sm"
             onClick={logout}
             className="flex items-center space-x-2"
           >

@@ -4,12 +4,13 @@ import { Icons } from '../shared/Icons'
 import { cn } from '@/lib/utils'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
-import { Menu, ShoppingCart } from 'lucide-react'
+import { Menu, ShoppingCart, User } from 'lucide-react'
 import { useCart } from '@/hooks/use-cart'
 import { Badge } from '../ui/badge'
 import { useAuth } from '@/hooks/use-auth'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { Fragment } from 'react'
 
 const navLinks = [
   { href: '/', label: 'Trang chủ' },
@@ -69,11 +70,18 @@ export function Header() {
           </Button>
 
           {isAuthenticated ? (
-            <div className="max-w-[200px] ml-4">
-              <Button asChild variant="default" className="w-full">
-                <Link href="/planner">Lập kế hoạch tập luyện</Link>
+            <Fragment>
+              <Button asChild variant="ghost" size="icon" className="relative">
+                <Link href="/account">
+                  <User className="h-6 w-6" />
+                </Link>
               </Button>
-            </div>
+              <div className="max-w-[200px] ml-4">
+                <Button asChild variant="default" className="w-full">
+                  <Link href="/planner">Lập kế hoạch tập luyện</Link>
+                </Button>
+              </div>
+            </Fragment>
           ) : (
             <div className="hidden md:flex items-center space-x-2">
               <Button asChild variant="ghost">

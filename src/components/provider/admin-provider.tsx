@@ -26,14 +26,14 @@ export function AdminProvider({ children }: AdminProviderProps) {
         return
       }
 
-      //   if (user && user.role === 'admin') {
-      //     setIsAdmin(true)
-      //     setIsChecking(false)
-      //   } else {
-      //     // User is authenticated but not admin, redirect to homepage
-      //     router.push('/')
-      //     return
-      //   }
+      if (user && user.role === 'admin') {
+        setIsAdmin(true)
+        setIsChecking(false)
+      } else {
+        // User is authenticated but not admin, redirect to homepage
+        router.push('/')
+        return
+      }
     }
 
     checkAdminStatus()
