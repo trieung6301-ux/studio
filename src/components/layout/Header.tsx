@@ -1,21 +1,19 @@
 'use client'
 
-import * as React from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { Icons } from '../shared/Icons'
 import { cn } from '@/lib/utils'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
-import { Menu, User, ShoppingCart } from 'lucide-react'
+import { Menu, ShoppingCart } from 'lucide-react'
 import { useCart } from '@/hooks/use-cart'
 import { Badge } from '../ui/badge'
 import { useAuth } from '@/hooks/use-auth'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 const navLinks = [
   { href: '/', label: 'Trang chủ' },
   { href: '/shop', label: 'Cửa hàng' },
-  { href: '/planner', label: 'Lập kế hoạch tập luyện' },
   { href: '/booking', label: 'Đặt lịch PT' },
   { href: '/pricing', label: 'Bảng giá' },
 ]
@@ -42,7 +40,9 @@ export function Header() {
               href={link.href}
               className={cn(
                 'transition-colors hover:text-primary relative',
-                pathname === link.href ? 'text-primary' : 'text-muted-foreground',
+                pathname === link.href
+                  ? 'text-primary'
+                  : 'text-muted-foreground',
               )}
             >
               {link.label}
@@ -69,11 +69,11 @@ export function Header() {
           </Button>
 
           {isAuthenticated ? (
-            <Button variant="ghost" size="icon">
-              <Link href="/calendar">
-                <User className="h-6 w-6" />
-              </Link>
-            </Button>
+            <div className="max-w-[200px]">
+              <Button asChild variant="default" className="w-full">
+                <Link href="/planner">Lập kế hoạch tập luyện</Link>
+              </Button>
+            </div>
           ) : (
             <div className="hidden md:flex items-center space-x-2">
               <Button asChild variant="ghost">
@@ -97,7 +97,9 @@ export function Header() {
                 <div className="p-4">
                   <Link href="/" className="mb-6 flex items-center space-x-2">
                     <Icons.logo className="h-8 w-8 text-primary" />
-                    <span className="font-bold font-headline text-xl">MuscleUp</span>
+                    <span className="font-bold font-headline text-xl">
+                      MuscleUp
+                    </span>
                   </Link>
                   <nav className="flex flex-col space-y-4">
                     {navLinks.map((link) => (

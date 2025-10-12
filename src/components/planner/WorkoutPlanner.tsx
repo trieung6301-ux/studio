@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { WorkoutTable, type Exercise } from './WorkoutTable'
 import { weeklyWorkoutPlan } from '@/lib/placeholder-data'
+import { useAuth } from '@/hooks/use-auth'
+import { useRouter } from 'next/navigation'
 
 const daysOfWeek = [
   'Thứ Hai',
@@ -27,6 +29,17 @@ const dayKeys = [
 
 export function WorkoutPlanner() {
   const [workouts, setWorkouts] = useState(weeklyWorkoutPlan)
+
+  const { isAuthenticated, isLoading } = useAuth()
+  const router = useRouter()
+
+  if (isLoading) {
+    return null
+  }
+
+  if (!isAuthenticated && !isLoading) {
+    router.push('/login')
+  }
 
   const handleExercisesChange = (day: string, exercises: Exercise[]) => {
     setWorkouts((prevWorkouts) => ({

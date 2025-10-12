@@ -1,5 +1,5 @@
-import { WorkoutPlanner } from '@/components/planner/WorkoutPlanner'
 import { Dumbbell } from 'lucide-react'
+import { WorkoutPlanner } from '@/components/planner/WorkoutPlanner'
 
 export default function PlannerPage() {
   return (
