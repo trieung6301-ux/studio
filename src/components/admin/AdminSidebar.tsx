@@ -1,6 +1,6 @@
 'use client'
 
-import { Package, Users } from 'lucide-react'
+import { Package, Users, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -17,6 +17,11 @@ const menuItems = [
     title: 'Sản phẩm',
     url: '/admin/products',
     icon: Package,
+  },
+  {
+    title: 'Đơn hàng',
+    url: '/admin/orders',
+    icon: ShoppingCart,
   },
   {
     title: 'Người dùng',
