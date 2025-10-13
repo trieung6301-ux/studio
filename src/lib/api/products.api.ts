@@ -107,3 +107,53 @@ export async function getProductById(id: number | string): Promise<Product> {
     throw error;
   }
 }
+
+/**
+ * Định nghĩa dữ liệu tạo sản phẩm mới
+ */
+export interface CreateProductData {
+  product_name: string
+  product_desc: string
+  product_type: string
+  product_price: number
+  product_image?: File | string
+}
+
+/**
+ * Tạo sản phẩm mới
+ * @param productData Dữ liệu sản phẩm mới
+ * @returns Promise chứa sản phẩm đã tạo
+ */
+export async function createProduct(productData: CreateProductData): Promise<Product> {
+  try {
+    const formData = new FormData();
+    
+    formData.append('product_name', productData.product_name);
+    formData.append('product_desc', productData.product_desc);
+    formData.append('product_type', productData.product_type);
+    formData.append('product_price', productData.product_price.toString());
+    
+    if (productData.product_image) {
+      if (productData.product_image instanceof File) {
+        formData.append('product_image', productData.product_image);
+      } else if (typeof productData.product_image === 'string') {
+        // If it's a base64 string, convert to blob
+        const response = await fetch(productData.product_image);
+        const blob = await response.blob();
+        const file = new File([blob], 'product-image.jpg', { type: blob.type });
+        formData.append('product_image', file);
+      }
+    }
+
+    const response = await api.post('/products', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    
+    return transformProduct(response.data);
+  } catch (error) {
+    console.error('Error creating product:', error);
+    throw error;
+  }
+}
