@@ -14,15 +14,31 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { getProducts, Product } from '@/lib/api/products.api'
+import { getProducts, Product, deleteProduct } from '@/lib/api/products.api'
 import { Edit, Trash2, Eye, Plus, Search, AlertCircle, RefreshCw } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import AddProductForm from '@/components/forms/AddProductForm'
+import EditProductForm from '@/components/forms/EditProductForm'
 
 export default function AdminProductsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [isAddProductOpen, setIsAddProductOpen] = useState(false)
+  const [isEditProductOpen, setIsEditProductOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [productToDelete, setProductToDelete] = useState<Product | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
   const queryClient = useQueryClient()
 
   // Use React Query to fetch products
@@ -59,17 +75,36 @@ export default function AdminProductsPage() {
   }
 
   const handleEdit = (product: Product) => {
-    console.log('Edit product:', product)
-    // TODO: Implement edit functionality
-    // After successful edit, invalidate the products query
-    // queryClient.invalidateQueries({ queryKey: ['products'] })
+    setSelectedProduct(product)
+    setIsEditProductOpen(true)
   }
 
   const handleDelete = (product: Product) => {
-    console.log('Delete product:', product)
-    // TODO: Implement delete functionality
-    // After successful delete, invalidate the products query
-    // queryClient.invalidateQueries({ queryKey: ['products'] })
+    setProductToDelete(product)
+    setIsDeleteDialogOpen(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (!productToDelete) return
+
+    setIsDeleting(true)
+    try {
+      await deleteProduct(productToDelete.id)
+      // Invalidate and refetch products after successful deletion
+      queryClient.invalidateQueries({ queryKey: ['products'] })
+      setIsDeleteDialogOpen(false)
+      setProductToDelete(null)
+    } catch (error) {
+      console.error('Error deleting product:', error)
+      // You could add a toast notification here for error handling
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setIsDeleteDialogOpen(false)
+    setProductToDelete(null)
   }
 
   const handleView = (product: Product) => {
@@ -84,6 +119,12 @@ export default function AdminProductsPage() {
   const handleAddProductSuccess = () => {
     // Invalidate and refetch products after successful creation
     queryClient.invalidateQueries({ queryKey: ['products'] })
+  }
+
+  const handleEditProductSuccess = () => {
+    // Invalidate and refetch products after successful update
+    queryClient.invalidateQueries({ queryKey: ['products'] })
+    setSelectedProduct(null)
   }
 
   if (isLoading) {
@@ -236,14 +277,6 @@ export default function AdminProductsPage() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => handleView(product)}
-                            title="View product"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
                             onClick={() => handleEdit(product)}
                             title="Edit product"
                           >
@@ -275,6 +308,39 @@ export default function AdminProductsPage() {
         onOpenChange={setIsAddProductOpen}
         onSuccess={handleAddProductSuccess}
       />
+
+      {/* Edit Product Dialog */}
+      <EditProductForm
+        open={isEditProductOpen}
+        onOpenChange={setIsEditProductOpen}
+        onSuccess={handleEditProductSuccess}
+        product={selectedProduct}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Xác nhận xóa sản phẩm</AlertDialogTitle>
+            <AlertDialogDescription>
+              Bạn có chắc chắn muốn xóa sản phẩm "{productToDelete?.name}"? 
+              Hành động này không thể hoàn tác.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleCancelDelete} disabled={isDeleting}>
+              Hủy
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleConfirmDelete}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isDeleting ? 'Đang xóa...' : 'Xóa'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

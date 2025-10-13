@@ -157,3 +157,61 @@ export async function createProduct(productData: CreateProductData): Promise<Pro
     throw error;
   }
 }
+
+/**
+ * Cập nhật sản phẩm
+ * @param id ID của sản phẩm cần cập nhật
+ * @param productData Dữ liệu sản phẩm mới
+ * @returns Promise chứa sản phẩm đã cập nhật
+ */
+export async function updateProduct(id: number, productData: CreateProductData): Promise<Product> {
+  try {
+    const formData = new FormData();
+    
+    formData.append('product_name', productData.product_name);
+    formData.append('product_desc', productData.product_desc);
+    formData.append('product_type', productData.product_type);
+    formData.append('product_price', productData.product_price.toString());
+    
+    if (productData.product_image) {
+      if (productData.product_image instanceof File) {
+        formData.append('product_image', productData.product_image);
+      } else if (typeof productData.product_image === 'string') {
+        // If it's a base64 string, convert to blob
+        const response = await fetch(productData.product_image);
+        const blob = await response.blob();
+        const file = new File([blob], 'product-image.jpg', { type: blob.type });
+        formData.append('product_image', file);
+      }
+    }
+
+    const response = await api.put(`/products/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    
+    return transformProduct(response.data);
+  } catch (error) {
+    console.error('Error updating product:', error);
+    throw error;
+  }
+}
+
+/**
+ * Xóa sản phẩm
+ * @param id ID của sản phẩm cần xóa
+ * @returns Promise chứa kết quả xóa
+ */
+export async function deleteProduct(id: number): Promise<{ success: boolean; message: string }> {
+  try {
+    const response = await api.delete(`/products/${id}`);
+    return {
+      success: true,
+      message: 'Product deleted successfully'
+    };
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    throw error;
+  }
+}
