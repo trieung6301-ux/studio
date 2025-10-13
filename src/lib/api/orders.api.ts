@@ -98,6 +98,12 @@ export interface CreateOrderData {
   address: string
   phone_number: string
   email: string
+  items?: Array<{
+    product_id: string | number
+    quantity: number
+    price: number
+  }>
+  total_amount?: number
 }
 
 /**
