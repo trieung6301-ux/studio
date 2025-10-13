@@ -229,12 +229,11 @@ export default function AdminProductsPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[50px]">Hình ảnh</TableHead>
+                    <TableHead >Hình ảnh</TableHead>
                     <TableHead>Tên</TableHead>
                     <TableHead>Loại</TableHead>
                     <TableHead>Giá</TableHead>
                     <TableHead>Trạng thái</TableHead>
-                    <TableHead className="text-right">Hành động</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -269,7 +268,7 @@ export default function AdminProductsPage() {
                         <Badge 
                           variant={product.deleted ? "destructive" : "default"}
                         >
-                          {product.deleted ? "Đã xóa" : "Hoạt động"}
+                          {product.deleted ? "Đã xóa" : "Active"}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">

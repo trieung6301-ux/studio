@@ -28,10 +28,10 @@ import { Loader2, Upload } from 'lucide-react'
 
 // Form validation schema
 const productSchema = z.object({
-  name: z.string().min(1, 'Product name is required').max(100, 'Name must be less than 100 characters'),
-  description: z.string().min(1, 'Description is required').max(500, 'Description must be less than 500 characters'),
-  type: z.string().min(1, 'Product type is required'),
-  price: z.coerce.number().min(0, 'Price must be positive').max(999999999, 'Price is too high'),
+  name: z.string().min(1, 'Tên sản phẩm là bắt buộc').max(100, 'Tên phải ít hơn 100 ký tự'),
+  description: z.string().min(1, 'Mô tả là bắt buộc').max(500, 'Mô tả phải ít hơn 500 ký tự'),
+  type: z.string().min(1, 'Loại sản phẩm là bắt buộc'),
+  price: z.coerce.number().min(0, 'Giá phải là số dương').max(999999999, 'Giá quá cao'),
   image: z.string().optional(),
 })
 
@@ -135,9 +135,9 @@ export default function EditProductForm({ open, onOpenChange, onSuccess, product
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Edit Product</DialogTitle>
+          <DialogTitle>Chỉnh sửa sản phẩm</DialogTitle>
           <DialogDescription>
-            Update the product information. Make changes to the fields below.
+            Cập nhật thông tin sản phẩm. Thực hiện thay đổi ở các trường bên dưới.
           </DialogDescription>
         </DialogHeader>
 
@@ -148,9 +148,9 @@ export default function EditProductForm({ open, onOpenChange, onSuccess, product
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Product Name</FormLabel>
+                  <FormLabel>Tên sản phẩm</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter product name" {...field} />
+                    <Input placeholder="Nhập tên sản phẩm" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -162,10 +162,10 @@ export default function EditProductForm({ open, onOpenChange, onSuccess, product
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Mô tả</FormLabel>
                   <FormControl>
                     <Textarea 
-                      placeholder="Enter product description" 
+                      placeholder="Nhập mô tả sản phẩm" 
                       className="min-h-[80px]"
                       {...field} 
                     />
@@ -181,10 +181,10 @@ export default function EditProductForm({ open, onOpenChange, onSuccess, product
                 name="type"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Product Type</FormLabel>
+                    <FormLabel>Loại sản phẩm</FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="Enter product type (e.g., Supplement, Equipment, etc.)" 
+                        placeholder="Nhập loại sản phẩm (ví dụ: Thực phẩm chức năng, Thiết bị, v.v.)" 
                         {...field} 
                       />
                     </FormControl>
@@ -198,7 +198,7 @@ export default function EditProductForm({ open, onOpenChange, onSuccess, product
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Price (VND)</FormLabel>
+                    <FormLabel>Giá (VND)</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -218,7 +218,7 @@ export default function EditProductForm({ open, onOpenChange, onSuccess, product
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Product Image</FormLabel>
+                  <FormLabel>Hình ảnh sản phẩm</FormLabel>
                   <FormControl>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
@@ -234,7 +234,7 @@ export default function EditProductForm({ open, onOpenChange, onSuccess, product
                         <div className="mt-2">
                           <img 
                             src={imagePreview} 
-                            alt="Preview" 
+                            alt="Xem trước" 
                             className="h-20 w-20 object-cover rounded-md border"
                           />
                         </div>
@@ -253,11 +253,11 @@ export default function EditProductForm({ open, onOpenChange, onSuccess, product
                 onClick={handleClose}
                 disabled={isSubmitting}
               >
-                Cancel
+                Hủy
               </Button>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isSubmitting ? 'Updating...' : 'Update Product'}
+                {isSubmitting ? 'Đang cập nhật...' : 'Cập nhật sản phẩm'}
               </Button>
             </DialogFooter>
           </form>
