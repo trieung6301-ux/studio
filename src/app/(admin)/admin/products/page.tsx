@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+
 export default function AdminProductsPage() {
   return (
     <div className="space-y-6">
@@ -9,9 +11,7 @@ export default function AdminProductsPage() {
       <div className="bg-white rounded-lg border p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">All Products</h2>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-            Add Product
-          </button>
+          <Button variant="default">Add Product</Button>
         </div>
 
         <div className="text-center py-8 text-gray-500">

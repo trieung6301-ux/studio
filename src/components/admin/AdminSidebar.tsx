@@ -1,5 +1,6 @@
 'use client'
 
+import { Package, Users } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -7,10 +8,9 @@ import {
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { Package, Users } from 'lucide-react'
 
 const menuItems = [
   {
