@@ -131,14 +131,14 @@ export default function AdminProductsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold">Products Management</h1>
-          <p className="text-gray-600">Manage your product catalog</p>
+          <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
+          <p className="text-gray-600">Quản lý danh mục sản phẩm của bạn</p>
         </div>
         <Card>
           <CardContent>
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
-              <p className="mt-2 text-gray-500">Loading products...</p>
+              <p className="mt-2 text-gray-500">Đang tải sản phẩm...</p>
             </div>
           </CardContent>
         </Card>
@@ -150,22 +150,22 @@ export default function AdminProductsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold">Products Management</h1>
-          <p className="text-gray-600">Manage your product catalog</p>
+          <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
+          <p className="text-gray-600">Quản lý danh mục sản phẩm của bạn</p>
         </div>
         <Card>
           <CardContent>
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>
-                Failed to load products. {error?.message || 'Please try again.'}
+                Không thể tải sản phẩm. {error?.message || 'Vui lòng thử lại.'}
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={() => refetch()}
                   className="ml-2"
                 >
-                  Retry
+                  Thử lại
                 </Button>
               </AlertDescription>
             </Alert>
@@ -178,14 +178,14 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Products Management</h1>
-        <p className="text-gray-600">Manage your product catalog</p>
+        <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
+        <p className="text-gray-600">Quản lý danh mục sản phẩm của bạn</p>
       </div>
 
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <CardTitle>All Products ({filteredProducts.length})</CardTitle>
+            <CardTitle>Tất cả sản phẩm ({filteredProducts.length})</CardTitle>
             <div className="flex items-center gap-2">
               <Button 
                 variant="outline" 
@@ -195,14 +195,14 @@ export default function AdminProductsPage() {
                 className="flex items-center gap-2"
               >
                 <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-                Refresh
+                Làm mới
               </Button>
               <Button 
                 className="flex items-center gap-2"
                 onClick={() => setIsAddProductOpen(true)}
               >
                 <Plus className="h-4 w-4" />
-                Add Product
+                Thêm sản phẩm
               </Button>
             </div>
           </div>
@@ -212,7 +212,7 @@ export default function AdminProductsPage() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search products..."
+                placeholder="Tìm kiếm sản phẩm..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-8"
@@ -222,19 +222,19 @@ export default function AdminProductsPage() {
 
           {filteredProducts.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
-              <p>No products found. Click "Add Product" to get started.</p>
+              <p>Không tìm thấy sản phẩm nào. Nhấn "Thêm sản phẩm" để bắt đầu.</p>
             </div>
           ) : (
             <div className="rounded-md border">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[50px]">Image</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead className="w-[50px]">Hình ảnh</TableHead>
+                    <TableHead>Tên</TableHead>
+                    <TableHead>Loại</TableHead>
+                    <TableHead>Giá</TableHead>
+                    <TableHead>Trạng thái</TableHead>
+                    <TableHead className="text-right">Hành động</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -269,7 +269,7 @@ export default function AdminProductsPage() {
                         <Badge 
                           variant={product.deleted ? "destructive" : "default"}
                         >
-                          {product.deleted ? "Deleted" : "Active"}
+                          {product.deleted ? "Đã xóa" : "Hoạt động"}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
@@ -278,7 +278,7 @@ export default function AdminProductsPage() {
                             variant="ghost"
                             size="icon"
                             onClick={() => handleEdit(product)}
-                            title="Edit product"
+                            title="Chỉnh sửa sản phẩm"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
@@ -286,7 +286,7 @@ export default function AdminProductsPage() {
                             variant="ghost"
                             size="icon"
                             onClick={() => handleDelete(product)}
-                            title="Delete product"
+                            title="Xóa sản phẩm"
                             className="text-destructive hover:text-destructive"
                           >
                             <Trash2 className="h-4 w-4" />

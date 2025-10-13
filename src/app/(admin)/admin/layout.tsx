@@ -9,7 +9,7 @@ import {
 import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'MuscleUp Admin',
+  title: 'MuscleUp Quản trị',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 }
 
@@ -26,7 +26,7 @@ export default function AdminLayout({
           <main className="flex-1 overflow-auto">
             <div className="container mx-auto p-6">
               <div className="flex items-center mb-4">
-                <h1 className="text-xl font-bold">Admin Dashboard</h1>
+                <h1 className="text-xl font-bold">Bảng điều khiển quản trị</h1>
               </div>
               <div className="mt-6">{children}</div>
             </div>
