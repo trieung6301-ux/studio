@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { PersonalTrainer } from '@/lib/placeholder-data'
 import {
   Card,
@@ -20,21 +21,19 @@ export function PTCard({ pt }: PTCardProps) {
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group border-2 border-transparent hover:border-primary">
       <CardHeader className="p-0">
-        <div className="relative w-full h-64 overflow-hidden">
+        <div className="relative w-full h-80 overflow-hidden">
           <Image
             src={pt.image}
             alt={pt.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            className="object-cover transition-transform duration-500 group-hover:scale-110 object-top"
             data-ai-hint="personal trainer fitness"
           />
         </div>
       </CardHeader>
       <CardContent className="p-6 flex-grow">
-        <CardTitle className="text-2xl font-bold font-headline mb-2">
-          {pt.name}
-        </CardTitle>
+        <CardTitle className="text-2xl font-bold font-headline mb-2">{pt.name}</CardTitle>
         <div className="flex flex-wrap gap-2 mb-4">
           {pt.specialties.map((spec) => (
             <Badge key={spec} variant="secondary" className="text-sm">
@@ -83,7 +82,9 @@ export function PTCard({ pt }: PTCardProps) {
         </div>
       </CardContent>
       <CardFooter className="p-6 pt-0">
-        <Button className="w-full">Đặt ngay</Button>
+        <Link href={`/booking/${pt.id}`} className="w-full">
+          <Button className="w-full">Đặt ngay</Button>
+        </Link>
       </CardFooter>
     </Card>
   )

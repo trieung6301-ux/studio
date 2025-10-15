@@ -314,8 +314,8 @@ export const ptData: PersonalTrainer[] = [
     image:
       'https://res.cloudinary.com/dsy1matb3/image/upload/v1760531901/553753614_869169025467509_1255388658941947642_n_r93hlh.jpg',
     packages: {
-      session: { price: 1875000 },
-      monthly: { price: 6250000 },
+      session: { price: 600000 },
+      monthly: { price: 2000000 },
     },
     availability: ['Thứ 2, 4, 6: 4pm - 8pm', 'Thứ 7: 9am - 1pm'],
   },
@@ -328,8 +328,8 @@ export const ptData: PersonalTrainer[] = [
     image:
       'https://res.cloudinary.com/dsy1matb3/image/upload/v1760531894/564539196_1530417491424222_7461068339426895725_n_siaber.jpg',
     packages: {
-      session: { price: 1500000 },
-      monthly: { price: 5000000 },
+      session: { price: 500000 },
+      monthly: { price: 1800000 },
     },
     availability: ['Thứ 3, 5: 8am - 12pm', 'Chủ Nhật: 10am - 2pm'],
   },
@@ -342,8 +342,8 @@ export const ptData: PersonalTrainer[] = [
     image:
       'https://res.cloudinary.com/dsy1matb3/image/upload/v1760531880/553103048_841561931883466_6777221657847373204_n_pvjwut.jpg',
     packages: {
-      session: { price: 2000000 },
-      monthly: { price: 7000000 },
+      session: { price: 700000 },
+      monthly: { price: 2400000 },
     },
     availability: ['Thứ 2, 4: 6am - 10am', 'Thứ 6: 6pm - 9pm', 'Thứ 7: 12pm - 4pm'],
   },

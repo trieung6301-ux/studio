@@ -5,13 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import {
   Table,
   TableBody,
@@ -21,7 +15,18 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import Image from 'next/image'
-import { CreditCard, MapPin, Phone, Mail, User, Loader2, CheckCircle, XCircle, ArrowLeft, ShoppingBag } from 'lucide-react'
+import {
+  CreditCard,
+  MapPin,
+  Phone,
+  Mail,
+  User,
+  Loader2,
+  CheckCircle,
+  XCircle,
+  ArrowLeft,
+  ShoppingBag,
+} from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { createOrder } from '@/lib/api/orders.api'
 import { useToast } from '@/hooks/use-toast'
@@ -38,8 +43,17 @@ export default function CheckoutPage() {
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
   const [orderId, setOrderId] = useState<string | null>(null)
-  
+  const [bookingData, setBookingData] = useState<any>(null)
+
   const confirmation = searchParams.get('confirmation')
+
+  // Check for booking data on component mount
+  useEffect(() => {
+    const storedBookingData = localStorage.getItem('bookingData')
+    if (storedBookingData) {
+      setBookingData(JSON.parse(storedBookingData))
+    }
+  }, [])
 
   const {
     register,
@@ -57,52 +71,106 @@ export default function CheckoutPage() {
   })
 
   const onSubmit = async (data: CheckoutFormData) => {
-    if (items.length === 0) {
-      toast({
-        title: "Giỏ hàng trống",
-        description: "Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.",
-        variant: "destructive",
-      })
-      return
-    }
+    // Check if it's a booking or cart order
+    if (bookingData) {
+      // Handle booking order
+      setIsLoading(true)
 
-    setIsLoading(true)
-    
-    try {
-      const orderData = {
-        name: data.name,
-        address: data.address,
-        phone_number: data.phone,
-        email: data.email,
-        items: items.map(item => ({
-          product_id: item.id,
-          quantity: item.quantity,
-          price: item.price
-        })),
-        total_amount: cartTotal
+      try {
+        const orderData = {
+          name: data.name,
+          address: data.address,
+          phone_number: data.phone,
+          email: data.email,
+          items: [
+            {
+              product_id: bookingData.trainerId,
+              quantity: 1,
+              price: bookingData.price,
+              product_name: bookingData.productName,
+              booking_details: {
+                trainer: bookingData.trainerName,
+                day: bookingData.day,
+                time: bookingData.time,
+                package: bookingData.package,
+              },
+            },
+          ],
+          total_amount: bookingData.price,
+          order_type: 'booking',
+        }
+
+        const order = await createOrder(orderData)
+
+        // Clear booking data after successful order
+        localStorage.removeItem('bookingData')
+        setBookingData(null)
+
+        // Reset form
+        reset()
+
+        // Set order ID for confirmation screen
+        setOrderId(order.id.toString())
+
+        // Redirect to confirmation success page
+        router.push('/checkout?confirmation=success')
+      } catch (error) {
+        console.error('Error creating booking order:', error)
+
+        // Redirect to confirmation failure page
+        router.push('/checkout?confirmation=fail')
+      } finally {
+        setIsLoading(false)
+      }
+    } else {
+      // Handle cart order
+      if (items.length === 0) {
+        toast({
+          title: 'Giỏ hàng trống',
+          description: 'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.',
+          variant: 'destructive',
+        })
+        return
       }
 
-      const order = await createOrder(orderData)
-      
-      // Clear cart after successful order
-      clearCart()
-      
-      // Reset form
-      reset()
-      
-      // Set order ID for confirmation screen
-      setOrderId(order.id.toString())
-      
-      // Redirect to confirmation success page
-      router.push('/checkout?confirmation=success')
-      
-    } catch (error) {
-      console.error('Error creating order:', error)
-      
-      // Redirect to confirmation failure page
-      router.push('/checkout?confirmation=fail')
-    } finally {
-      setIsLoading(false)
+      setIsLoading(true)
+
+      try {
+        const orderData = {
+          name: data.name,
+          address: data.address,
+          phone_number: data.phone,
+          email: data.email,
+          items: items.map((item) => ({
+            product_id: item.id,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          total_amount: cartTotal,
+          order_type: 'cart',
+        }
+
+        const order = await createOrder(orderData)
+
+        // Clear cart after successful order
+        clearCart()
+
+        // Reset form
+        reset()
+
+        // Set order ID for confirmation screen
+        setOrderId(order.id.toString())
+
+        // Redirect to confirmation success page
+        router.push('/checkout?confirmation=success')
+      } catch (error) {
+        console.error('Error creating order:', error)
+
+        // Redirect to confirmation failure page
+        router.push('/checkout?confirmation=fail')
+      } finally {
+        setIsLoading(false)
+      }
     }
   }
 
@@ -114,29 +182,33 @@ export default function CheckoutPage() {
           <div className="inline-flex items-center justify-center bg-green-100 text-green-600 rounded-full w-20 h-20 mb-6">
             <CheckCircle className="w-10 h-10" />
           </div>
-          
+
           <h1 className="text-4xl font-bold text-green-600 mb-4">
-            Đặt hàng thành công!
+            {bookingData ? 'Đặt lịch thành công!' : 'Đặt hàng thành công!'}
           </h1>
-          
+
           <p className="text-xl text-muted-foreground mb-8">
-            Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đã được xử lý thành công.
+            {bookingData
+              ? 'Cảm ơn bạn đã đặt lịch. Lịch tập của bạn đã được xác nhận thành công.'
+              : 'Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đã được xử lý thành công.'}
           </p>
-          
+
           {orderId && (
             <Card className="mb-8">
               <CardContent className="pt-6">
-                <p className="text-lg font-semibold mb-2">Mã đơn hàng</p>
+                <p className="text-lg font-semibold mb-2">
+                  {bookingData ? 'Mã đặt lịch' : 'Mã đơn hàng'}
+                </p>
                 <p className="text-2xl font-bold text-primary">#{orderId}</p>
               </CardContent>
             </Card>
           )}
-          
+
           <div className="space-y-4">
             <p className="text-muted-foreground">
               Chúng tôi sẽ gửi email xác nhận đến địa chỉ email của bạn.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
                 <Link href="/shop">
@@ -144,7 +216,7 @@ export default function CheckoutPage() {
                   Tiếp tục mua sắm
                 </Link>
               </Button>
-              
+
               <Button asChild variant="outline" size="lg">
                 <Link href="/">
                   <ArrowLeft className="w-4 h-4 mr-2" />
@@ -165,20 +237,18 @@ export default function CheckoutPage() {
           <div className="inline-flex items-center justify-center bg-red-100 text-red-600 rounded-full w-20 h-20 mb-6">
             <XCircle className="w-10 h-10" />
           </div>
-          
-          <h1 className="text-4xl font-bold text-red-600 mb-4">
-            Đặt hàng thất bại
-          </h1>
-          
+
+          <h1 className="text-4xl font-bold text-red-600 mb-4">Đặt hàng thất bại</h1>
+
           <p className="text-xl text-muted-foreground mb-8">
             Có lỗi xảy ra khi xử lý đơn hàng của bạn. Vui lòng thử lại.
           </p>
-          
+
           <div className="space-y-4">
             <p className="text-muted-foreground">
               Nếu vấn đề vẫn tiếp tục, vui lòng liên hệ với chúng tôi để được hỗ trợ.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
                 <Link href="/checkout">
@@ -186,7 +256,7 @@ export default function CheckoutPage() {
                   Thử lại
                 </Link>
               </Button>
-              
+
               <Button asChild variant="outline" size="lg">
                 <Link href="/cart">
                   <ArrowLeft className="w-4 h-4 mr-2" />
@@ -207,10 +277,10 @@ export default function CheckoutPage() {
           <CreditCard className="w-8 h-8" />
         </div>
         <h1 className="text-4xl font-bold font-headline text-primary">
-          Thanh toán
+          {bookingData ? 'Thanh toán đặt lịch' : 'Thanh toán'}
         </h1>
         <p className="text-muted-foreground mt-2">
-          Hoàn tất đơn hàng của bạn
+          {bookingData ? 'Hoàn tất đặt lịch của bạn' : 'Hoàn tất đơn hàng của bạn'}
         </p>
       </div>
 
@@ -221,7 +291,7 @@ export default function CheckoutPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="w-5 h-5" />
-                Thông tin giao hàng
+                {bookingData ? 'Thông tin liên hệ' : 'Thông tin giao hàng'}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -235,9 +305,7 @@ export default function CheckoutPage() {
                       placeholder="Nhập họ và tên"
                       className={errors.name ? 'border-red-500' : ''}
                     />
-                    {errors.name && (
-                      <p className="text-sm text-red-500">{errors.name.message}</p>
-                    )}
+                    {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Số điện thoại *</Label>
@@ -248,9 +316,7 @@ export default function CheckoutPage() {
                       placeholder="Nhập số điện thoại"
                       className={errors.phone ? 'border-red-500' : ''}
                     />
-                    {errors.phone && (
-                      <p className="text-sm text-red-500">{errors.phone.message}</p>
-                    )}
+                    {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
                   </div>
                 </div>
 
@@ -263,17 +329,21 @@ export default function CheckoutPage() {
                     placeholder="Nhập địa chỉ email"
                     className={errors.email ? 'border-red-500' : ''}
                   />
-                  {errors.email && (
-                    <p className="text-sm text-red-500">{errors.email.message}</p>
-                  )}
+                  {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="address">Địa chỉ giao hàng *</Label>
+                  <Label htmlFor="address">
+                    {bookingData ? 'Địa chỉ liên hệ *' : 'Địa chỉ giao hàng *'}
+                  </Label>
                   <Textarea
                     id="address"
                     {...register('address')}
-                    placeholder="Nhập địa chỉ giao hàng chi tiết"
+                    placeholder={
+                      bookingData
+                        ? 'Nhập địa chỉ liên hệ chi tiết'
+                        : 'Nhập địa chỉ giao hàng chi tiết'
+                    }
                     rows={3}
                     className={errors.address ? 'border-red-500' : ''}
                   />
@@ -283,9 +353,9 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="pt-4">
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
+                  <Button
+                    type="submit"
+                    className="w-full"
                     size="lg"
                     disabled={isLoading || isSubmitting}
                   >
@@ -297,7 +367,7 @@ export default function CheckoutPage() {
                     ) : (
                       <>
                         <CreditCard className="w-4 h-4 mr-2" />
-                        Thanh toán ngay
+                        {bookingData ? 'Xác nhận đặt lịch' : 'Thanh toán ngay'}
                       </>
                     )}
                   </Button>
@@ -311,37 +381,84 @@ export default function CheckoutPage() {
         <div>
           <Card className="sticky top-20">
             <CardHeader>
-              <CardTitle>Tóm tắt đơn hàng</CardTitle>
+              <CardTitle>{bookingData ? 'Tóm tắt đặt lịch' : 'Tóm tắt đơn hàng'}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {/* Cart Items */}
-                <div className="space-y-3">
-                  {items.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3">
-                      <div className="relative h-12 w-12">
+                {bookingData ? (
+                  /* Booking Summary */
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="relative h-16 w-16">
                         <Image
-                          src={item.imageUrl}
-                          alt={item.name}
+                          src={bookingData.trainerImage}
+                          alt={bookingData.trainerName}
                           fill
                           className="object-cover rounded-md"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">{item.name}</p>
+                        <p className="text-sm font-medium">{bookingData.productName}</p>
                         <p className="text-xs text-muted-foreground">
-                          Số lượng: {item.quantity}
+                          {bookingData.day} - {bookingData.time}
                         </p>
+                        <p className="text-xs text-muted-foreground">Gói: {bookingData.package}</p>
                       </div>
                       <p className="text-sm font-semibold">
                         {new Intl.NumberFormat('vi-VN', {
                           style: 'currency',
                           currency: 'VND',
-                        }).format(item.price * item.quantity)}
+                        }).format(bookingData.price)}
                       </p>
                     </div>
-                  ))}
-                </div>
+
+                    {/* Booking Details */}
+                    <div className="bg-muted/50 p-3 rounded-lg space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>Huấn luyện viên:</span>
+                        <span className="font-medium">{bookingData.trainerName}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>Ngày:</span>
+                        <span className="font-medium">{bookingData.day}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>Giờ:</span>
+                        <span className="font-medium">{bookingData.time}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>Gói:</span>
+                        <span className="font-medium">{bookingData.package}</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Cart Items */
+                  <div className="space-y-3">
+                    {items.map((item) => (
+                      <div key={item.id} className="flex items-center gap-3">
+                        <div className="relative h-12 w-12">
+                          <Image
+                            src={item.imageUrl}
+                            alt={item.name}
+                            fill
+                            className="object-cover rounded-md"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">{item.name}</p>
+                          <p className="text-xs text-muted-foreground">Số lượng: {item.quantity}</p>
+                        </div>
+                        <p className="text-sm font-semibold">
+                          {new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }).format(item.price * item.quantity)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Summary */}
                 <div className="border-t pt-4 space-y-2">
@@ -351,7 +468,7 @@ export default function CheckoutPage() {
                       {new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
                         currency: 'VND',
-                      }).format(cartTotal)}
+                      }).format(bookingData ? bookingData.price : cartTotal)}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
@@ -364,7 +481,7 @@ export default function CheckoutPage() {
                       {new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
                         currency: 'VND',
-                      }).format(cartTotal)}
+                      }).format(bookingData ? bookingData.price : cartTotal)}
                     </span>
                   </div>
                 </div>
@@ -373,7 +490,9 @@ export default function CheckoutPage() {
             <CardFooter className="bg-muted/50">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4" />
-                <span>Giao hàng miễn phí toàn quốc</span>
+                <span>
+                  {bookingData ? 'Dịch vụ tại phòng tập' : 'Giao hàng miễn phí toàn quốc'}
+                </span>
               </div>
             </CardFooter>
           </Card>
