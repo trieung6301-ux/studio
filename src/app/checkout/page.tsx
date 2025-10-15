@@ -6,20 +6,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
 import Image from 'next/image'
 import {
   CreditCard,
   MapPin,
-  Phone,
-  Mail,
   User,
   Loader2,
   CheckCircle,
@@ -27,7 +17,7 @@ import {
   ArrowLeft,
   ShoppingBag,
 } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { createOrder } from '@/lib/api/orders.api'
 import { useToast } from '@/hooks/use-toast'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -36,7 +26,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { checkoutSchema, type CheckoutFormData } from '@/lib/schemas/checkoutSchema'
 import Link from 'next/link'
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const { items, cartTotal, clearCart } = useCart()
   const { toast } = useToast()
   const router = useRouter()
@@ -499,5 +489,13 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutContent />
+    </Suspense>
   )
 }
