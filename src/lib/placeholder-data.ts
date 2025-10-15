@@ -88,8 +88,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 1100,
     image: 'https://placehold.co/600x400.png',
-    description:
-      'Bột creatine micronized để cải thiện sự hấp thụ và hiệu suất.',
+    description: 'Bột creatine micronized để cải thiện sự hấp thụ và hiệu suất.',
   },
   {
     id: '8',
@@ -100,8 +99,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 450,
     image: 'https://placehold.co/600x400.png',
-    description:
-      'Pre-workout tối thượng cho năng lượng, sự tập trung và sự bơm cơ.',
+    description: 'Pre-workout tối thượng cho năng lượng, sự tập trung và sự bơm cơ.',
   },
   {
     id: '9',
@@ -134,8 +132,7 @@ export const products: Product[] = [
     rating: 5,
     reviews: 550,
     image: 'https://placehold.co/600x400.png',
-    description:
-      'Con lăn xốp mật độ cao giúp phục hồi cơ bắp và giảm đau nhức.',
+    description: 'Con lăn xốp mật độ cao giúp phục hồi cơ bắp và giảm đau nhức.',
   },
   {
     id: '12',
@@ -146,8 +143,7 @@ export const products: Product[] = [
     rating: 4,
     reviews: 1200,
     image: 'https://placehold.co/600x400.png',
-    description:
-      'Bình lắc không chứa BPA, chống rò rỉ để pha trộn protein một cách dễ dàng.',
+    description: 'Bình lắc không chứa BPA, chống rò rỉ để pha trộn protein một cách dễ dàng.',
   },
 ]
 
@@ -259,7 +255,7 @@ export interface Exercise {
 
 export const weeklyWorkoutPlan: Record<string, Exercise[]> = {
   monday: [
-    { id: '1', name: 'Đẩy ngực', sets: '4', reps: '8-12', weight: '80'},
+    { id: '1', name: 'Đẩy ngực', sets: '4', reps: '8-12', weight: '80' },
     { id: '2', name: 'Squat', sets: '4', reps: '8-12', weight: '100' },
     { id: '3', name: 'Deadlift', sets: '3', reps: '5-8', weight: '120' },
   ],
@@ -315,7 +311,8 @@ export const ptData: PersonalTrainer[] = [
     specialties: ['Powerlifting', 'Tập luyện sức mạnh'],
     description:
       'Alex là một huấn luyện viên powerlifting được chứng nhận với hơn 10 năm kinh nghiệm. Anh ấy tập trung vào việc xây dựng sức mạnh thô và hoàn thiện kỹ thuật cho các bài tập chính.',
-    image: 'https://placehold.co/600x400.png',
+    image:
+      'https://res.cloudinary.com/dsy1matb3/image/upload/v1760531901/553753614_869169025467509_1255388658941947642_n_r93hlh.jpg',
     packages: {
       session: { price: 1875000 },
       monthly: { price: 6250000 },
@@ -328,7 +325,8 @@ export const ptData: PersonalTrainer[] = [
     specialties: ['Yoga', 'Linh hoạt', 'Pilates'],
     description:
       'Jessica là một giảng viên yoga nổi tiếng, kết hợp các phương pháp truyền thống với thể dục hiện đại. Các buổi tập của cô giúp cải thiện sự linh hoạt, cân bằng và tinh thần minh mẫn.',
-    image: 'https://placehold.co/600x400.png',
+    image:
+      'https://res.cloudinary.com/dsy1matb3/image/upload/v1760531894/564539196_1530417491424222_7461068339426895725_n_siaber.jpg',
     packages: {
       session: { price: 1500000 },
       monthly: { price: 5000000 },
@@ -341,15 +339,12 @@ export const ptData: PersonalTrainer[] = [
     specialties: ['Quyền Anh', 'HIIT', 'Cardio'],
     description:
       'Từng là một võ sĩ quyền Anh chuyên nghiệp, Marcus mang đến sự quyết liệt và kỷ luật cho mỗi buổi tập. Hãy sẵn sàng đổ mồ hôi với các bài tập quyền Anh năng lượng cao và các vòng lặp HIIT.',
-    image: 'https://placehold.co/600x400.png',
+    image:
+      'https://res.cloudinary.com/dsy1matb3/image/upload/v1760531880/553103048_841561931883466_6777221657847373204_n_pvjwut.jpg',
     packages: {
       session: { price: 2000000 },
       monthly: { price: 7000000 },
     },
-    availability: [
-      'Thứ 2, 4: 6am - 10am',
-      'Thứ 6: 6pm - 9pm',
-      'Thứ 7: 12pm - 4pm',
-    ],
+    availability: ['Thứ 2, 4: 6am - 10am', 'Thứ 6: 6pm - 9pm', 'Thứ 7: 12pm - 4pm'],
   },
 ]
