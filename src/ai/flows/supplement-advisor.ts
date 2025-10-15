@@ -57,6 +57,8 @@ export async function supplementAdvisor(
   return supplementAdvisorFlow(input)
 }
 
+export { supplementAdvisorFlow }
+
 const prompt = ai.definePrompt({
   name: 'supplementAdvisorPrompt',
   input: { schema: SupplementAdvisorInputSchema },

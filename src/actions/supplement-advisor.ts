@@ -1,7 +1,7 @@
 'use server'
 
 import {
-  supplementAdvisor as supplementAdvisorFlow,
+  supplementAdvisorFlow,
   type SupplementAdvisorInput,
   type SupplementAdvisorOutput,
 } from '@/ai/flows/supplement-advisor'

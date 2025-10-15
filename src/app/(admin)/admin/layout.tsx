@@ -1,30 +1,32 @@
-import { AdminProvider } from '@/components/provider/admin-provider'
+import type { Metadata } from 'next'
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
-import { SidebarInset, SidebarTrigger, SidebarProvider } from '@/components/ui/sidebar'
-import { Metadata } from 'next'
+import { AdminProvider } from '@/components/provider/admin-provider'
+import {
+  SidebarProvider,
+} from '@/components/ui/sidebar'
 
 export const metadata: Metadata = {
   title: 'MuscleUp Admin',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 }
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    // <AdminProvider>
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full">
-        <AdminSidebar />
-        <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-            <SidebarTrigger className="-ml-1" />
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg font-semibold">Admin Dashboard</h1>
+    <AdminProvider>
+      <SidebarProvider defaultOpen={true}>
+        <div className="flex min-h-screen w-full">
+          <AdminSidebar />
+          <main className="flex-1 overflow-auto">
+            <div className="container mx-auto p-6">
+              <div className="mt-6">{children}</div>
             </div>
-          </header>
-          <div className="flex-1 p-4">{children}</div>
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
-    // </AdminProvider>
+          </main>
+        </div>
+      </SidebarProvider>
+    </AdminProvider>
   )
 }

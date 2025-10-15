@@ -153,7 +153,9 @@ export default function CartPage() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full">Tiến hành thanh toán</Button>
+                <Button asChild className="w-full">
+                  <Link href="/checkout">Tiến hành thanh toán</Link>
+                </Button>
               </CardFooter>
             </Card>
           </div>

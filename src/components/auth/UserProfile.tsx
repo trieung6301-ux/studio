@@ -1,17 +1,18 @@
-'use client'
+"use client";
 
-import { useAuth } from '@/hooks/use-auth'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { LogOut, RefreshCw, User } from 'lucide-react'
+import { useAuth } from "@/hooks/use-auth";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { LogOut, RefreshCw, User, Settings } from "lucide-react";
+import Link from "next/link";
 
 export function UserProfile() {
-  const { user, isAuthenticated, isLoading, logout, checkAuth } = useAuth()
+  const { user, isAuthenticated, isLoading, logout, checkAuth } = useAuth();
 
   const handleRefreshAuth = async () => {
-    await checkAuth()
-  }
+    await checkAuth();
+  };
 
   if (isLoading) {
     return (
@@ -23,7 +24,7 @@ export function UserProfile() {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (!isAuthenticated || !user) {
@@ -36,7 +37,7 @@ export function UserProfile() {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -51,7 +52,9 @@ export function UserProfile() {
         <div className="flex items-center space-x-4">
           <Avatar>
             <AvatarFallback>
-              {user.first_name?.[0] || user.username?.[0] || user.email[0].toUpperCase()}
+              {user.first_name?.[0] ||
+                user.username?.[0] ||
+                user.email[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
@@ -61,32 +64,51 @@ export function UserProfile() {
                 : user.username || user.email}
             </h3>
             <p className="text-sm text-muted-foreground">{user.email}</p>
-            {user.role && <p className="text-xs text-muted-foreground">Vai trò: {user.role}</p>}
+            {user.role && (
+              <p className="text-xs text-muted-foreground">
+                Vai trò: {user.role}
+              </p>
+            )}
           </div>
         </div>
 
-        <div className="flex space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefreshAuth}
-            className="flex items-center space-x-2"
-          >
-            <RefreshCw className="h-4 w-4" />
-            <span>Làm mới</span>
-          </Button>
+        <div className="flex flex-col space-y-2">
+          <div className="flex gap-2 max-md:flex-col">
+            {user?.role === "admin" && (
+              <Button
+                asChild
+                variant="default"
+                size="sm"
+                className="flex md:w-[200px] items-center space-x-2"
+              >
+                <Link href="/admin/products">
+                  <Settings className="h-4 w-4" />
+                  <span>Quản trị sản phẩm</span>
+                </Link>
+              </Button>
+            )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefreshAuth}
+              className="flex items-center space-x-2"
+            >
+              <RefreshCw className="h-4 w-4" />
+              <span>Làm mới</span>
+            </Button>
 
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={logout}
-            className="flex items-center space-x-2"
-          >
-            <LogOut className="h-4 w-4" />
-            <span>Đăng xuất</span>
-          </Button>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={logout}
+              className="flex items-center space-x-2"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Đăng xuất</span>
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

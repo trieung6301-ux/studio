@@ -1,5 +1,6 @@
 'use client'
 
+import { Package, Users, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -7,19 +8,23 @@ import {
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { Package, Users } from 'lucide-react'
 
 const menuItems = [
   {
-    title: 'Products',
+    title: 'Sản phẩm',
     url: '/admin/products',
     icon: Package,
   },
   {
-    title: 'Users',
+    title: 'Đơn hàng',
+    url: '/admin/orders',
+    icon: ShoppingCart,
+  },
+  {
+    title: 'Người dùng',
     url: '/admin/users',
     icon: Users,
   },
@@ -32,7 +37,7 @@ export function AdminSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-2">
-          <h2 className="text-lg font-semibold">Admin Panel</h2>
+          <h2 className="text-lg font-semibold">Bảng quản trị</h2>
         </div>
       </SidebarHeader>
       <SidebarContent>

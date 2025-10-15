@@ -14,7 +14,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { getProducts, Product, deleteProduct } from '@/lib/api/products.api'
+import { getOrders, Order, deleteOrder } from '@/lib/api/orders.api'
 import { Edit, Trash2, Eye, Plus, Search, AlertCircle, RefreshCw } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -28,74 +28,68 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import AddProductForm from '@/components/forms/AddProductForm'
-import EditProductForm from '@/components/forms/EditProductForm'
+import AddOrderForm from '@/components/forms/AddOrderForm'
+import EditOrderForm from '@/components/forms/EditOrderForm'
 
-export default function AdminProductsPage() {
+export default function AdminOrdersPage() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [isAddProductOpen, setIsAddProductOpen] = useState(false)
-  const [isEditProductOpen, setIsEditProductOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [isAddOrderOpen, setIsAddOrderOpen] = useState(false)
+  const [isEditOrderOpen, setIsEditOrderOpen] = useState(false)
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-  const [productToDelete, setProductToDelete] = useState<Product | null>(null)
+  const [orderToDelete, setOrderToDelete] = useState<Order | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
   const queryClient = useQueryClient()
 
-  // Use React Query to fetch products
+  // Use React Query to fetch orders
   const {
-    data: productsData,
+    data: ordersData,
     isLoading,
     isError,
     error,
     refetch
   } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => getProducts(),
+    queryKey: ['orders'],
+    queryFn: () => getOrders(),
     staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 3,
   })
 
-  const products = productsData?.products || []
+  const orders = ordersData?.orders || []
 
-  // Filter products based on search term
-  const filteredProducts = useMemo(() => {
-    if (!searchTerm) return products
+  // Filter orders based on search term
+  const filteredOrders = useMemo(() => {
+    if (!searchTerm) return orders
     
-    return products.filter((product: Product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.type.toLowerCase().includes(searchTerm.toLowerCase())
+    return orders.filter((order: Order) =>
+      order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.phoneNumber.toLowerCase().includes(searchTerm.toLowerCase())
     )
-  }, [products, searchTerm])
+  }, [orders, searchTerm])
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND'
-    }).format(price)
+  const handleEdit = (order: Order) => {
+    setSelectedOrder(order)
+    setIsEditOrderOpen(true)
   }
 
-  const handleEdit = (product: Product) => {
-    setSelectedProduct(product)
-    setIsEditProductOpen(true)
-  }
-
-  const handleDelete = (product: Product) => {
-    setProductToDelete(product)
+  const handleDelete = (order: Order) => {
+    setOrderToDelete(order)
     setIsDeleteDialogOpen(true)
   }
 
   const handleConfirmDelete = async () => {
-    if (!productToDelete) return
+    if (!orderToDelete) return
 
     setIsDeleting(true)
     try {
-      await deleteProduct(productToDelete.id)
-      // Invalidate and refetch products after successful deletion
-      queryClient.invalidateQueries({ queryKey: ['products'] })
+      await deleteOrder(orderToDelete.id)
+      // Invalidate and refetch orders after successful deletion
+      queryClient.invalidateQueries({ queryKey: ['orders'] })
       setIsDeleteDialogOpen(false)
-      setProductToDelete(null)
+      setOrderToDelete(null)
     } catch (error) {
-      console.error('Error deleting product:', error)
+      console.error('Error deleting order:', error)
       // You could add a toast notification here for error handling
     } finally {
       setIsDeleting(false)
@@ -104,11 +98,11 @@ export default function AdminProductsPage() {
 
   const handleCancelDelete = () => {
     setIsDeleteDialogOpen(false)
-    setProductToDelete(null)
+    setOrderToDelete(null)
   }
 
-  const handleView = (product: Product) => {
-    console.log('View product:', product)
+  const handleView = (order: Order) => {
+    console.log('View order:', order)
     // TODO: Implement view functionality
   }
 
@@ -116,29 +110,29 @@ export default function AdminProductsPage() {
     refetch()
   }
 
-  const handleAddProductSuccess = () => {
-    // Invalidate and refetch products after successful creation
-    queryClient.invalidateQueries({ queryKey: ['products'] })
+  const handleAddOrderSuccess = () => {
+    // Invalidate and refetch orders after successful creation
+    queryClient.invalidateQueries({ queryKey: ['orders'] })
   }
 
-  const handleEditProductSuccess = () => {
-    // Invalidate and refetch products after successful update
-    queryClient.invalidateQueries({ queryKey: ['products'] })
-    setSelectedProduct(null)
+  const handleEditOrderSuccess = () => {
+    // Invalidate and refetch orders after successful update
+    queryClient.invalidateQueries({ queryKey: ['orders'] })
+    setSelectedOrder(null)
   }
 
   if (isLoading) {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
-          <p className="text-gray-600">Quản lý danh mục sản phẩm của bạn</p>
+          <h1 className="text-2xl font-bold">Quản lý đơn hàng</h1>
+          <p className="text-gray-600">Quản lý danh sách đơn hàng của bạn</p>
         </div>
         <Card>
           <CardContent>
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
-              <p className="mt-2 text-gray-500">Đang tải sản phẩm...</p>
+              <p className="mt-2 text-gray-500">Đang tải đơn hàng...</p>
             </div>
           </CardContent>
         </Card>
@@ -150,15 +144,15 @@ export default function AdminProductsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
-          <p className="text-gray-600">Quản lý danh mục sản phẩm của bạn</p>
+          <h1 className="text-2xl font-bold">Quản lý đơn hàng</h1>
+          <p className="text-gray-600">Quản lý danh sách đơn hàng của bạn</p>
         </div>
         <Card>
           <CardContent>
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>
-                Không thể tải sản phẩm. {error?.message || 'Vui lòng thử lại.'}
+                Không thể tải đơn hàng. {error?.message || 'Vui lòng thử lại.'}
                 <Button 
                   variant="outline" 
                   size="sm" 
@@ -178,14 +172,14 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
-        <p className="text-gray-600">Quản lý danh mục sản phẩm của bạn</p>
+        <h1 className="text-2xl font-bold">Quản lý đơn hàng</h1>
+        <p className="text-gray-600">Quản lý danh sách đơn hàng của bạn</p>
       </div>
 
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <CardTitle>Tất cả sản phẩm ({filteredProducts.length})</CardTitle>
+            <CardTitle>Tất cả đơn hàng ({filteredOrders.length})</CardTitle>
             <div className="flex items-center gap-2">
               <Button 
                 variant="outline" 
@@ -199,10 +193,10 @@ export default function AdminProductsPage() {
               </Button>
               <Button 
                 className="flex items-center gap-2"
-                onClick={() => setIsAddProductOpen(true)}
+                onClick={() => setIsAddOrderOpen(true)}
               >
                 <Plus className="h-4 w-4" />
-                Thêm sản phẩm
+                Thêm đơn hàng
               </Button>
             </div>
           </div>
@@ -212,7 +206,7 @@ export default function AdminProductsPage() {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Tìm kiếm sản phẩm..."
+                placeholder="Tìm kiếm đơn hàng..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-8"
@@ -220,55 +214,52 @@ export default function AdminProductsPage() {
             </div>
           </div>
 
-          {filteredProducts.length === 0 ? (
+          {filteredOrders.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
-              <p>Không tìm thấy sản phẩm nào. Nhấn "Thêm sản phẩm" để bắt đầu.</p>
+              <p>Không tìm thấy đơn hàng nào. Nhấn "Thêm đơn hàng" để bắt đầu.</p>
             </div>
           ) : (
             <div className="rounded-md border">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead >Hình ảnh</TableHead>
-                    <TableHead>Tên</TableHead>
-                    <TableHead>Loại</TableHead>
-                    <TableHead>Giá</TableHead>
+                    <TableHead>Khách hàng</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Số điện thoại</TableHead>
+                    <TableHead>Địa chỉ</TableHead>
                     <TableHead>Trạng thái</TableHead>
+                    <TableHead className="text-right">Thao tác</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredProducts.map((product: Product) => (
-                    <TableRow key={product.id}>
+                  {filteredOrders.map((order: Order) => (
+                    <TableRow key={order.id}>
                       <TableCell>
-                        <Avatar className="h-10 w-10">
-                          <AvatarImage 
-                            src={product.imageUrl} 
-                            alt={product.name}
-                          />
-                          <AvatarFallback>
-                            {product.name.charAt(0).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">{product.name}</div>
-                          <div className="text-sm text-muted-foreground truncate max-w-[200px]">
-                            {product.description}
+                        <div className="flex items-center space-x-3">
+                          <Avatar className="h-10 w-10">
+                            <AvatarFallback>
+                              {order.name.charAt(0).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="font-medium">{order.name}</div>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="secondary">{product.type}</Badge>
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {formatPrice(product.price)}
+                        <div className="text-sm">{order.email}</div>
                       </TableCell>
                       <TableCell>
-                        <Badge 
-                          variant={product.deleted ? "destructive" : "default"}
-                        >
-                          {product.deleted ? "Đã xóa" : "Active"}
+                        <div className="text-sm">{order.phoneNumber}</div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm text-muted-foreground truncate max-w-[200px]">
+                          {order.address}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="default">
+                          {order.status || "Mới"}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
@@ -276,16 +267,16 @@ export default function AdminProductsPage() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => handleEdit(product)}
-                            title="Chỉnh sửa sản phẩm"
+                            onClick={() => handleEdit(order)}
+                            title="Chỉnh sửa đơn hàng"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => handleDelete(product)}
-                            title="Xóa sản phẩm"
+                            onClick={() => handleDelete(order)}
+                            title="Xóa đơn hàng"
                             className="text-destructive hover:text-destructive"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -301,28 +292,28 @@ export default function AdminProductsPage() {
         </CardContent>
       </Card>
 
-      {/* Add Product Dialog */}
-      <AddProductForm
-        open={isAddProductOpen}
-        onOpenChange={setIsAddProductOpen}
-        onSuccess={handleAddProductSuccess}
+      {/* Add Order Dialog */}
+      <AddOrderForm
+        open={isAddOrderOpen}
+        onOpenChange={setIsAddOrderOpen}
+        onSuccess={handleAddOrderSuccess}
       />
 
-      {/* Edit Product Dialog */}
-      <EditProductForm
-        open={isEditProductOpen}
-        onOpenChange={setIsEditProductOpen}
-        onSuccess={handleEditProductSuccess}
-        product={selectedProduct}
+      {/* Edit Order Dialog */}
+      <EditOrderForm
+        open={isEditOrderOpen}
+        onOpenChange={setIsEditOrderOpen}
+        onSuccess={handleEditOrderSuccess}
+        order={selectedOrder}
       />
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Xác nhận xóa sản phẩm</AlertDialogTitle>
+            <AlertDialogTitle>Xác nhận xóa đơn hàng</AlertDialogTitle>
             <AlertDialogDescription>
-              Bạn có chắc chắn muốn xóa sản phẩm "{productToDelete?.name}"? 
+              Bạn có chắc chắn muốn xóa đơn hàng của "{orderToDelete?.name}"? 
               Hành động này không thể hoàn tác.
             </AlertDialogDescription>
           </AlertDialogHeader>
